@@ -39,6 +39,9 @@ local_cache_backup_*/
 Thumbs.db
 NUL
 
+# ── Claude Code 本机配置（机器相关，不提交）──────────────
+.claude/settings.local.json
+
 # ── 临时 / 一次性脚本产物 ───────────────────────────────
 *.tmp
 *.log
