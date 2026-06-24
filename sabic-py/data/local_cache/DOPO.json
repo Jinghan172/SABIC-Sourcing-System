@@ -1,0 +1,38 @@
+{
+  "en": "DOPO",
+  "cn": "DOPO磷阻燃剂",
+  "collected_at": "2026-06-10 14:17",
+  "count": 2,
+  "companies": [
+    {
+      "name": "江阴市涵丰科技有限公司",
+      "credit_code": "91320281767397170Q",
+      "legal_person": "王建春",
+      "reg_capital": "2207万元",
+      "established": "2004-11-24",
+      "status": "存续",
+      "scope": "对阻燃材料的研究、开发和技术咨询；盐酸的生产；磷酸酯阻燃剂、复合阻燃剂、硫酸钙的生产。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "江苏",
+      "city": "",
+      "address": "江阴市临港新城利港双友路5号",
+      "industry": "研究和试验发展",
+      "_qcc_industry": "研究和试验发展",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "杭州捷尔思阻燃化工有限公司",
+      "credit_code": "91330100728452261J",
+      "legal_person": "裘雪阳",
+      "reg_capital": "500万元",
+      "established": "2001-04-12",
+      "status": "存续",
+      "scope": "研发、生产：阻燃产品；销售：本公司生产的产品并提供相关技术服务。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "浙江",
+      "city": "",
+      "address": "浙江省杭州市莫干山路1418-61号（上城科技工业基地）",
+      "industry": "其他化工产品批发",
+      "_source": "seed"
+    }
+  ]
+}

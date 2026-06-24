@@ -1,0 +1,72 @@
+{
+  "en": "Bromine",
+  "cn": "溴素",
+  "collected_at": "2026-06-10 14:06",
+  "count": 4,
+  "companies": [
+    {
+      "name": "沧州盐业集团溴素有限公司",
+      "credit_code": "91130983MA086KB285",
+      "legal_person": "李东亮",
+      "reg_capital": "1296.0815万元",
+      "established": "2017-02-13",
+      "status": "存续",
+      "scope": "许可项目：危险化学品生产。（依法须经批准的项目，经相关部门批准后方可开展经营活动，具体经营项目以相关部门批准文件或许可证件为准）一般项目：保温材料销售；化工产品销售（不含许可类化工产品）；金属制品销售；劳动保护用品销售；艺术品代理；非食用盐销售；木材收购；光伏设备及元器件销售；水泥制品销售。（除依法须经批准的项目外，凭营业执照依法自主开展经营活动）",
+      "province": "河北",
+      "city": "",
+      "address": "河北省沧州市黄骅市建设大街206-1",
+      "industry": "有机化学原料制造",
+      "_qcc_industry": "有机化学原料制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "昌邑市利源溴素厂",
+      "credit_code": "91370786767756161M",
+      "legal_person": "李清军",
+      "reg_capital": "20万元",
+      "established": "2006-03-08",
+      "status": "在业",
+      "scope": "生产销售溴素。（有效期限以许可证为准）;（依法须经批准的项目，经相关部门批准后方可开展经营活动）。",
+      "province": "山东",
+      "city": "",
+      "address": "昌邑市龙池镇东利渔村",
+      "industry": "采盐",
+      "_qcc_industry": "采盐",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "山东海化股份有限公司溴素厂",
+      "credit_code": "91370700695402611D",
+      "legal_person": "王彬",
+      "reg_capital": "",
+      "established": "2009-09-02",
+      "status": "在业",
+      "scope": "许可项目：危险化学品生产。（依法须经批准的项目，经相关部门批准后方可开展经营活动，具体经营项目以相关部门批准文件或许可证件为准）一般项目：第二类非药品类易制毒化学品生产；化工产品生产（不含许可类化工产品）；化工产品销售（不含许可类化工产品）。（除依法须经批准的项目外，凭营业执照依法自主开展经营活动）",
+      "province": "山东",
+      "city": "",
+      "address": "潍坊滨海经济开发区大海路中段路东",
+      "industry": "其他基础化学原料制造",
+      "_qcc_industry": "其他基础化学原料制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "沧州盐业集团溴素有限公司溴素三厂",
+      "credit_code": "91130924MA0G1TCD9B",
+      "legal_person": "阚耀睿",
+      "reg_capital": "",
+      "established": "2021-02-08",
+      "status": "存续",
+      "scope": "许可项目：危险化学品生产。（依法须经批准的项目，经相关部门批准后方可开展经营活动，具体经营项目以相关部门批准文件或许可证件为准）",
+      "province": "河北",
+      "city": "",
+      "address": "河北省沧州市海兴县青锋农场东北三公里",
+      "industry": "其他基础化学原料制造",
+      "_qcc_industry": "其他基础化学原料制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    }
+  ]
+}

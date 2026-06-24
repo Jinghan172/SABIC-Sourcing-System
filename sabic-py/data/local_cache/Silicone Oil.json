@@ -1,0 +1,56 @@
+{
+  "en": "Silicone Oil",
+  "cn": "硅油",
+  "collected_at": "2026-06-10 14:24",
+  "count": 3,
+  "companies": [
+    {
+      "name": "桐乡市翔宇硅油有限责任公司",
+      "credit_code": "913304837332028574",
+      "legal_person": "徐林妹",
+      "reg_capital": "50万元",
+      "established": "2001-10-31",
+      "status": "存续",
+      "scope": "氨基硅油的生产、销售",
+      "province": "浙江",
+      "city": "",
+      "address": "浙江省崇福镇湾里村肇昌桥",
+      "industry": "有机化学原料制造",
+      "_qcc_industry": "有机化学原料制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "江门市新会区朗景硅油制造有限公司",
+      "credit_code": "91440705682440168A",
+      "legal_person": "林国辉",
+      "reg_capital": "10万元",
+      "established": "2008-12-04",
+      "status": "在业",
+      "scope": "生产、销售：硅油、硅橡胶、硅脂、硅乳液；销售：塑料制品、五金制品。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "广东",
+      "city": "",
+      "address": "江门市新会区罗坑镇石咀管理区（石咀漂白粉厂车间）",
+      "industry": "合成橡胶制造",
+      "_qcc_industry": "合成橡胶制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "枣阳市金鹏化工有限公司",
+      "credit_code": "914206837069160022",
+      "legal_person": "杜雪玲",
+      "reg_capital": "500万元",
+      "established": "1999-08-04",
+      "status": "存续",
+      "scope": "工艺美术颜料制造；文化用信息化学品制造；DMC、硅油、硅橡胶生产、销售；货物与技术进出口。**（涉及许可经营项目，应取得相关部门许可后方可经营）",
+      "province": "湖北",
+      "city": "",
+      "address": "枣阳市梁集董岗火车站",
+      "industry": "基础化学原料制造",
+      "_qcc_industry": "基础化学原料制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    }
+  ]
+}

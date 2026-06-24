@@ -1,0 +1,1651 @@
+"""
+SABIC 上海在线寻源系统 — Python / Streamlit 版
+运行方式: streamlit run app.py
+
+v3.0 改版：
+- 移除全部演示数据（拜尔上海等虚拟企业）与 SABIC 历史合作内容
+- 评分三维化（地理/规模/合规，全部可量化），移除相关性与专利评分
+- 搜索移到主区域：输入英文代码/中文即联想缓存品类（与 local_cache JSON 一一对应），
+  未缓存品类自动落到企查查实时 API
+"""
+from pathlib import Path as _Path
+from dotenv import load_dotenv as _load
+_load(_Path(__file__).parent / ".env.local", override=False)
+
+import json
+import re
+from pathlib import Path
+import streamlit as st
+import pandas as pd
+
+from utils.matcher import match_suppliers, LAST_SEARCH_META
+from utils.cross_validator import batch_validate, confidence_label
+from utils.chemnet_client import search_chem_suppliers, is_configured as chemnet_ok
+from utils.ibuychem_client import search_by_keyword as ibc_search, is_loaded as ibc_loaded
+from utils.sabic_search import SABIC_SEARCH_STRATEGIES, get_category_priority
+from utils.local_search import list_cache_categories, cache_status
+from utils.scorer import DEFAULT_WEIGHTS, has_hazmat_license, _IND_CHEM, _IND_MFG
+from utils.exporter import export_excel
+from utils.insights import decision_summary, supply_landscape, why_not_top
+from components.charts import (
+    radar_chart, bar_chart, bubble_chart,
+    parallel_chart, heatmap_chart, compare_dataframe, china_map,
+)
+from components.core_materials import (
+    render_core_cards, render_core_report, get_material, CORE_CSS,
+)
+
+APP_DIR = Path(__file__).resolve().parent
+
+# 三类最核心物料：关键词 → 物料 key（用于搜索时直接路由到专家评审报告）
+_CORE_KEYWORDS = {
+    "TiO2":   ["tio2", "钛白粉", "氯化法钛白粉", "二氧化钛"],
+    "FFS":    ["ffs", "ffs膜", "ffs重载塑料膜", "重载塑料膜", "重载膜"],
+    "Pallet": ["pallet", "木托盘", "出口级木托盘", "托盘"],
+}
+# 这两个品类已升级为"最核心物料"，从普通缓存品类列表/联想中移除（改走专家报告）
+_CORE_HIDE_FILES = {"TiO2.json", "Pallet.json"}
+
+
+def _core_key_for(text: str) -> str | None:
+    """输入文本若命中核心物料关键词，返回其 key，否则 None。"""
+    t = (text or "").strip().lower()
+    if not t:
+        return None
+    for key, kws in _CORE_KEYWORDS.items():
+        if any(t == kw for kw in kws):
+            return key
+    return None
+
+# ── 品类别名表（知识库辅助联想，不影响企查查数据）─────────────────────
+try:
+    with open(APP_DIR / "data" / "category_aliases.json", encoding="utf-8") as _af:
+        _ALIASES: dict[str, list[str]] = {
+            k: v for k, v in json.load(_af).items() if not k.startswith("_")
+        }
+except Exception:
+    _ALIASES = {}
+
+
+def _suggest_categories(text: str, max_n: int = 8) -> list[dict]:
+    """
+    输入英文代码/中文/别名片段，返回联想品类列表（每项 1:1 对应一个缓存 JSON 文件）。
+    排序：精确命中 > 前缀 > 包含 > 别名精确 > 别名包含；同级内 P1 品类优先、收录企业多者优先。
+    """
+    q = (text or "").strip()
+    if not q:
+        return []
+    ql = q.lower()
+    ranked = []
+    for cat in list_cache_categories():
+        if cat["file"] in _CORE_HIDE_FILES:
+            continue  # 核心物料改走专家报告，不在普通联想中出现
+        en_l, cn = cat["en"].lower(), cat["cn"]
+        aliases = _ALIASES.get(cat["en"], [])
+        rank = None
+        if ql == en_l or q == cn:
+            rank = 0
+        elif en_l.startswith(ql) or cn.startswith(q):
+            rank = 1
+        elif ql in en_l or q in cn:
+            rank = 2
+        elif any(ql == a.lower() for a in aliases):
+            rank = 3
+        elif any(ql in a.lower() for a in aliases):
+            rank = 4
+        if rank is not None:
+            prio = SABIC_SEARCH_STRATEGIES.get(cn, {}).get("priority", 2)
+            ranked.append((rank, prio, -cat["count"], cat))
+    ranked.sort(key=lambda x: x[:3])
+    return [c for _, _, _, c in ranked[:max_n]]
+
+
+def _number_value(value) -> float | None:
+    match = re.search(r"-?\d+(?:\.\d+)?", str(value))
+    return float(match.group()) if match else None
+
+
+def _highlight_row_max(row):
+    values = [_number_value(v) for v in row.values if v not in ("—", "")]
+    values = [v for v in values if v is not None]
+    if not values:
+        return ["" for _ in row.values]
+
+    max_value = max(values)
+    return [
+        "background-color:#f0faf4;color:#0E8C3A;font-weight:bold"
+        if _number_value(v) == max_value else ""
+        for v in row.values
+    ]
+
+
+def _side_head(icon: str, title: str) -> None:
+    """侧栏分区标题：渐变竖条 + 图标 + 标题，与主区设计统一。"""
+    st.markdown(
+        f'<div class="side-head"><span class="sb-bar"></span>'
+        f'<span class="sb-ico">{icon}</span>'
+        f'<span class="sb-title">{title}</span></div>',
+        unsafe_allow_html=True,
+    )
+
+
+# ── 页面配置 ──────────────────────────────────────────────────────────
+st.set_page_config(
+    page_title="SABIC 寻源系统",
+    page_icon="🏭",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+# ── 全局样式注入 ──────────────────────────────────────────────────────
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* ── 整体画布：柔和渐变底，提升质感 ───────────────────── */
+.stApp {
+    background:
+      radial-gradient(900px 420px at 88% -8%, rgba(14,140,58,.06), transparent 60%),
+      radial-gradient(720px 360px at -5% 4%, rgba(59,130,246,.05), transparent 55%),
+      linear-gradient(180deg,#f3f6fb 0%, #eaeef5 100%);
+}
+
+/* ── 放大正文字号，整体更易读 ─────────────────────────── */
+.block-container p, .block-container li, .block-container label,
+.stMarkdown, .stMarkdown p, .stMarkdown li,
+.stRadio label, .stCheckbox label, .stSelectbox label, .stMultiSelect label,
+.stTextInput label, .stSlider label, .stNumberInput label {
+    font-size: 15.5px !important;
+}
+.stTextInput input, .stNumberInput input { font-size: 15.5px !important; }
+.block-container h3 { font-size: 20px !important; font-weight: 700; letter-spacing:.2px; }
+.stCaption, [data-testid="stCaptionContainer"] { font-size: 13px !important; }
+
+/* ── 选项卡更大更清晰 ─────────────────────────────────── */
+button[data-baseweb="tab"] { font-size: 14.5px !important; padding: 6px 4px !important; }
+button[data-baseweb="tab"] [data-testid="stMarkdownContainer"] p { font-size:14.5px !important; }
+
+/* ── 按钮：更圆润、更有分量 ───────────────────────────── */
+.stButton > button, .stDownloadButton > button {
+    border-radius: 9px !important; font-weight: 600 !important; font-size: 14px !important;
+    white-space: nowrap !important;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+.stButton > button:hover, .stDownloadButton > button:hover {
+    transform: translateY(-1px);
+}
+.stButton > button[kind="primary"], .stDownloadButton > button[kind="primary"] {
+    background: linear-gradient(135deg,#0E8C3A,#27a84f) !important;
+    border: none !important; box-shadow: 0 4px 14px rgba(14,140,58,.28) !important;
+}
+
+/* ── 侧栏标题 ─────────────────────────────────────────── */
+section[data-testid="stSidebar"] .stMarkdown h3 { font-size: 16.5px !important; }
+section[data-testid="stSidebar"] { background: #fbfcfe; }
+
+/* ── 指标卡（st.metric）放大 ─────────────────────────── */
+[data-testid="stMetricValue"] { font-size: 26px !important; }
+[data-testid="stMetricLabel"] p { font-size: 13.5px !important; }
+
+/* Hero 顶部横幅 */
+.sabic-hero {
+    background:
+      radial-gradient(120% 140% at 92% -20%, rgba(16,185,129,.22) 0%, transparent 45%),
+      radial-gradient(90% 120% at 8% 120%, rgba(59,130,246,.18) 0%, transparent 50%),
+      linear-gradient(135deg,#071120 0%,#0d1d36 55%,#0a182c 100%);
+    padding: 40px 44px 30px;
+    border-radius: 18px;
+    margin: -.4rem -.2rem 1.4rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 18px 48px -18px rgba(7,17,32,.55),
+                inset 0 1px 0 rgba(255,255,255,.05);
+}
+/* 细网格肌理 */
+.sabic-hero::before {
+    content:'';
+    position:absolute;inset:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 33px,
+        rgba(255,255,255,0.022) 33px,rgba(255,255,255,0.022) 34px),
+        repeating-linear-gradient(90deg,transparent,transparent 33px,
+        rgba(255,255,255,0.022) 33px,rgba(255,255,255,0.022) 34px);
+    -webkit-mask-image:radial-gradient(120% 100% at 50% 0%,#000 35%,transparent 80%);
+            mask-image:radial-gradient(120% 100% at 50% 0%,#000 35%,transparent 80%);
+    pointer-events:none;
+}
+/* 右上发光光晕 */
+.sabic-hero::after {
+    content:'';position:absolute;top:-90px;right:-60px;
+    width:340px;height:340px;border-radius:50%;
+    background:radial-gradient(circle,rgba(16,185,129,.30),transparent 68%);
+    filter:blur(14px);pointer-events:none;
+}
+.hero-inner { position:relative;z-index:1; }
+.hero-badge {
+    display:inline-flex;align-items:center;gap:8px;
+    padding:5px 15px;border-radius:30px;
+    background:rgba(16,185,129,.12);
+    border:1px solid rgba(94,234,212,.32);
+    backdrop-filter:blur(6px);
+    font-size:11.5px;font-weight:700;letter-spacing:.16em;
+    text-transform:uppercase;color:#5eead4;margin-bottom:18px;
+}
+.hero-badge .pulse {
+    width:7px;height:7px;border-radius:50%;background:#34d399;
+    box-shadow:0 0 0 0 rgba(52,211,153,.6);
+    animation:heroPulse 2s infinite;
+}
+@keyframes heroPulse {
+    0%{box-shadow:0 0 0 0 rgba(52,211,153,.55);}
+    70%{box-shadow:0 0 0 8px rgba(52,211,153,0);}
+    100%{box-shadow:0 0 0 0 rgba(52,211,153,0);}
+}
+.hero-title {
+    font-size:36px;font-weight:300;color:rgba(255,255,255,.78);
+    margin:0 0 12px;letter-spacing:.4px;line-height:1.28;max-width:880px;
+}
+.hero-title .lead { font-weight:300;color:rgba(255,255,255,.72); }
+.hero-title .key {
+    font-weight:800;
+    background:linear-gradient(100deg,#5eead4 0%,#34d399 48%,#86efac 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:#34d399;
+    text-shadow:0 4px 28px rgba(52,211,153,.25);
+    white-space:nowrap;
+}
+.hero-sub { font-size:15px;color:rgba(255,255,255,.55);margin-bottom:26px;
+    line-height:1.65;max-width:780px; }
+.hero-sub b { color:#5eead4;font-weight:600; }
+.hero-stats { display:flex;gap:0;border-top:1px solid rgba(255,255,255,.08);
+    padding-top:20px;margin-top:6px; }
+.hero-stat { padding:0 30px;position:relative; }
+.hero-stat:first-child { padding-left:0; }
+.hero-stat:not(:last-child)::after {
+    content:'';position:absolute;right:0;top:6px;bottom:2px;
+    width:1px;background:rgba(255,255,255,.08);
+}
+.hero-stat-val { font-size:28px;font-weight:800;color:#fff;line-height:1;
+    letter-spacing:-.5px; }
+.hero-stat-val.g { color:#34d399; }
+.hero-stat-val.b { color:#60a5fa; }
+.hero-stat-val.t { color:#5eead4; }
+.hero-stat-lbl { font-size:11px;color:rgba(255,255,255,.42);
+    text-transform:uppercase;letter-spacing:.1em;margin-top:7px;font-weight:600; }
+
+/* 搜索区标题（与 hero 呼应）*/
+.search-head { display:flex;align-items:center;gap:13px;margin:2px 0 14px; }
+.search-head .s-bar {
+    width:4px;height:30px;border-radius:4px;
+    background:linear-gradient(180deg,#5eead4,#0E8C3A);
+    box-shadow:0 2px 10px rgba(14,140,58,.35);
+}
+.search-head .s-txt { display:flex;flex-direction:column;line-height:1.2; }
+.search-head .s-title { font-size:20px;font-weight:800;color:#0f1f38;letter-spacing:.3px; }
+.search-head .s-sub { font-size:12.5px;color:#7c8aa0;margin-top:2px;font-weight:500; }
+.search-head .s-pill {
+    margin-left:auto;display:inline-flex;align-items:center;gap:6px;
+    padding:5px 14px;border-radius:30px;
+    background:linear-gradient(135deg,rgba(14,140,58,.10),rgba(59,130,246,.08));
+    border:1px solid rgba(14,140,58,.22);
+    font-size:12px;font-weight:600;color:#0E8C3A;
+}
+.search-head .s-pill .dot { background:#0E8C3A; }
+
+/* 侧栏分区标题（紧凑版竖条风格）*/
+.side-head { display:flex;align-items:center;gap:10px;margin:6px 0 10px; }
+.side-head .sb-bar {
+    width:3.5px;height:18px;border-radius:4px;
+    background:linear-gradient(180deg,#5eead4,#0E8C3A);
+    box-shadow:0 1px 6px rgba(14,140,58,.30);
+}
+.side-head .sb-ico { font-size:14px;line-height:1; }
+.side-head .sb-title { font-size:15px;font-weight:800;color:#0f1f38;letter-spacing:.2px; }
+
+/* API 状态条 */
+.api-bar {
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:10px 16px;background:#fff;border:1px solid #e6ebf2;
+    border-radius:10px;margin-bottom:14px;font-size:13px;
+    box-shadow:0 1px 4px rgba(15,30,60,.04);
+}
+.api-lbl { font-weight:700;text-transform:uppercase;
+    letter-spacing:.06em;color:#9ba8bb;margin-right:4px;font-size:11.5px; }
+.api-chip {
+    display:inline-flex;align-items:center;gap:5px;
+    padding:4px 12px;border-radius:20px;font-size:12.5px;font-weight:500;
+    border:1px solid;cursor:default;
+}
+.api-chip.on { background:rgba(14,140,58,.10);
+    border-color:rgba(14,140,58,.4);color:#0E8C3A; }
+.api-chip.off { background:rgba(156,163,175,.08);
+    border-color:rgba(156,163,175,.25);color:#9ca3af; }
+.dot { width:5px;height:5px;border-radius:50%;background:currentColor;
+    display:inline-block; }
+
+/* 供应商卡片 */
+.sup-card {
+    background:#fff;border:1px solid #e2e8f0;border-radius:10px;
+    padding:12px 14px;margin-bottom:8px;cursor:pointer;
+    transition:all .2s;position:relative;overflow:hidden;
+}
+.sup-card:hover { box-shadow:0 4px 12px rgba(0,0,0,.08);
+    border-color:rgba(14,140,58,.25);transform:translateY(-1px); }
+.sup-rank {
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:6px;
+    background:linear-gradient(135deg,#0E8C3A,#27a84f);
+    color:#fff;font-weight:700;font-size:12px;flex-shrink:0;
+}
+.sup-name { font-weight:600;font-size:14.5px;color:#1a2233; }
+.sup-meta { font-size:12.5px;color:#5a6780;margin-top:2px; }
+.score-high { color:#059669;font-weight:700; }
+.score-mid  { color:#d97706;font-weight:700; }
+.score-low  { color:#dc2626;font-weight:700; }
+.tier-t1 { background:rgba(14,140,58,.1);color:#0E8C3A;
+    border:1px solid rgba(14,140,58,.2);padding:2px 9px;
+    border-radius:5px;font-size:11.5px;font-weight:600; }
+.tier-t2 { background:rgba(59,130,246,.1);color:#3b82f6;
+    border:1px solid rgba(59,130,246,.2);padding:2px 9px;
+    border-radius:5px;font-size:11.5px;font-weight:600; }
+.tier-t3 { background:rgba(139,92,246,.1);color:#7c3aed;
+    border:1px solid rgba(139,92,246,.2);padding:2px 9px;
+    border-radius:5px;font-size:11.5px;font-weight:600; }
+
+/* ── 智能采购决策卡 ───────────────────────────────────── */
+.decide-wrap {
+    background:linear-gradient(135deg,#0a1628 0%,#10243f 100%);
+    border:1px solid rgba(94,234,212,.25);
+    border-radius:14px;padding:18px 20px;margin:6px 0 14px;
+    position:relative;overflow:hidden;
+}
+.decide-wrap::after{
+    content:'';position:absolute;top:-40px;right:-30px;width:180px;height:180px;
+    background:radial-gradient(circle,rgba(14,140,58,.25),transparent 70%);
+    pointer-events:none;
+}
+.decide-kicker{
+    font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+    color:#5eead4;margin-bottom:10px;display:flex;align-items:center;gap:6px;
+}
+.decide-top{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;}
+.decide-medal{
+    width:48px;height:48px;border-radius:12px;flex-shrink:0;
+    background:linear-gradient(135deg,#facc15,#f59e0b);
+    display:flex;align-items:center;justify-content:center;font-size:24px;
+    box-shadow:0 4px 14px rgba(245,158,11,.4);
+}
+.decide-name{font-size:19px;font-weight:700;color:#fff;line-height:1.25;}
+.decide-why{font-size:12.5px;color:rgba(255,255,255,.62);margin-top:3px;}
+.decide-score-box{margin-left:auto;text-align:right;}
+.decide-score{font-size:30px;font-weight:800;color:#34d399;line-height:1;}
+.decide-score-lbl{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;}
+.decide-lead{
+    display:inline-block;margin-top:5px;font-size:11px;font-weight:600;
+    color:#86efac;background:rgba(14,140,58,.18);
+    border:1px solid rgba(14,140,58,.4);padding:2px 9px;border-radius:20px;
+}
+.decide-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.decide-tag{
+    font-size:11px;color:#cbd5e1;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.12);padding:2px 9px;border-radius:6px;
+}
+.scen-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;
+    border-top:1px solid rgba(255,255,255,.08);padding-top:12px;}
+.scen-card{
+    flex:1;min-width:150px;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 11px;
+}
+.scen-label{font-size:10px;font-weight:600;letter-spacing:.05em;color:#93c5fd;
+    text-transform:uppercase;margin-bottom:3px;}
+.scen-name{font-size:13px;font-weight:600;color:#f1f5f9;line-height:1.3;}
+.scen-why{font-size:10.5px;color:rgba(255,255,255,.45);margin-top:2px;}
+
+/* ── 供应市场结构条 ───────────────────────────────────── */
+.land-bar{
+    display:flex;flex-wrap:wrap;gap:0;background:#fff;border:1px solid #e2e8f0;
+    border-radius:10px;overflow:hidden;margin-bottom:14px;
+}
+.land-cell{flex:1;min-width:96px;padding:10px 14px;border-right:1px solid #eef2f7;}
+.land-cell:last-child{border-right:none;}
+.land-val{font-size:20px;font-weight:700;color:#0a1628;line-height:1;}
+.land-val .u{font-size:12px;font-weight:500;color:#9ba8bb;}
+.land-lbl{font-size:10.5px;color:#5a6780;margin-top:4px;}
+.land-note{width:100%;background:#f8fafc;border-top:1px solid #eef2f7;
+    padding:7px 14px;font-size:11.5px;color:#5a6780;}
+.land-note b{color:#0E8C3A;}
+
+/* ── 为什么不是它 ───────────────────────────────────── */
+.wn-box{border-radius:10px;padding:12px 14px;margin:2px 0 10px;border:1px solid;}
+.wn-box.top{background:#f0faf4;border-color:rgba(14,140,58,.3);}
+.wn-box.lag{background:#fffbeb;border-color:#fcd34d;}
+.wn-box.role{background:#eff6ff;border-color:#bfdbfe;}
+.wn-verdict{font-size:13.5px;font-weight:700;color:#0a1628;display:flex;align-items:center;gap:7px;}
+.wn-narr{font-size:12px;color:#5a6780;margin-top:5px;line-height:1.55;}
+.wn-cmp{display:flex;gap:8px;margin-top:9px;}
+.wn-dim{flex:1;background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.05);
+    border-radius:7px;padding:6px 8px;text-align:center;}
+.wn-dim-lbl{font-size:10px;color:#5a6780;}
+.wn-dim-vs{font-size:13px;font-weight:700;margin-top:2px;}
+.wn-scen{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
+.wn-scen-chip{font-size:11px;font-weight:600;color:#1d4ed8;background:#dbeafe;
+    border:1px solid #bfdbfe;padding:2px 9px;border-radius:20px;}
+
+/* 前三名奖牌 */
+.medal-rank{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:6px;font-weight:700;font-size:13px;flex-shrink:0;
+}
+.medal-1{background:linear-gradient(135deg,#facc15,#f59e0b);color:#fff;box-shadow:0 2px 7px rgba(245,158,11,.35);}
+.medal-2{background:linear-gradient(135deg,#cbd5e1,#94a3b8);color:#fff;}
+.medal-3{background:linear-gradient(135deg,#fcd9b6,#d9a066);color:#fff;}
+
+/* 移除 Streamlit 默认上方空白 */
+.block-container { padding-top: 0.5rem !important; }
+</style>
+""", unsafe_allow_html=True)
+
+# ── 状态初始化 ────────────────────────────────────────────────────────
+def _init():
+    defaults = {
+        "query": "",
+        "filters": {
+            "provinces":     [],
+            "tiers":         [],
+            "status_active": True,
+            "company_type":  "factory_first",
+            "min_capital":   0,
+            "est_after":     1990,
+            "only_hazmat":   False,
+            "scope_keyword": "",
+            "min_score":     0,
+        },
+        "weights": dict(DEFAULT_WEIGHTS),
+        "selected_ids": [],
+        "active_supplier": None,
+        "chart_tab": "radar",
+        "core_material": None,
+    }
+    for k, v in defaults.items():
+        if k not in st.session_state:
+            st.session_state[k] = v
+    # 旧会话可能残留四维权重（含 relevance），重置为三维默认
+    if set(st.session_state.weights.keys()) - {"geography", "scale", "compliance"}:
+        st.session_state.weights = dict(DEFAULT_WEIGHTS)
+
+_init()
+
+# ── 核心物料样式 + 专家评审报告拦截 ──────────────────────────────────
+st.markdown(CORE_CSS, unsafe_allow_html=True)
+if st.session_state.get("core_material"):
+    render_core_report(st.session_state.core_material)
+    st.stop()
+
+# ── 计算匹配结果 ──────────────────────────────────────────────────────
+_, results = match_suppliers(
+    query=st.session_state.query,
+    filters=st.session_state.filters,
+    weights=st.session_state.weights,
+)
+
+# ── 交叉验证（仅在真实配置了化工网/买化塑时运行）──────────────────
+_query     = st.session_state.query or ""
+_cn_items  = []
+_ibc_items = []
+_xval_on   = False
+
+if chemnet_ok() and _query:
+    _cn_items = search_chem_suppliers(_query)
+    _xval_on = True
+if ibc_loaded() and _query:
+    _ibc_items = ibc_search(_query)
+    _xval_on = True
+
+if _xval_on and results:
+    results = batch_validate(results, _cn_items, _ibc_items, _query)
+
+sel_ids = st.session_state.selected_ids
+compare_suppliers = (
+    [s for s in results if s["id"] in sel_ids] if sel_ids
+    else results[:5]
+)
+
+# 统计
+_cs = cache_status()
+tier1_count   = sum(1 for s in results if s.get("_tier") == 1)
+factory_count = sum(1 for s in results if s.get("_role") in ("manufacturer", "both"))
+hazmat_count  = sum(1 for s in results if
+    s.get("licenses", {}).get("hazardous_chemicals") or
+    s.get("licenses", {}).get("hazmat_business"))
+avg_score = (
+    round(sum(s.get("score", 0) for s in results) / len(results), 1)
+    if results else "—"
+)
+
+# ═══════════════════════════════════════════════════════════════════════
+# Hero 顶部
+# ═══════════════════════════════════════════════════════════════════════
+st.markdown(f"""
+<div class="sabic-hero">
+ <div class="hero-inner">
+  <div class="hero-badge"><span class="pulse"></span>SABIC Shanghai · 智能寻源决策</div>
+  <div class="hero-title"><span class="lead">请输入一种原材料，</span><br>告诉你<span class="key">选哪家供应商</span></div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-val g">{len(results)}</div>
+      <div class="hero-stat-lbl">当前匹配</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val b">{tier1_count}</div>
+      <div class="hero-stat-lbl">华东一级</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val t">{_cs['count']}</div>
+      <div class="hero-stat-lbl">缓存品类</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">{avg_score}</div>
+      <div class="hero-stat-lbl">平均评分</div>
+    </div>
+  </div>
+ </div>
+</div>
+""", unsafe_allow_html=True)
+
+# ═══════════════════════════════════════════════════════════════════════
+# 侧边栏：筛选 + 权重
+# ═══════════════════════════════════════════════════════════════════════
+with st.sidebar:
+    # ── 筛选器 ──────────────────────────────────────────────────────
+    _side_head("🔎", "筛选条件")
+    f = st.session_state.filters
+
+    with open(APP_DIR / "data" / "regions.json", encoding="utf-8") as _f:
+        _regions = json.load(_f)
+
+    # ▶ 地域筛选
+    with st.expander("📍 地域", expanded=True):
+        tier_options = {"一级 (沪苏浙皖)": 1, "二级 (鲁粤鄂豫闽)": 2, "三级 (其余)": 3}
+        sel_tier_labels = st.multiselect(
+            "地理圈层", list(tier_options.keys()),
+            default=[k for k, v in tier_options.items() if v in f.get("tiers", [])],
+            placeholder="不限",
+        )
+        sel_tiers = [tier_options[l] for l in sel_tier_labels]
+
+        tier1_p = _regions["tiers"]["tier1"]["provinces"]
+        tier2_p = _regions["tiers"]["tier2"]["provinces"]
+        tier3_p = _regions["tiers"].get("tier3", {}).get("provinces", [])
+        if sel_tiers:
+            pool = []
+            if 1 in sel_tiers: pool += tier1_p
+            if 2 in sel_tiers: pool += tier2_p
+            if 3 in sel_tiers: pool += tier3_p
+        else:
+            pool = tier1_p + tier2_p + tier3_p
+
+        sel_provinces = st.multiselect(
+            "省份（支持多选）", pool,
+            default=[p for p in f.get("provinces", []) if p in pool],
+            placeholder="不限（全国）",
+        )
+
+    # ▶ 企业信息（来自企查查）
+    with st.expander("🏢 企业信息", expanded=True):
+        status_active = st.checkbox(
+            "仅展示存续/在业企业",
+            value=f.get("status_active", True),
+            help="过滤掉注销、吊销、迁出等状态企业",
+        )
+        company_type = st.radio(
+            "企业类型（默认排除纯中介）",
+            options=["factory_first", "manufacturer", "all"],
+            format_func=lambda x: {
+                "factory_first": "工厂优先（推荐）",
+                "manufacturer":  "只看工厂",
+                "all":           "全部（含贸易商）",
+            }[x],
+            index=["factory_first","manufacturer","all"].index(
+                f.get("company_type","factory_first")
+                if f.get("company_type") in ("factory_first","manufacturer","all") else "factory_first"),
+        )
+        min_capital = st.number_input(
+            "最低注册资本（万元）",
+            min_value=0, max_value=100_000,
+            value=int(f.get("min_capital", 0)),
+            step=100,
+            help="0 = 不限；来自企查查 RegistCapi 字段",
+        )
+        import datetime as _dt
+        current_year = _dt.datetime.now().year
+        est_after = st.slider(
+            "成立年份 ≥",
+            min_value=1980, max_value=current_year,
+            value=f.get("est_after", 1990),
+            help="来自企查查 StartDate 字段",
+        )
+
+    # ▶ 资质与行业
+    with st.expander("📋 资质 & 关键词", expanded=False):
+        only_hazmat = st.checkbox(
+            "含危险化学品经营资质",
+            value=f.get("only_hazmat", False),
+            help="经营范围包含危险化学品关键词（'不含危化品'等否定表述不算）",
+        )
+        scope_keyword = st.text_input(
+            "经营范围额外包含词",
+            value=f.get("scope_keyword", ""),
+            placeholder="例：换热器 / ISO9001 / 出口",
+            help="在企查查经营范围文本中精确匹配",
+        )
+
+    # ▶ 评分门槛
+    with st.expander("🎯 评分门槛", expanded=False):
+        min_score = st.slider(
+            "最低综合评分",
+            min_value=0, max_value=90,
+            value=f.get("min_score", 0),
+            step=5,
+            help="过滤掉低于该分数的企业",
+        )
+
+    new_filters = {
+        "provinces":     sel_provinces,
+        "tiers":         sel_tiers,
+        "status_active": status_active,
+        "company_type":  company_type,
+        "min_capital":   min_capital,
+        "est_after":     est_after,
+        "only_hazmat":   only_hazmat,
+        "scope_keyword": scope_keyword,
+        "min_score":     min_score,
+    }
+    if new_filters != st.session_state.filters:
+        st.session_state.filters = new_filters
+        st.rerun()
+
+    st.divider()
+
+    # ── 权重调节 ─────────────────────────────────────────────────────
+    _side_head("⚖️", "评分权重")
+    st.caption("每家企业的总分 = 三项分数 × 各自权重。拖动滑块调整你看重的方面。")
+
+    with st.expander("📖 每个分数是怎么算出来的？（点击查看）", expanded=False):
+        st.markdown("""
+**总分 = 地理 × 权重 + 规模 × 权重 + 合规 × 权重**
+（三项满分都是 100 分，权重就是右边滑块的百分比）
+
+---
+
+**📍 地理位置**　越靠近上海工厂，分越高
+- 看企业注册在哪个省
+- 沪苏浙皖（一级圈）≈ 100 分
+- 鲁粤鄂豫闽（二级圈）≈ 55 分
+- 其他省份（三级圈）≈ 20 分
+- 再根据距上海公里数微调
+
+**🏢 企业规模**　实力越强，分越高
+- 注册资本：10 亿以上 = 100 分，1 亿 = 78 分，1000 万 = 50 分
+- 成立年限：20 年以上 = 100 分，10 年 = 70 分，5 年 = 50 分
+- 两项按 65% : 35% 合并
+
+**✅ 合规资质**　全部来自企查查工商字段，逐项累加
+- 经营状态正常（存续/在业）＝ 25 分
+- 企业角色：工厂 20 / 工厂兼贸易 16 / 进口商 8 / 经销商 4 / 中介 0
+- 危险化学品许可（经营范围，"不含危化品"不算）＝ 20 分
+- 生产/安全许可证关键词 ＝ 10 分
+- 化工园区 10 分（一般工业园区 5 分）
+- 化工类行业 10 分（其他制造业 5 分，看企查查行业分类）
+- 进出口经营资质 ＝ 5 分
+
+---
+
+*所有分数都从企查查的工商数据自动算出，没有人工打分。*
+        """)
+
+    w = st.session_state.weights
+    w_geo  = st.slider("📍 地理位置", 0, 100, int(w.get("geography", 0.35) * 100), 5,
+                       help="企业离上海越近分越高。看重物流成本就调高它。")
+    w_scl  = st.slider("🏢 企业规模", 0, 100, int(w.get("scale",    0.35) * 100), 5,
+                       help="注册资本越大、成立越久分越高。看重企业实力就调高它。")
+    w_cmp  = st.slider("✅ 合规资质", 0, 100, int(w.get("compliance",0.30) * 100), 5,
+                       help="证照齐全、是制造商、在化工园区分越高。看重合规就调高它。")
+
+    total_w = w_geo + w_scl + w_cmp
+    if total_w > 0:
+        new_weights = {
+            "geography":  w_geo / total_w,
+            "scale":      w_scl / total_w,
+            "compliance": w_cmp / total_w,
+        }
+        if new_weights != st.session_state.weights:
+            st.session_state.weights = new_weights
+            st.rerun()
+        st.caption("已自动归一化，合计 100%")
+
+    # 一键预设场景
+    st.caption("不知道怎么调？直接选一个场景：")
+    pcol1, pcol2 = st.columns(2)
+    if pcol1.button("⚖️ 均衡推荐", width='stretch',
+                    help="地理35 规模35 合规30，适合大多数情况"):
+        st.session_state.weights = dict(DEFAULT_WEIGHTS)
+        st.rerun()
+    if pcol2.button("🚚 就近优先", width='stretch',
+                    help="加重地理位置，适合急需交付、看重物流的采购"):
+        st.session_state.weights = {"geography":0.50,"scale":0.25,"compliance":0.25}
+        st.rerun()
+    pcol3, pcol4 = st.columns(2)
+    if pcol3.button("🏆 实力优先", width='stretch',
+                    help="加重企业规模，适合大宗、长期合作采购"):
+        st.session_state.weights = {"geography":0.20,"scale":0.50,"compliance":0.30}
+        st.rerun()
+    if pcol4.button("🛡️ 合规优先", width='stretch',
+                    help="加重合规资质，适合危化品等强监管品类"):
+        st.session_state.weights = {"geography":0.20,"scale":0.30,"compliance":0.50}
+        st.rerun()
+
+    st.divider()
+
+    # ── 本地缓存状态 ────────────────────────────────────────────
+    _side_head("📦", "本地数据缓存")
+    if _cs["count"] > 0:
+        st.success(f"✓ 已缓存 **{_cs['count']}** 个品类，搜索命中不调 API")
+        with st.expander("查看已缓存品类", expanded=False):
+            st.caption("  ".join(_cs["files"]))
+        st.caption("数据来自企查查 MCP 采集脚本（collect_local.py）")
+    else:
+        st.warning("暂无本地缓存，搜索全部走企查查 API")
+        st.caption("运行 collect_local.py 采集数据后可离线搜索")
+    st.markdown("---")
+
+    # ── 接口管理面板 ─────────────────────────────────────────────
+    _side_head("🔌", "接口管理")
+    st.caption("本地缓存命中时不调 API；未缓存品类需开通以下接口实时搜索。")
+
+    from utils.qcc_client import (is_configured as qcc_ok,
+                                  is_qual_enabled, is_risk_enabled)
+    _qcc  = qcc_ok()
+    _qual = is_qual_enabled()
+    _risk = is_risk_enabled()
+
+    def _iface_row(order, name, code, on, mandatory, powers, cfg_hint):
+        """渲染一个接口管理行"""
+        if on:
+            dot, dot_c, state = "●", "#0E8C3A", "已开通"
+        elif mandatory:
+            dot, dot_c, state = "●", "#d97706", "待配置"
+        else:
+            dot, dot_c, state = "○", "#9ca3af", "未开通"
+        tag = ('<span style="background:#fee2e2;color:#dc2626;font-size:9px;'
+               'padding:0 5px;border-radius:8px;margin-left:4px">实时搜索必开</span>'
+               if mandatory else
+               '<span style="background:#f1f5f9;color:#64748b;font-size:9px;'
+               'padding:0 5px;border-radius:8px;margin-left:4px">可选</span>')
+        st.markdown(
+            f'<div style="border:1px solid #e2e8f0;border-radius:8px;'
+            f'padding:8px 10px;margin:4px 0;background:white">'
+            f'<div style="font-size:13px;font-weight:600;color:#0a1628">'
+            f'<span style="color:{dot_c}">{dot}</span> '
+            f'<span style="color:#9ba8bb;font-size:11px">{order}.</span> {name}{tag}</div>'
+            f'<div style="font-size:11px;color:#5a6780;margin-top:3px">'
+            f'<b>对应网页：</b>{powers}</div>'
+            f'<div style="font-size:11px;color:{dot_c};margin-top:2px">'
+            f'状态：{state}'
+            + (f' &nbsp;·&nbsp; <span style="color:#9ba8bb">{cfg_hint}</span>' if not on else "")
+            + f'</div></div>',
+            unsafe_allow_html=True,
+        )
+
+    _iface_row(1, "企业模糊搜索", "886", _qcc, True,
+               "未缓存品类 → 实时搜索供应商列表",
+               "填 QCC_APP_KEY / SECRET")
+    _iface_row(2, "企业工商信息", "410", _qcc, True,
+               "实时搜索的供应商详情 + 三维评分",
+               "同上（同一组 Key）")
+    _iface_row(3, "资质证书 (255)", "0.3元", _qual, False,
+               "详情卡「📜 资质证书核验」· 打开详情自动加载",
+               "填 QCC_QUAL_ENDPOINT")
+    _iface_row(4, "风险扫描 (736)", "6元", _risk, False,
+               "详情卡「⚠️ 深度风险核查」· 手动按钮才调用",
+               "填 QCC_RISK_ENDPOINT")
+
+# ═══════════════════════════════════════════════════════════════════════
+# 主体内容
+# ═══════════════════════════════════════════════════════════════════════
+
+# API 状态条
+from utils.qcc_client import (is_configured as _qcc_ok,
+                              is_qual_enabled as _qual_ok,
+                              is_risk_enabled as _risk_ok)
+_qcc_on  = _qcc_ok()
+_qual_on = _qual_ok()
+_risk_on = _risk_ok()
+
+def _chip(label, on):
+    cls = "on" if on else "off"
+    state = "已接入" if on else "未开通"
+    return f'<span class="api-chip {cls}"><span class="dot"></span>{label} · {state}</span>'
+
+_mode_txt = ("本地缓存 + 企查查实时 API" if _qcc_on
+             else f"本地缓存模式（{_cs['count']} 个品类）")
+st.markdown(f"""
+<div class="api-bar">
+  <span class="api-lbl">数据链路</span>
+  {_chip(f"本地缓存 {_cs['count']} 品类", _cs['count'] > 0)}
+  {_chip("企查查实时搜索", _qcc_on)}
+  {_chip("资质证书核验", _qual_on)}
+  {_chip("经营风险核查", _risk_on)}
+  <span style="margin-left:auto;color:#9ba8bb;font-size:11px;">当前：{_mode_txt}</span>
+</div>
+""", unsafe_allow_html=True)
+
+# ═══════════════════════════════════════════════════════════════════════
+# 搜索区（主区域顶部，始终显示）
+# ═══════════════════════════════════════════════════════════════════════
+st.markdown(f"""
+<div class="search-head">
+  <div class="s-bar"></div>
+  <div class="s-txt">
+    <span class="s-title">搜索采购品类</span>
+    <span class="s-sub">输入英文代码或中文名，即时联想本地缓存品类</span>
+  </div>
+  <span class="s-pill"><span class="dot"></span>{_cs['count']} 个品类已缓存</span>
+</div>
+""", unsafe_allow_html=True)
+
+search_col, btn_col = st.columns([5, 1])
+with search_col:
+    search_text = st.text_input(
+        "搜索",
+        value="",
+        key="search_text",
+        placeholder="输入英文代码或中文名联想缓存品类，如 PC / 聚碳酸酯 / PVC / 阻燃剂 / nylon …",
+        label_visibility="collapsed",
+    )
+with btn_col:
+    do_search = st.button("搜索", width='stretch', type="primary")
+
+# ── 核心物料快捷入口：命中三类核心物料关键词时，直接进入专家评审报告 ──
+def _core_suggest(text: str) -> list[str]:
+    t = (text or "").strip().lower()
+    if not t:
+        return []
+    hits = []
+    for _key, _kws in _CORE_KEYWORDS.items():
+        if any(t in kw or kw in t for kw in _kws):
+            hits.append(_key)
+    return hits
+
+_core_hits = _core_suggest(search_text)
+if do_search and _core_key_for(search_text):
+    st.session_state.core_material = _core_key_for(search_text)
+    st.session_state.query = ""
+    st.rerun()
+
+if _core_hits:
+    st.caption("⭐ 最核心物料 · 点击进入专家评审报告：")
+    _cc = st.columns(min(3, len(_core_hits)))
+    for _i, _ck in enumerate(_core_hits):
+        _cm = get_material(_ck)
+        with _cc[_i % len(_cc)]:
+            if st.button(f"{_cm['icon']} {_cm['cn']}（{len(_cm['companies'])}家）",
+                         key=f"core_hit_{_ck}", width='stretch', type="primary"):
+                st.session_state.core_material = _ck
+                st.session_state.query = ""
+                st.rerun()
+
+# ── 联想栏：每个联想项与一个 local_cache JSON 文件一一对应 ────────────
+_hints = _suggest_categories(search_text, 8) if search_text else []
+
+if search_text and _hints:
+    # 输入恰好精确等于某个品类 → 回车/点搜索直接进入该品类
+    _exact = next((c for c in _hints
+                   if search_text.strip().lower() == c["en"].lower()
+                   or search_text.strip() == c["cn"]), None)
+    st.caption("📦 缓存品类联想（点击直接查看，不消耗 API 额度）：")
+    _hint_cols = st.columns(4)
+    for _i, _c in enumerate(_hints):
+        _prio = SABIC_SEARCH_STRATEGIES.get(_c["cn"], {}).get("priority", 2)
+        _badge = "🔵" if _prio == 1 else "⚪"
+        _lbl = f"{_badge} {_c['en']} · {_c['cn']}（{_c['count']}家）"
+        with _hint_cols[_i % 4]:
+            if st.button(_lbl, key=f"hint_{_c['file']}", width='stretch'):
+                st.session_state.query = _c["cn"]
+                st.session_state.selected_ids = []
+                st.session_state.active_supplier = None
+                st.rerun()
+    if _exact and do_search:
+        st.session_state.query = _exact["cn"]
+        st.session_state.selected_ids = []
+        st.session_state.active_supplier = None
+        st.rerun()
+
+if do_search and search_text:
+    _exact = next((c for c in list_cache_categories()
+                   if search_text.strip().lower() == c["en"].lower()
+                   or search_text.strip() == c["cn"]), None)
+    st.session_state.query = _exact["cn"] if _exact else search_text.strip()
+    st.session_state.selected_ids = []
+    st.session_state.active_supplier = None
+    st.rerun()
+
+if search_text and not _hints:
+    if _qcc_on:
+        st.caption("ℹ️ 本地缓存未收录该关键词，点「搜索」将调用企查查实时接口（消耗额度）")
+    else:
+        st.caption("⚠️ 本地缓存未收录该关键词，且未配置企查查 API Key，无法实时搜索")
+
+# 当前查询状态行
+if st.session_state.query:
+    _q_col1, _q_col2 = st.columns([5, 1])
+    with _q_col1:
+        _lm = LAST_SEARCH_META
+        _src_txt = ""
+        if _lm.get("source") == "local_cache":
+            _src_txt = (f"&nbsp;<span style='background:#f0faf4;color:#059669;"
+                        f"font-size:11px;padding:1px 7px;border-radius:8px'>"
+                        f"📦 本地缓存 {_lm.get('cache_file','')} · 采集于 {_lm.get('collected_at','')[:10]}</span>")
+        elif _lm.get("source") == "api":
+            _src_txt = ("&nbsp;<span style='background:#eff6ff;color:#3b82f6;"
+                        "font-size:11px;padding:1px 7px;border-radius:8px'>🌐 企查查实时 API</span>")
+        elif _lm.get("source") == "no_api":
+            _src_txt = ("&nbsp;<span style='background:#fef2f2;color:#dc2626;"
+                        "font-size:11px;padding:1px 7px;border-radius:8px'>⚠️ 未缓存且未配置 API</span>")
+        st.markdown(
+            f"**当前查询：**「**{st.session_state.query}**」&nbsp;&nbsp;"
+            f"命中 <b style='color:#0E8C3A'>{len(results)}</b> 家{_src_txt}",
+            unsafe_allow_html=True,
+        )
+        if get_category_priority(st.session_state.query) == 2:
+            st.caption("⚪ 扩展品类 · 不在 SABIC 核心采购清单内")
+        _fail = _lm.get("detail_fail", 0)
+        _ok   = _lm.get("detail_ok", 0)
+        if _fail > 0 and _fail >= _ok:
+            st.warning(
+                f"⚠️ 有 {_fail} 家企业的工商详情未能获取（企业工商信息接口 410 额度可能已用完）。"
+                f"规模/合规评分会回退到默认值，失去区分度。"
+                f"请到企查查控制台为「企业工商信息」接口充值后重试。"
+            )
+        elif _fail > 0:
+            st.caption(f"注：{_fail} 家企业详情未获取，其评分准确度受影响")
+    with _q_col2:
+        if st.button("✕ 清除", width='stretch'):
+            st.session_state.query = ""
+            st.session_state.selected_ids = []
+            st.session_state.active_supplier = None
+            st.rerun()
+        if results:
+            from utils.report import build_dossier_html
+            _src_label = ("企查查实时 API" if LAST_SEARCH_META.get("source") == "api"
+                          else f"本地缓存（{LAST_SEARCH_META.get('cache_file','')} · 采集于 {LAST_SEARCH_META.get('collected_at','')[:10]}）")
+            _dossier_html = build_dossier_html(
+                st.session_state.query, results,
+                st.session_state.weights,
+                meta={"source_label": _src_label},
+            )
+            st.download_button(
+                "📄 背调报告",
+                data=_dossier_html.encode("utf-8"),
+                file_name=f"SABIC背调报告_{st.session_state.query}_{__import__('datetime').date.today()}.html",
+                mime="text/html",
+                width='stretch',
+                type="primary",
+                help="生成完整背调报告（决策结论+市场结构+首选档案+候选对比+核验渠道），下载后用浏览器打开，Ctrl+P 可存为 PDF",
+            )
+            excel_bytes = export_excel(results[:20], st.session_state.query or "供应商对比")
+            st.download_button(
+                "📥 导出 Excel",
+                data=excel_bytes,
+                file_name=f"SABIC_供应商对比_{st.session_state.query}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                width='stretch',
+            )
+
+st.markdown("---")
+
+# ═══════════════════════════════════════════════════════════════════════
+# 空查询：搜索引导页（按分组浏览全部缓存品类）
+# ═══════════════════════════════════════════════════════════════════════
+if not st.session_state.query:
+    # ⭐ 最核心物料：三类外销沙特战略物料的专家评审入口（置于全部品类之上）
+    render_core_cards()
+    st.markdown("---")
+
+    st.markdown(
+        "<div style='color:#5a6780;font-size:14px;margin-bottom:10px'>"
+        "在上方搜索框输入品类的<b>英文代码</b>（如 PC、PVC、SEBS）或<b>中文名</b>"
+        "（如 聚碳酸酯、阻燃剂、滑石粉），联想栏会列出已缓存的品类，点击即可查看供应商排名。"
+        "也可以直接浏览下面的全部缓存品类：</div>",
+        unsafe_allow_html=True,
+    )
+    # 钛白粉、木托盘已升级为"最核心物料"（上方专家报告），从普通品类列表移除
+    _all_cats = [c for c in list_cache_categories() if c["file"] not in _CORE_HIDE_FILES]
+    # 按 P1/P2 分两组展示，P1 在前
+    for _prio, _title in [(1, "🔵 SABIC 核心采购品类"), (2, "⚪ 行业扩展品类")]:
+        _grp = [c for c in _all_cats
+                if SABIC_SEARCH_STRATEGIES.get(c["cn"], {}).get("priority", 2) == _prio]
+        if not _grp:
+            continue
+        with st.expander(f"{_title}（{len(_grp)} 个）", expanded=(_prio == 1)):
+            _cols = st.columns(4)
+            for _i, _c in enumerate(_grp):
+                with _cols[_i % 4]:
+                    if st.button(f"{_c['en']} · {_c['cn']}（{_c['count']}）",
+                                 key=f"cat_{_c['file']}", width='stretch'):
+                        st.session_state.query = _c["cn"]
+                        st.session_state.selected_ids = []
+                        st.session_state.active_supplier = None
+                        st.rerun()
+    st.stop()
+
+# ═══════════════════════════════════════════════════════════════════════
+# 智能采购决策卡 —— 本系统区别于企查查的核心：不只给数据，直接给结论
+# ═══════════════════════════════════════════════════════════════════════
+if results:
+    _dec = decision_summary(results)
+    _land = supply_landscape(results)
+
+    if _dec:
+        _tags_html = "".join(f"<span class='decide-tag'>{t}</span>" for t in _dec["top_tags"])
+        _lead_html = (
+            f"<div class='decide-lead'>↑ 领先第二名 {_dec['lead']} 分</div>"
+            if _dec.get("lead") and _dec["lead"] > 0 else ""
+        )
+        _scen_html = ""
+        if _dec["scenarios"]:
+            _cards = "".join(
+                f"<div class='scen-card'>"
+                f"<div class='scen-label'>{s['icon']} {s['label']}之选</div>"
+                f"<div class='scen-name'>{s['name']}</div>"
+                f"<div class='scen-why'>{s['why']}</div>"
+                f"</div>"
+                for s in _dec["scenarios"]
+            )
+            _scen_html = f"<div class='scen-row'>{_cards}</div>"
+
+        st.markdown(
+            f"<div class='decide-wrap'>"
+            f"  <div class='decide-kicker'>🎯 采购决策建议 · 基于当前筛选与权重自动生成</div>"
+            f"  <div class='decide-top'>"
+            f"    <div class='decide-medal'>🥇</div>"
+            f"    <div style='flex:1;min-width:200px'>"
+            f"      <div class='decide-name'>{_dec['top_name']}</div>"
+            f"      <div class='decide-why'>推荐理由：{_dec['top_why']}</div>"
+            f"      <div class='decide-tags'>{_tags_html}</div>"
+            f"    </div>"
+            f"    <div class='decide-score-box'>"
+            f"      <div class='decide-score'>{_dec['top_score']:.1f}</div>"
+            f"      <div class='decide-score-lbl'>综合评分</div>"
+            f"      {_lead_html}"
+            f"    </div>"
+            f"  </div>"
+            f"  {_scen_html}"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
+
+    # 供应市场结构条 —— 一眼看清整个供应版图（企查查只给你单家公司）
+    if _land.get("n"):
+        _avg = f"{_land['avg_dist']}<span class='u'> km</span>" if _land.get("avg_dist") else "—"
+        _provs = "、".join(f"{p}{c}家" for p, c in _land["top_provs"])
+        st.markdown(
+            f"<div class='land-bar'>"
+            f"  <div class='land-cell'><div class='land-val'>{_land['n']}<span class='u'> 家</span></div>"
+            f"      <div class='land-lbl'>可选供应商</div></div>"
+            f"  <div class='land-cell'><div class='land-val'>{_land['tier1']}<span class='u'> 家</span></div>"
+            f"      <div class='land-lbl'>华东一级圈 ({_land['tier1_share']}%)</div></div>"
+            f"  <div class='land-cell'><div class='land-val'>{_land['factories']}<span class='u'> 家</span></div>"
+            f"      <div class='land-lbl'>工厂/制造商 ({_land['factory_share']}%)</div></div>"
+            f"  <div class='land-cell'><div class='land-val'>{_land['hazmat']}<span class='u'> 家</span></div>"
+            f"      <div class='land-lbl'>含危化品资质</div></div>"
+            f"  <div class='land-cell'><div class='land-val'>{_avg}</div>"
+            f"      <div class='land-lbl'>平均距上海</div></div>"
+            f"  <div class='land-cell'><div class='land-val' style='font-size:14px;padding-top:3px'>{_land['leader_name']}</div>"
+            f"      <div class='land-lbl'>资本龙头 · {_land['leader_cap']}</div></div>"
+            f"  <div class='land-note'>📊 供应版图：主要集中在 <b>{_provs}</b> &nbsp;·&nbsp; {_land['geo_note']}</div>"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
+
+# ═══════════════════════════════════════════════════════════════════════
+# 结果区：两栏布局
+# ═══════════════════════════════════════════════════════════════════════
+left_col, right_col = st.columns([4, 6], gap="medium")
+
+# ── 左栏：供应商排名列表 ─────────────────────────────────────────────
+with left_col:
+    n_selected = len(sel_ids)
+    st.markdown(
+        f"**供应商排名** "
+        f"<span style='font-size:12px;color:#9ba8bb'>Top {min(len(results), 15)}</span>"
+        f"{'&nbsp;&nbsp;<span style=\"background:#f0f0ff;border:1px solid #c4b5fd;padding:1px 8px;border-radius:4px;font-size:11px;color:#7c3aed\">' + str(n_selected) + ' 家已选对比</span>' if n_selected else ''}",
+        unsafe_allow_html=True,
+    )
+
+    # ── 交叉验证汇总条（仅在化工网/买化塑真实开启时显示）──────────
+    if results and _xval_on:
+        _cn_hit   = sum(1 for s in results if s.get("_validation",{}).get("chemnet_matched"))
+        _ibc_hit  = sum(1 for s in results if s.get("_validation",{}).get("ibc_matched"))
+        _hi_conf  = sum(1 for s in results if s.get("_validation",{}).get("confidence",0) >= 75)
+        _parts = ['<b style="color:#0a1628">🔁 交叉验证</b>']
+        if _cn_items:
+            _parts.append(f'<span style="background:#f0faf4;padding:1px 7px;'
+                          f'border-radius:10px;color:#059669">化工网 {_cn_hit} 家命中</span>')
+        if _ibc_items:
+            _parts.append(f'<span style="background:#fffbeb;padding:1px 7px;'
+                          f'border-radius:10px;color:#d97706">买化塑 {_ibc_hit} 家命中</span>')
+        _parts.append(f'<span style="background:#eff6ff;padding:1px 7px;'
+                      f'border-radius:10px;color:#3b82f6">置信≥75%: {_hi_conf} 家</span>')
+        st.markdown(
+            f'<div style="display:flex;flex-wrap:wrap;gap:8px;padding:7px 10px;margin-bottom:6px;'
+            f'background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:11px;'
+            f'color:#5a6780">{"".join(_parts)}</div>',
+            unsafe_allow_html=True,
+        )
+
+    if not results:
+        st.info("未找到匹配供应商，请调整搜索条件或筛选器。")
+    else:
+        for i, s in enumerate(results[:15]):
+            sid      = s.get("id", "")
+            name     = s.get("name", "") or s.get("shortName", "")
+            score    = s.get("score", 0)
+            province = s.get("province", "")
+            tier     = s.get("_tier", 3)
+            is_sel   = sid in sel_ids
+
+            tier_cls  = ["","tier-t1","tier-t2","tier-t3"][tier]
+            tier_lbl  = ["","一级","二级","三级"][tier]
+            score_cls = "score-high" if score >= 70 else ("score-mid" if score >= 50 else "score-low")
+
+            card_cols = st.columns([0.5, 6, 2])
+            with card_cols[0]:
+                checked = st.checkbox(
+                    "对比", value=is_sel, key=f"sel_{i}_{sid}",
+                    label_visibility="collapsed",
+                )
+                if checked != is_sel:
+                    if checked and len(sel_ids) < 5:
+                        st.session_state.selected_ids.append(sid)
+                    elif not checked:
+                        st.session_state.selected_ids = [x for x in sel_ids if x != sid]
+                    st.rerun()
+
+            with card_cols[1]:
+                _city = s.get("city", "")
+                _rank_cls = f"medal-rank medal-{i+1}" if i < 3 else "sup-rank"
+                _rank_txt = ["🥇", "🥈", "🥉"][i] if i < 3 else str(i + 1)
+                _role_s = s.get("_role", "unknown")
+                _role_chip = ""
+                if _role_s in ("manufacturer", "both"):
+                    _role_chip = ("<span style='font-size:9px;color:#0E8C3A;background:rgba(14,140,58,.1);"
+                                  "border:1px solid rgba(14,140,58,.2);padding:0 5px;border-radius:4px;"
+                                  "margin-left:5px'>工厂</span>")
+                st.markdown(
+                    f"<div style='display:flex;align-items:center;gap:8px;padding:6px 0'>"
+                    f"  <div class='{_rank_cls}'>{_rank_txt}</div>"
+                    f"  <div style='flex:1;min-width:0'>"
+                    f"    <div class='sup-name'>{name}{_role_chip}</div>"
+                    f"    <div class='sup-meta'>{province}{(' · ' + _city) if _city and _city != province else ''}</div>"
+                    f"  </div>"
+                    f"  <span class='{tier_cls}'>{tier_lbl}</span>"
+                    f"</div>",
+                    unsafe_allow_html=True,
+                )
+
+            with card_cols[2]:
+                _val_s = s.get("_validation", {})
+                _conf  = _val_s.get("confidence", 0) if _val_s else 0
+                _srcs  = _val_s.get("sources", [])   if _val_s else []
+                _src_dots = "".join(
+                    f'<span title="{src["name"]}" style="color:{src["color"]};'
+                    f'font-size:13px;margin-left:1px">{"●" if src["matched"] else "○"}</span>'
+                    for src in _srcs
+                ) if _srcs else ""
+                _conf_color = ("#15803d" if _conf>=90 else "#059669" if _conf>=75
+                               else "#d97706" if _conf>=60 else "#dc2626")
+                _conf_str   = f"{_conf:.0f}%" if _conf else ""
+                st.markdown(
+                    f"<div style='text-align:right;padding:6px 0'>"
+                    f"  <span class='{score_cls}' style='font-size:23px'>{score:.1f}</span>"
+                    f"  <span style='font-size:11.5px;color:#9ba8bb'> 分</span><br>"
+                    f"  <span style='font-size:11px;color:{_conf_color}'>{_conf_str}</span>"
+                    f"  {_src_dots}"
+                    f"</div>",
+                    unsafe_allow_html=True,
+                )
+
+            # 维度迷你进度条（3 维，与左侧权重一一对应）
+            dims = s.get("dimensions", {})
+            bar_html = "".join(
+                f"<div style='flex:1;text-align:center'>"
+                f"  <div style='font-size:11.5px;color:#5a6780;margin-bottom:3px'>{lbl} "
+                f"    <b style='color:{"#0E8C3A" if dims.get(k,0)>=70 else "#f59e0b" if dims.get(k,0)>=40 else "#ef4444"}'>"
+                f"      {dims.get(k,0):.0f}</b></div>"
+                f"  <div style='height:6px;background:#e2e8f0;border-radius:3px'>"
+                f"    <div style='height:100%;width:{dims.get(k,0):.0f}%;"
+                f"          background:{"#0E8C3A" if dims.get(k,0)>=70 else "#f59e0b" if dims.get(k,0)>=40 else "#ef4444"};"
+                f"          border-radius:3px'></div>"
+                f"  </div>"
+                f"</div>"
+                for k, lbl in zip(
+                    ["geography","scale","compliance"],
+                    ["地理","规模","合规"]
+                )
+            )
+            st.markdown(
+                f"<div style='display:flex;gap:8px;margin-bottom:8px;padding:0 4px'>{bar_html}</div>",
+                unsafe_allow_html=True,
+            )
+
+            if st.button(f"查看详情", key=f"detail_{i}_{sid}",
+                         width='stretch', type="secondary"):
+                st.session_state.active_supplier = s
+                st.rerun()
+
+            st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
+
+# ── 右栏：图表 + 统计 + 详情 ────────────────────────────────────────
+with right_col:
+
+    # 图表优先级：① 中国地图（供应版图）② 雷达图（多维对比）③ 热力矩阵（强弱交叉）
+    # 其余（单项对比/并排表/平行坐标/气泡）作为补充靠后
+    tab_labels = ["🗺️ 中国地图","📡 雷达图","🌡️ 热力矩阵",
+                  "📊 单项对比","📋 并排对比表","📈 平行坐标","🫧 气泡图"]
+    tabs = st.tabs(tab_labels)
+
+    with tabs[0]:
+        fig = china_map(results)
+        st.plotly_chart(fig, width='stretch', config={"displayModeBar": False}, key="chart_map")
+        st.caption("颜色深浅：该省供应商数量 · 气泡：供应商位置与评分 · ★：SABIC 上海基地")
+
+    with tabs[1]:
+        fig = radar_chart(compare_suppliers)
+        st.plotly_chart(fig, width='stretch', config={"displayModeBar": False}, key="chart_radar")
+        st.caption(f"展示 {'已选 ' + str(len(sel_ids)) + ' 家' if sel_ids else 'Top 5'} 供应商 · 勾选左侧复选框可自定义对比组合")
+
+    with tabs[2]:
+        fig = heatmap_chart(results[:15])
+        st.plotly_chart(fig, width='stretch', config={"displayModeBar": False}, key="chart_heatmap")
+        st.caption("行：供应商 · 列：三维评分 · 颜色越深分越高，行列交叉一眼看清各家强弱项")
+
+    with tabs[3]:
+        metric_opt = st.selectbox(
+            "选择指标",
+            ["综合评分","地理评分","规模评分","合规资质"],
+            label_visibility="collapsed",
+        )
+        metric_map = {
+            "综合评分":"score","地理评分":"geography",
+            "规模评分":"scale","合规资质":"compliance",
+        }
+        fig = bar_chart(compare_suppliers, metric_map[metric_opt])
+        st.plotly_chart(fig, width='stretch', config={"displayModeBar": False}, key=f"chart_bar_{metric_opt}")
+
+    with tabs[4]:
+        if len(compare_suppliers) < 2:
+            st.info("请在左侧勾选至少 2 家供应商进行并排对比。")
+        else:
+            df_cmp = compare_dataframe(compare_suppliers)
+            st.dataframe(
+                df_cmp.style.apply(_highlight_row_max, axis=1),
+                width='stretch',
+                height=480,
+            )
+
+    with tabs[5]:
+        fig = parallel_chart(compare_suppliers)
+        st.plotly_chart(fig, width='stretch', config={"displayModeBar": False}, key="chart_parallel")
+        st.caption("每条折线代表一家企业 · 悬停显示各维度精确分数 · 点击右侧图例可隐藏/显示某企业")
+
+    with tabs[6]:
+        fig = bubble_chart(results[:20])
+        st.plotly_chart(fig, width='stretch', config={"displayModeBar": False}, key="chart_bubble")
+        st.caption("X轴：注册资本（对数）· Y轴：成立年限 · 气泡大小：综合评分 · 颜色：地理圈层")
+
+    # ── 统计卡片 ───────────────────────────────────────────────────────
+    st.markdown("---")
+    sc1, sc2, sc3, sc4 = st.columns(4)
+    sc1.metric("华东一级圈", f"{tier1_count} 家",
+               delta=None, help="沪苏浙皖四省市")
+    sc2.metric("工厂（制造商）", f"{factory_count} 家",
+               delta=None, help="经营范围含生产/制造（含工厂兼贸易）")
+    sc3.metric("危化品资质", f"{hazmat_count} 家",
+               delta=None, help="经营范围含危化品许可（否定表述不算）")
+    sc4.metric("平均评分", f"{avg_score} 分",
+               delta=None, help="当前筛选结果的评分均值")
+
+    # ── 供应商详情 ─────────────────────────────────────────────────────
+    active = st.session_state.active_supplier
+    if active:
+        st.markdown("---")
+        _src_map = {"local_cache": "📦 本地缓存（企查查 MCP 采集）", "api": "🌐 企查查实时 API"}
+        source_badge = (
+            '<span style="background:#eff6ff;border:1px solid #3b82f6;'
+            'padding:1px 8px;border-radius:4px;font-size:11px;color:#3b82f6">'
+            f'数据来源：{_src_map.get(active.get("_source",""), active.get("_source","企查查"))}</span>'
+        )
+        st.markdown(
+            f'#### 📋 {active.get("shortName") or active.get("name")} &nbsp; {source_badge}',
+            unsafe_allow_html=True,
+        )
+
+        # ── 得分明细（让每个分数都有据可查）──────────────────────────
+        _dims = active.get("dimensions", {})
+        _w    = st.session_state.weights
+        _total = active.get("score", 0)
+        import datetime as _dtx
+        _age = (_dtx.datetime.now().year - active.get("established", 0)) if active.get("established") else 0
+        _cap_wan = active.get("registered_capital_wan", 0) or 0
+        _cap_txt = f"{_cap_wan/10000:.1f}亿元" if _cap_wan >= 10000 else f"{_cap_wan:.0f}万元" if _cap_wan else "未知"
+
+        st.markdown(f"**🎯 综合得分 {_total:.1f} 分** &nbsp;<span style='color:#9ba8bb;font-size:12px'>= 以下三项加权求和</span>", unsafe_allow_html=True)
+
+        # 合规得分明细（与 scorer.score_compliance 逐项对应）
+        _scope_d   = active.get("_business_scope", "") or ""
+        _industry_d = active.get("industry", "") or ""
+        _loc_d     = (active.get("address", "") or "") + " " + _scope_d
+        _comp_parts = list(filter(None, [
+            ("存续25分" if (active.get('reg_status','存续') or '存续') in ('存续','在业','') else "非存续0分"),
+            {"manufacturer":"工厂20分","both":"工厂兼贸易16分","importer":"进口商8分",
+             "trader":"经销商4分","agent":"中介0分","unknown":"未分类8分"}.get(active.get("_role","unknown")),
+            ("危化品许可20分" if (active.get('licenses',{}).get('hazardous_chemicals')
+                                or has_hazmat_license(_scope_d)) else None),
+            ("生产/安全许可10分" if any(k in _scope_d for k in
+                ["生产许可","安全生产许可","生产经营许可","全国工业产品生产许可"]) else None),
+            ("化工园区10分" if any(k in _loc_d for k in ["化工园","化工区","化工园区","化学工业园"])
+             else ("工业园区5分" if any(k in _loc_d for k in
+                   ["工业园","工业区","经济开发区","高新区","经济技术开发区"]) else None)),
+            ("化工行业10分" if any(k in _industry_d for k in _IND_CHEM)
+             else ("制造行业5分" if any(k in _industry_d for k in _IND_MFG) else None)),
+            ("进出口5分" if any(k in _scope_d for k in ["进出口","货物及技术进出口"]) else None),
+        ]))
+
+        # 互联网公开信息核验：解释合规分为何被抬高（修正爬取低估）
+        _rep = active.get("_reputation")
+        if _rep:
+            _comp_parts.append(f"🌐 互联网核验下限{int(_rep.get('floor',0))}分")
+
+        _explain = [
+            ("📍 地理位置", _dims.get("geography",0), int(_w.get("geography",0.35)*100),
+             f"注册在 {active.get('province','—')}，距上海约 {active.get('logistics',{}).get('distance_km_to_shanghai','—')} 公里"),
+            ("🏢 企业规模", _dims.get("scale",0), int(_w.get("scale",0.35)*100),
+             (f"注册资本 {_cap_txt}（资本占65%）"
+              + (f" + 成立 {_age} 年（年限占35%）" if _age else "")) ),
+            ("✅ 合规资质", _dims.get("compliance",0), int(_w.get("compliance",0.30)*100),
+             " + ".join(_comp_parts) if _comp_parts else "无可量化合规项"),
+        ]
+        for _label, _score, _wt, _basis in _explain:
+            _color = "#0E8C3A" if _score>=70 else "#f59e0b" if _score>=40 else "#ef4444"
+            st.markdown(
+                f"<div style='display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px'>"
+                f"<span style='width:90px'>{_label}</span>"
+                f"<span style='width:46px;text-align:right;font-weight:600;color:{_color}'>{_score:.0f}分</span>"
+                f"<span style='width:40px;color:#9ba8bb;font-size:11px'>×{_wt}%</span>"
+                f"<div style='flex:1;height:6px;background:#e2e8f0;border-radius:3px'>"
+                f"<div style='height:100%;width:{_score:.0f}%;background:{_color};border-radius:3px'></div></div>"
+                f"</div>"
+                f"<div style='font-size:11px;color:#9ba8bb;margin:0 0 4px 98px'>↳ {_basis}</div>",
+                unsafe_allow_html=True,
+            )
+        if _rep:
+            _tk = _rep.get("tag", "公开核验")
+            _tc = (f"｜股票代码 {_rep['ticker']}" if _rep.get("ticker") else "")
+            _aka = (f"｜亦称 {_rep['aka']}" if _rep.get("aka") else "")
+            st.markdown(
+                f"<div style='background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;"
+                f"padding:8px 11px;margin:2px 0 4px;font-size:12px;color:#1e3a8a'>"
+                f"🌐 <b>互联网公开信息核验</b>　<span style='background:#dbeafe;border-radius:6px;"
+                f"padding:0 6px'>{_tk}</span>{_tc}{_aka}<br>"
+                f"<span style='color:#334155'>{_rep.get('note','')}</span><br>"
+                f"<span style='color:#64748b;font-size:11px'>↳ 合规分已按公开信息设下限 "
+                f"{int(_rep.get('floor',0))} 分，避免因爬取不到许可关键词而低估可靠企业。</span></div>",
+                unsafe_allow_html=True,
+            )
+        st.markdown("<div style='border-bottom:1px solid #e2e8f0;margin:6px 0'></div>", unsafe_allow_html=True)
+
+        # ── 为什么不是它：与首选逐维对比，给出落选原因 + 适用场景 ──────
+        _wn = why_not_top(active, results, st.session_state.weights)
+        if _wn:
+            if _wn["is_top"]:
+                st.markdown(
+                    f"<div class='wn-box top'>"
+                    f"<div class='wn-verdict'>🥇 {_wn['verdict']}</div>"
+                    f"<div class='wn-narr'>{_wn['narrative']}</div>"
+                    f"</div>",
+                    unsafe_allow_html=True,
+                )
+            else:
+                _box_cls = "role" if _wn["role_priority_reason"] else "lag"
+                _icon = "⚖️" if _wn["role_priority_reason"] else "🤔"
+                # 三维对比小卡（本企业 vs 首选）
+                def _dim_html(d):
+                    col = "#0E8C3A" if d["raw"] >= 0 else "#dc2626"
+                    return (
+                        f"<div class='wn-dim'>"
+                        f"<div class='wn-dim-lbl'>{d['icon']} {d['label']}</div>"
+                        f"<div class='wn-dim-vs' style='color:{col}'>"
+                        f"{d['a']:.0f}<span style='font-size:10px;color:#9ba8bb'> vs {d['t']:.0f}</span></div>"
+                        f"</div>"
+                    )
+                _cmp = "".join(_dim_html(d) for d in _wn["dim_gaps"])
+                _scen = ""
+                if _wn["scenario_fit"]:
+                    _chips = "".join(
+                        f"<span class='wn-scen-chip'>{s['icon']} 它是「{s['scenario']}」之选 · {s['score']:.0f}分</span>"
+                        for s in _wn["scenario_fit"]
+                    )
+                    _scen = (f"<div class='wn-scen'>{_chips}</div>"
+                             f"<div style='font-size:11px;color:#9ba8bb;margin-top:5px'>"
+                             f"↳ 若你更看重以上场景，它反而比首选更合适。</div>")
+                st.markdown(
+                    f"<div class='wn-box {_box_cls}'>"
+                    f"<div class='wn-verdict'>{_icon} 为什么不是首选：{_wn['verdict']}"
+                    f"<span style='font-weight:500;font-size:11px;color:#9ba8bb'>（vs {_wn['top_name']}）</span></div>"
+                    f"<div class='wn-narr'>{_wn['narrative']}</div>"
+                    f"<div class='wn-cmp'>{_cmp}</div>"
+                    f"{_scen}"
+                    f"</div>",
+                    unsafe_allow_html=True,
+                )
+
+        # ── 行 1：工商基本信息 + 合规资质 + 经营角色 ────────────────
+        d1, d2, d3 = st.columns(3)
+        with d1:
+            st.markdown("**🏢 工商基本信息**")
+            cap = active.get("registered_capital_wan", 0) or 0
+            cap_str = f"{cap/10000:.1f} 亿元" if cap >= 10000 else f"{cap} 万元" if cap > 0 else "—"
+            _na = "—"
+            rows_d1 = [
+                ("企业全称",  active.get("name") or _na),
+                ("统一信用代码", active.get("creditCode") or active.get("credit_code") or _na),
+                ("法定代表人", active.get("legalPerson") or active.get("legal_person") or _na),
+                ("注册地址",  (active.get("address") or _na)[:30] + ("…" if len(active.get("address") or "")>30 else "")),
+                ("所在省市",  f"{active.get('province') or _na} {active.get('city') or ''}".strip()),
+                ("注册资本",  cap_str),
+                ("成立年份",  f"{active.get('established')} 年" if active.get('established') else _na),
+                ("经营状态",  active.get("reg_status") or "存续"),
+                ("所属行业",  active.get("industry") or _na),
+            ]
+            for k, v in rows_d1:
+                st.markdown(f'<div style="font-size:13px;padding:2px 0"><span style="color:#5a6780">{k}：</span>{v}</div>',
+                            unsafe_allow_html=True)
+
+        with d2:
+            lic = active.get("licenses", {})
+            st.markdown("**✅ 资质 & 合规**")
+            def badge(ok, label, api_note=""):
+                color = "#059669" if ok else "#9ca3af"
+                icon  = "✓" if ok else "✗"
+                note  = f' <span style="font-size:10px;color:#9ba8bb">{api_note}</span>' if api_note and not ok else ""
+                return f'<div style="font-size:13px;padding:2px 0"><span style="color:{color}">{icon}</span> {label}{note}</div>'
+
+            st.markdown(badge(
+                lic.get("hazardous_chemicals") or lic.get("hazmat_business"),
+                "危险化学品经营许可证",
+                "→ 应急管理部核验"
+            ), unsafe_allow_html=True)
+            st.markdown(badge(lic.get("safety_production"), "安全生产许可证",
+                              "→ 应急管理部核验"), unsafe_allow_html=True)
+            st.markdown(badge(any(k in _scope_d for k in
+                ["生产许可","安全生产许可","生产经营许可"]), "生产许可证关键词"), unsafe_allow_html=True)
+            st.markdown(badge(active.get("chemical_park"), "化工园区内企业"), unsafe_allow_html=True)
+            st.markdown(badge(any(k in _scope_d for k in ["进出口","货物及技术进出口"]),
+                              "进出口经营资质"), unsafe_allow_html=True)
+
+            st.markdown("<br>**🏭 企业类型（来自经营范围）**", unsafe_allow_html=True)
+            role_map = {
+                "manufacturer": ("🏭 工厂（生产制造）", "#059669"),
+                "both":         ("🏭 工厂兼贸易", "#3b82f6"),
+                "importer":     ("🚢 进口商", "#0891b2"),
+                "trader":       ("🟡 经销商", "#d97706"),
+                "agent":        ("⚠️ 中介/代理（建议排除）", "#dc2626"),
+                "unknown":      ("⚪ 未分类", "#9ca3af"),
+            }
+            role = active.get("_role", "unknown")
+            rl, rc = role_map.get(role, ("⚪ 未分类", "#9ca3af"))
+            st.markdown(f'<span style="color:{rc};font-weight:600">{rl}</span>', unsafe_allow_html=True)
+            st.caption("优先级：工厂 > 工厂兼贸易 > 进口商 > 经销商 > 中介")
+
+        with d3:
+            st.markdown("**📋 经营范围（企查查 Scope 字段）**")
+            scope = active.get("_business_scope", "")
+            if scope:
+                st.markdown(
+                    f'<div style="font-size:12px;color:#374151;background:#f9fafb;'
+                    f'border:1px solid #e5e7eb;border-radius:6px;padding:8px;'
+                    f'max-height:260px;overflow-y:auto;line-height:1.6">{scope[:800]}'
+                    f'{"…" if len(scope)>800 else ""}</div>',
+                    unsafe_allow_html=True
+                )
+            else:
+                st.caption("该企业暂无经营范围数据（个体工商户在企查查工商接口可能无登记字段）")
+            st.caption("产能/起订量/报价需向企业询价，企查查工商数据不含这些")
+
+        # ── 行 2：企查查扩展接口（开通后自动显示真实数据）──────────────
+        st.markdown("---")
+        st.caption("以下信息按需查询，仅在查看本企业时调用一次接口，控制成本")
+        from utils.qcc_client import (get_qualifications, get_risk_info,
+                                       is_qual_enabled, is_risk_enabled)
+        ea1, ea2, ea3, ea4 = st.columns(4)
+
+        with ea1:
+            st.markdown("**📜 资质证书核验**")
+            if is_qual_enabled():
+                _quals = get_qualifications(active.get("name", ""))
+                if _quals and _quals.get("items"):
+                    for q in _quals["items"][:4]:
+                        _ok = q.get("status","") in ("有效","正常","")
+                        st.markdown(
+                            f'<div style="font-size:12px;padding:2px 0">'
+                            f'<span style="color:{"#059669" if _ok else "#dc2626"}">'
+                            f'{"✓" if _ok else "✗"}</span> {q.get("name","")}'
+                            f'<span style="color:#9ba8bb"> {q.get("expire","")}</span></div>',
+                            unsafe_allow_html=True)
+                else:
+                    st.caption("未查到资质证书记录")
+            else:
+                st.markdown(
+                    '<div style="background:#f9fafb;border:1px dashed #d1d5db;'
+                    'border-radius:6px;padding:8px;font-size:11px;color:#9ca3af;text-align:center">'
+                    '开通「资质证书」接口后<br>核验危化品/安全生产许可证</div>',
+                    unsafe_allow_html=True)
+
+        with ea2:
+            st.markdown("**⚠️ 深度风险核查**")
+            if is_risk_enabled():
+                _sid = active.get("id", "")
+                _risk_cache_key = f"risk_{_sid}"
+                _cached_risk = st.session_state.get(_risk_cache_key)
+
+                if _cached_risk is None:
+                    st.caption("企查查风险扫描 · 6元/次")
+                    if st.button("🔍 立即核查", key=f"risk_btn_{_sid}",
+                                 width='stretch',
+                                 help="调用企查查736接口，含失信/诉讼/经营异常/股东，每次6元"):
+                        with st.spinner("正在核查..."):
+                            _r = get_risk_info(active.get("name", ""))
+                            st.session_state[_risk_cache_key] = _r or {"_empty": True}
+                        st.rerun()
+                else:
+                    _risk = _cached_risk if not _cached_risk.get("_empty") else None
+                    if _risk:
+                        _flags = []
+                        if _risk.get("dishonest"): _flags.append(("失信被执行人","#dc2626"))
+                        if _risk.get("executed"):  _flags.append(("被执行人","#dc2626"))
+                        if _risk.get("abnormal"):  _flags.append(("经营异常","#d97706"))
+                        if _risk.get("penalty_count",0)>0:
+                            _flags.append((f"行政处罚{_risk['penalty_count']}条","#d97706"))
+                        if _risk.get("lawsuit_count",0)>0:
+                            _flags.append((f"涉诉{_risk['lawsuit_count']}条","#d97706"))
+                        if _flags:
+                            for txt, col in _flags:
+                                st.markdown(f'<div style="font-size:12px;color:{col};padding:2px 0">⚠ {txt}</div>',
+                                            unsafe_allow_html=True)
+                        else:
+                            st.markdown('<div style="font-size:12px;color:#059669;padding:2px 0">✓ 未发现重大风险</div>',
+                                        unsafe_allow_html=True)
+                        st.caption("✓ 已核查（本次会话不再重复扣费）")
+                    else:
+                        st.caption("未查到风险记录")
+            else:
+                st.markdown(
+                    '<div style="background:#f9fafb;border:1px dashed #d1d5db;'
+                    'border-radius:6px;padding:8px;font-size:11px;color:#9ca3af;text-align:center">'
+                    '开通「企业风险扫描736」<br>后可手动核查（6元/次）</div>',
+                    unsafe_allow_html=True)
+
+        with ea3:
+            st.markdown("**👥 股东信息**")
+            _sid3 = active.get("id", "")
+            _risk_data = st.session_state.get(f"risk_{_sid3}")
+            _partners = (_risk_data or {}).get("partners", []) if _risk_data else []
+            if _partners:
+                for p in _partners[:5]:
+                    st.markdown(
+                        f'<div style="font-size:12px;padding:2px 0">'
+                        f'{p.get("name","")} '
+                        f'<span style="color:#9ba8bb">{p.get("ratio","")}</span></div>',
+                        unsafe_allow_html=True)
+            else:
+                st.markdown(
+                    '<div style="background:#f9fafb;border:1px dashed #d1d5db;'
+                    'border-radius:6px;padding:8px;font-size:11px;color:#9ca3af;text-align:center">'
+                    '点击左侧「深度风险核查」<br>后一并显示股东</div>', unsafe_allow_html=True)
+
+        with ea4:
+            st.markdown("**🔗 核验链接**")
+            st.markdown(
+                f'<a href="https://www.gsxt.gov.cn/corp-query-homepage.html" '
+                f'target="_blank" style="font-size:12px;color:#3b82f6">🏛 国家企业信用信息公示</a><br>'
+                f'<a href="https://www.mem.gov.cn/fw/cxfw/" '
+                f'target="_blank" style="font-size:12px;color:#3b82f6">🔒 应急管理部资质核验</a><br>'
+                f'<a href="https://credit.customs.gov.cn/" '
+                f'target="_blank" style="font-size:12px;color:#3b82f6">🛃 海关信用企业查询</a>',
+                unsafe_allow_html=True
+            )
+            if active.get("_fetched_at"):
+                st.caption(f"数据拉取时间：{active.get('_fetched_at', '')[:10]}")
+
+        # ── 交叉验证详情 ───────────────────────────────────────────
+        val = active.get("_validation")
+        if val:
+            st.markdown("---")
+            st.markdown("**🔁 三源交叉验证详情**")
+            conf = val.get("confidence", 60)
+            cl, cc = confidence_label(conf)
+            v1, v2, v3 = st.columns(3)
+            v1.metric("置信度", f"{conf:.0f}%", delta=f"{cl}")
+            v2.metric("化工网匹配",
+                      "✓ 命中" if val.get("chemnet_matched") else "✗ 未命中",
+                      delta=f"相似度 {val.get('chemnet_score',0):.0f}" if val.get("chemnet_matched") else None)
+            v3.metric("买化塑匹配",
+                      "✓ 命中" if val.get("ibc_matched") else "✗ 未命中",
+                      delta=f"相似度 {val.get('ibc_score',0):.0f}" if val.get("ibc_matched") else None)
+            if val.get("chemnet_price"):
+                st.caption(f"化工网报价参考：{val['chemnet_price']}")
+            if val.get("ibc_specs"):
+                st.caption(f"买化塑产品规格：{val['ibc_specs']}")

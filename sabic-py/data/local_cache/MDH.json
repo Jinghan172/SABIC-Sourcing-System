@@ -1,0 +1,72 @@
+{
+  "en": "MDH",
+  "cn": "氢氧化镁",
+  "collected_at": "2026-06-10 14:16",
+  "count": 4,
+  "companies": [
+    {
+      "name": "浙江旭森阻燃剂股份有限公司",
+      "credit_code": "913304216702758635",
+      "legal_person": "李四新",
+      "reg_capital": "3800万元",
+      "established": "2007-12-26",
+      "status": "存续",
+      "scope": "硼酸锌阻燃剂、氢氧化镁阻燃剂、硅微粉阻燃剂、氢氧化铝阻燃剂的生产、销售；化工产品、化工原料（不含化学危险品及易制毒化学品）的销售；PE阻燃母粒的生产销售；功能母粒（不含废旧塑料造粒）的生产销售；进出口业务。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "浙江",
+      "city": "",
+      "address": "浙江省嘉兴市嘉善县惠民街道成功路166号",
+      "industry": "场地准备活动",
+      "_qcc_industry": "场地准备活动",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "海城新广源粉体材料有限公司",
+      "credit_code": "91210381064084127C",
+      "legal_person": "李海滨",
+      "reg_capital": "3800万元",
+      "established": "2013-04-16",
+      "status": "存续",
+      "scope": "超细碳酸钙、活性碳酸钙、滑石粉、硅灰石、硫酸钡、白云石粉、碳酸钙、水镁石粉、氢氧化镁、阻燃剂、方解石粉生产、销售。",
+      "province": "辽宁",
+      "city": "",
+      "address": "海城市牌楼镇梨树村1060号",
+      "industry": "其他非金属矿物制品制造",
+      "_qcc_industry": "其他非金属矿物制品制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "河南瑞龙新材料科技有限公司",
+      "credit_code": "91410105MA3XEBJJ5L",
+      "legal_person": "徐振红",
+      "reg_capital": "1000万元",
+      "established": "2016-09-30",
+      "status": "存续",
+      "scope": "氢氧化镁、氧化镁、氢氧化铝、阻燃剂（以上经营范围除危险化学品）研发、生产、销售；化工产品及原料（除危险化学品）、建筑材料销售。",
+      "province": "河南",
+      "city": "",
+      "address": "郸城县工业区未来大道中段路东",
+      "industry": "其他未列明零售业",
+      "_qcc_industry": "其他未列明零售业",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "合肥中科阻燃新材料有限公司",
+      "credit_code": "91340122746781755R",
+      "legal_person": "王立贵",
+      "reg_capital": "500万元",
+      "established": "2003-03-18",
+      "status": "存续",
+      "scope": "阻燃剂、消烟剂、非金属矿产品（砂石除外）、氢氧化铝、氢氧化镁、阻燃母料、白碳黑生产、销售及技术研发、技术转让；化工产品（不含危险品）、橡胶、塑料材料销售；自营本企业产品出口业务（国家限定或禁止除外）。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "安徽",
+      "city": "",
+      "address": "肥东经济开发区祥和路36号",
+      "industry": "其他非金属矿物制品制造",
+      "_qcc_industry": "其他非金属矿物制品制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    }
+  ]
+}

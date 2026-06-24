@@ -1,0 +1,144 @@
+{
+  "chemicals": [
+    {
+      "id": "PE",
+      "primaryName": "聚乙烯",
+      "englishName": "Polyethylene",
+      "cas": "9002-88-4",
+      "formula": "(C2H4)n",
+      "aliases": ["PE", "高密度聚乙烯", "HDPE", "低密度聚乙烯", "LDPE", "线性低密度聚乙烯", "LLDPE", "聚乙烯树脂"],
+      "category": "通用塑料"
+    },
+    {
+      "id": "PP",
+      "primaryName": "聚丙烯",
+      "englishName": "Polypropylene",
+      "cas": "9003-07-0",
+      "formula": "(C3H6)n",
+      "aliases": ["PP", "聚丙烯树脂", "丙纶", "百折胶"],
+      "category": "通用塑料"
+    },
+    {
+      "id": "PC",
+      "primaryName": "聚碳酸酯",
+      "englishName": "Polycarbonate",
+      "cas": "25037-45-0",
+      "formula": "(C16H14O3)n",
+      "aliases": ["PC", "聚碳酸酯树脂", "防弹胶", "Lexan"],
+      "category": "工程塑料"
+    },
+    {
+      "id": "ABS",
+      "primaryName": "丙烯腈-丁二烯-苯乙烯共聚物",
+      "englishName": "Acrylonitrile Butadiene Styrene",
+      "cas": "9003-56-9",
+      "formula": "(C8H8·C4H6·C3H3N)x",
+      "aliases": ["ABS", "ABS树脂", "ABS塑料"],
+      "category": "工程塑料"
+    },
+    {
+      "id": "TDI",
+      "primaryName": "甲苯二异氰酸酯",
+      "englishName": "Toluene Diisocyanate",
+      "cas": "584-84-9",
+      "formula": "C9H6N2O2",
+      "aliases": ["TDI", "甲苯二异氰酸盐", "二异氰酸甲苯酯", "甲苯-2,4-二异氰酸酯"],
+      "category": "异氰酸酯",
+      "hazardous": true
+    },
+    {
+      "id": "MDI",
+      "primaryName": "二苯基甲烷二异氰酸酯",
+      "englishName": "Methylene Diphenyl Diisocyanate",
+      "cas": "101-68-8",
+      "formula": "C15H10N2O2",
+      "aliases": ["MDI", "纯MDI", "聚合MDI", "PMDI", "亚甲基二苯基二异氰酸酯"],
+      "category": "异氰酸酯",
+      "hazardous": true
+    },
+    {
+      "id": "BPA",
+      "primaryName": "双酚A",
+      "englishName": "Bisphenol A",
+      "cas": "80-05-7",
+      "formula": "C15H16O2",
+      "aliases": ["BPA", "二酚基丙烷", "4,4'-异亚丙基双酚"],
+      "category": "化工中间体"
+    },
+    {
+      "id": "ADIPIC",
+      "primaryName": "己二酸",
+      "englishName": "Adipic Acid",
+      "cas": "124-04-9",
+      "formula": "C6H10O4",
+      "aliases": ["AA", "1,4-丁烷二羧酸", "肥酸"],
+      "category": "二元酸"
+    },
+    {
+      "id": "EG",
+      "primaryName": "乙二醇",
+      "englishName": "Ethylene Glycol",
+      "cas": "107-21-1",
+      "formula": "C2H6O2",
+      "aliases": ["EG", "甘醇", "1,2-乙二醇", "MEG"],
+      "category": "醇类"
+    },
+    {
+      "id": "PTA",
+      "primaryName": "精对苯二甲酸",
+      "englishName": "Purified Terephthalic Acid",
+      "cas": "100-21-0",
+      "formula": "C8H6O4",
+      "aliases": ["PTA", "对苯二甲酸", "TPA", "1,4-苯二甲酸"],
+      "category": "二元酸"
+    },
+    {
+      "id": "STYRENE",
+      "primaryName": "苯乙烯",
+      "englishName": "Styrene",
+      "cas": "100-42-5",
+      "formula": "C8H8",
+      "aliases": ["SM", "乙烯苯", "苯基乙烯"],
+      "category": "化工单体",
+      "hazardous": true
+    },
+    {
+      "id": "ACETONE",
+      "primaryName": "丙酮",
+      "englishName": "Acetone",
+      "cas": "67-64-1",
+      "formula": "C3H6O",
+      "aliases": ["二甲基酮", "二甲酮", "醋酮"],
+      "category": "溶剂",
+      "hazardous": true
+    },
+    {
+      "id": "PHENOL",
+      "primaryName": "苯酚",
+      "englishName": "Phenol",
+      "cas": "108-95-2",
+      "formula": "C6H6O",
+      "aliases": ["石炭酸", "羟基苯", "苯醇"],
+      "category": "化工中间体",
+      "hazardous": true
+    },
+    {
+      "id": "GLYCEROL",
+      "primaryName": "甘油",
+      "englishName": "Glycerol",
+      "cas": "56-81-5",
+      "formula": "C3H8O3",
+      "aliases": ["丙三醇", "1,2,3-丙三醇", "甘油酯"],
+      "category": "醇类"
+    },
+    {
+      "id": "MELAMINE",
+      "primaryName": "三聚氰胺",
+      "englishName": "Melamine",
+      "cas": "108-78-1",
+      "formula": "C3H6N6",
+      "aliases": ["蜜胺", "氰尿酰胺", "2,4,6-三氨基-1,3,5-三嗪"],
+      "category": "化工中间体"
+    }
+  ]
+}

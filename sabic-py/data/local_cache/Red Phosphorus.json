@@ -1,0 +1,56 @@
+{
+  "en": "Red Phosphorus",
+  "cn": "红磷",
+  "collected_at": "2026-06-10 14:16",
+  "count": 3,
+  "companies": [
+    {
+      "name": "邵阳市富森阻燃材料有限公司",
+      "credit_code": "91430511788031442K",
+      "legal_person": "李叙和",
+      "reg_capital": "50万元",
+      "established": "2006-05-25",
+      "status": "存续",
+      "scope": "红磷系列阻燃剂及化工产品；聚乙烯阻燃管生产销售；自营和代理各类商品及技术的进出口，但国家限定公司经营或禁止进出口的商品和技术除外。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "湖南",
+      "city": "",
+      "address": "邵阳市北塔区陈家桥乡石子坳村（陈家桥乡派出所后墙边）",
+      "industry": "其他合成材料制造",
+      "_qcc_industry": "其他合成材料制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "河南科威阻燃新材料有限公司",
+      "credit_code": "9141082358173575XR",
+      "legal_person": "陈红霞",
+      "reg_capital": "1200万元",
+      "established": "2011-08-29",
+      "status": "存续",
+      "scope": "阻燃剂、阻燃母粒、阻燃专用料的生产、销售",
+      "province": "河南",
+      "city": "",
+      "address": "武陟县谢旗营镇扈庄村",
+      "industry": "其他专用化学产品制造",
+      "_qcc_industry": "其他专用化学产品制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "泸溪亿兴科技有限公司",
+      "credit_code": "91433122MA4L3TW531",
+      "legal_person": "顾星",
+      "reg_capital": "200万元",
+      "established": "2016-04-18",
+      "status": "存续",
+      "scope": "新型阻燃剂研发及制造。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "湖南",
+      "city": "",
+      "address": "湖南省泸溪县武溪镇武溪工业园南区鲇鱼溪桥旁（县龙腾耐火材料有限公司内）",
+      "industry": "化学试剂和助剂制造",
+      "_qcc_industry": "化学试剂和助剂制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    }
+  ]
+}

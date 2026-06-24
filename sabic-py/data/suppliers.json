@@ -1,0 +1,1180 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "updated_at": "2026-05-19",
+    "note": "示例数据(共30家),用于演示系统功能。正式上线前请由采购团队替换为真实供应商数据。",
+    "data_sources": ["SABIC内部历史采购Excel", "中国化工网", "化工在线", "化工书Chemicalbook", "1688.com", "国家企业信用信息公示系统"]
+  },
+  "suppliers": [
+    {
+      "id": "SUP-001",
+      "name": "上海石化股份有限公司",
+      "shortName": "上海石化",
+      "province": "上海",
+      "city": "上海",
+      "address": "上海市金山区金一路48号",
+      "established": 1972,
+      "registered_capital_wan": 1083000,
+      "employees": 12000,
+      "products": ["PE", "PP", "PTA", "STYRENE", "EG"],
+      "main_categories": ["通用塑料", "化工单体", "二元酸", "醇类"],
+      "annual_capacity_ton": 1500000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "8000-15000",
+      "chemical_park": "金山第二工业区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 60
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 12,
+        "rating": "A",
+        "last_cooperation": "2025-11"
+      },
+      "contact": {
+        "name": "采购联系人",
+        "phone": "021-5794-XXXX",
+        "email": "sales@sinopecshanghai.example.com"
+      }
+    },
+    {
+      "id": "SUP-002",
+      "name": "扬子石化-巴斯夫有限责任公司",
+      "shortName": "扬子巴斯夫",
+      "province": "江苏",
+      "city": "南京",
+      "address": "南京市六合区扬子江北路699号",
+      "established": 2000,
+      "registered_capital_wan": 290000,
+      "employees": 1800,
+      "products": ["STYRENE", "PHENOL", "ACETONE", "BPA"],
+      "main_categories": ["化工单体", "化工中间体"],
+      "annual_capacity_ton": 600000,
+      "min_order_ton": 10,
+      "price_range_per_ton": "9500-16000",
+      "chemical_park": "南京化学工业园",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 285
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 8,
+        "rating": "A",
+        "last_cooperation": "2025-09"
+      },
+      "contact": {
+        "name": "销售经理",
+        "phone": "025-5786-XXXX",
+        "email": "sales@yzbasf.example.com"
+      }
+    },
+    {
+      "id": "SUP-003",
+      "name": "万华化学集团股份有限公司",
+      "shortName": "万华化学",
+      "province": "山东",
+      "city": "烟台",
+      "address": "山东省烟台市芝罘区幸福南路17号",
+      "established": 1998,
+      "registered_capital_wan": 3140000,
+      "employees": 18000,
+      "products": ["MDI", "TDI", "PC"],
+      "main_categories": ["异氰酸酯", "工程塑料"],
+      "annual_capacity_ton": 2800000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "14000-22000",
+      "chemical_park": "齐鲁化工园区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 730
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 6,
+        "rating": "A",
+        "last_cooperation": "2025-12"
+      },
+      "contact": {
+        "name": "大客户经理",
+        "phone": "0535-3388-XXXX",
+        "email": "key@whchem.example.com"
+      }
+    },
+    {
+      "id": "SUP-004",
+      "name": "中国石化镇海炼化分公司",
+      "shortName": "镇海炼化",
+      "province": "浙江",
+      "city": "宁波",
+      "address": "浙江省宁波市镇海区炼化路1号",
+      "established": 1975,
+      "registered_capital_wan": 580000,
+      "employees": 6500,
+      "products": ["PE", "PP", "STYRENE", "EG"],
+      "main_categories": ["通用塑料", "化工单体", "醇类"],
+      "annual_capacity_ton": 1200000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "8500-14500",
+      "chemical_park": "宁波石化经济技术开发区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 220
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 10,
+        "rating": "A",
+        "last_cooperation": "2025-10"
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0574-8628-XXXX",
+        "email": "sales@zhsh.example.com"
+      }
+    },
+    {
+      "id": "SUP-005",
+      "name": "扬州扬农化工股份有限公司",
+      "shortName": "扬农化工",
+      "province": "江苏",
+      "city": "扬州",
+      "address": "江苏省扬州市江都区扬子江中路1号",
+      "established": 1986,
+      "registered_capital_wan": 31000,
+      "employees": 3200,
+      "products": ["PHENOL", "ACETONE", "ADIPIC"],
+      "main_categories": ["化工中间体", "二元酸"],
+      "annual_capacity_ton": 350000,
+      "min_order_ton": 3,
+      "price_range_per_ton": "9000-13000",
+      "chemical_park": "扬州化工园区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 320
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0514-8632-XXXX",
+        "email": "sales@yangnong.example.com"
+      }
+    },
+    {
+      "id": "SUP-006",
+      "name": "浙江巨化股份有限公司",
+      "shortName": "巨化股份",
+      "province": "浙江",
+      "city": "衢州",
+      "address": "浙江省衢州市巨化中路6号",
+      "established": 1965,
+      "registered_capital_wan": 270000,
+      "employees": 8500,
+      "products": ["ACETONE", "GLYCEROL", "MELAMINE"],
+      "main_categories": ["溶剂", "醇类", "化工中间体"],
+      "annual_capacity_ton": 800000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "7500-12500",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 380
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 5,
+        "rating": "B",
+        "last_cooperation": "2024-08"
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0570-3082-XXXX",
+        "email": "sales@juhua.example.com"
+      }
+    },
+    {
+      "id": "SUP-007",
+      "name": "齐鲁石化烯烃厂",
+      "shortName": "齐鲁石化",
+      "province": "山东",
+      "city": "淄博",
+      "address": "山东省淄博市临淄区殷家村",
+      "established": 1980,
+      "registered_capital_wan": 420000,
+      "employees": 9800,
+      "products": ["PE", "PP", "STYRENE", "PHENOL"],
+      "main_categories": ["通用塑料", "化工单体"],
+      "annual_capacity_ton": 1800000,
+      "min_order_ton": 10,
+      "price_range_per_ton": "8200-14200",
+      "chemical_park": "齐鲁化工园区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 870
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 7,
+        "rating": "A",
+        "last_cooperation": "2025-07"
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0533-7588-XXXX",
+        "email": "sales@qilush.example.com"
+      }
+    },
+    {
+      "id": "SUP-008",
+      "name": "中海壳牌石油化工有限公司",
+      "shortName": "中海壳牌",
+      "province": "广东",
+      "city": "惠州",
+      "address": "广东省惠州市大亚湾石化区中海壳牌大道",
+      "established": 2000,
+      "registered_capital_wan": 290000,
+      "employees": 1500,
+      "products": ["PE", "PP", "STYRENE", "EG"],
+      "main_categories": ["通用塑料", "化工单体", "醇类"],
+      "annual_capacity_ton": 950000,
+      "min_order_ton": 10,
+      "price_range_per_ton": "9500-15500",
+      "chemical_park": "惠州大亚湾石化区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 1480
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 4,
+        "rating": "B",
+        "last_cooperation": "2024-11"
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0752-5589-XXXX",
+        "email": "sales@cnoocsh.example.com"
+      }
+    },
+    {
+      "id": "SUP-009",
+      "name": "江苏索普集团有限公司",
+      "shortName": "江苏索普",
+      "province": "江苏",
+      "city": "镇江",
+      "address": "江苏省镇江市丹徒区高资街道",
+      "established": 1958,
+      "registered_capital_wan": 95000,
+      "employees": 4200,
+      "products": ["PHENOL", "ACETONE", "GLYCEROL"],
+      "main_categories": ["化工中间体", "溶剂", "醇类"],
+      "annual_capacity_ton": 280000,
+      "min_order_ton": 3,
+      "price_range_per_ton": "7800-12000",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 240
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0511-8552-XXXX",
+        "email": "sales@suopu.example.com"
+      }
+    },
+    {
+      "id": "SUP-010",
+      "name": "拜耳材料科技(上海)有限公司",
+      "shortName": "拜耳上海",
+      "province": "上海",
+      "city": "上海",
+      "address": "上海市浦东新区上海化学工业园区",
+      "established": 2001,
+      "registered_capital_wan": 380000,
+      "employees": 800,
+      "products": ["PC", "MDI", "TDI"],
+      "main_categories": ["工程塑料", "异氰酸酯"],
+      "annual_capacity_ton": 500000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "15000-25000",
+      "chemical_park": "上海化学工业园区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 70
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 9,
+        "rating": "A",
+        "last_cooperation": "2025-11"
+      },
+      "contact": {
+        "name": "大客户经理",
+        "phone": "021-5048-XXXX",
+        "email": "key@bayer-sh.example.com"
+      }
+    },
+    {
+      "id": "SUP-011",
+      "name": "南京金陵塑胶化工有限公司",
+      "shortName": "金陵塑化",
+      "province": "江苏",
+      "city": "南京",
+      "address": "南京市六合区雄州街道",
+      "established": 1995,
+      "registered_capital_wan": 18000,
+      "employees": 580,
+      "products": ["PE", "PP", "ABS"],
+      "main_categories": ["通用塑料", "工程塑料"],
+      "annual_capacity_ton": 120000,
+      "min_order_ton": 2,
+      "price_range_per_ton": "8800-13500",
+      "chemical_park": "南京化学工业园",
+      "licenses": {
+        "hazardous_chemicals": false,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 300
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "025-5710-XXXX",
+        "email": "sales@jlsuhua.example.com"
+      }
+    },
+    {
+      "id": "SUP-012",
+      "name": "宁波富德能源有限公司",
+      "shortName": "宁波富德",
+      "province": "浙江",
+      "city": "宁波",
+      "address": "浙江省宁波市北仑区大榭开发区",
+      "established": 2010,
+      "registered_capital_wan": 56000,
+      "employees": 720,
+      "products": ["PP", "STYRENE"],
+      "main_categories": ["通用塑料", "化工单体"],
+      "annual_capacity_ton": 350000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "8300-13800",
+      "chemical_park": "宁波石化经济技术开发区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 215
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0574-8688-XXXX",
+        "email": "sales@nbfude.example.com"
+      }
+    },
+    {
+      "id": "SUP-013",
+      "name": "盛虹石化集团有限公司",
+      "shortName": "盛虹石化",
+      "province": "江苏",
+      "city": "苏州",
+      "address": "江苏省苏州市吴江区盛泽镇",
+      "established": 2003,
+      "registered_capital_wan": 250000,
+      "employees": 5500,
+      "products": ["PTA", "EG", "STYRENE", "PHENOL"],
+      "main_categories": ["二元酸", "醇类", "化工单体"],
+      "annual_capacity_ton": 1600000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "8000-14000",
+      "chemical_park": "苏州张家港化工园",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 110
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 3,
+        "rating": "B",
+        "last_cooperation": "2025-06"
+      },
+      "contact": {
+        "name": "采购经理",
+        "phone": "0512-6378-XXXX",
+        "email": "sales@shenghong.example.com"
+      }
+    },
+    {
+      "id": "SUP-014",
+      "name": "湖北宜化集团有限责任公司",
+      "shortName": "宜化集团",
+      "province": "湖北",
+      "city": "宜昌",
+      "address": "湖北省宜昌市猇亭区平湖大道",
+      "established": 1977,
+      "registered_capital_wan": 90000,
+      "employees": 12000,
+      "products": ["MELAMINE", "GLYCEROL", "ADIPIC"],
+      "main_categories": ["化工中间体", "醇类", "二元酸"],
+      "annual_capacity_ton": 950000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "7000-11500",
+      "chemical_park": "武汉化学工业区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 1080
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0717-6385-XXXX",
+        "email": "sales@yihua.example.com"
+      }
+    },
+    {
+      "id": "SUP-015",
+      "name": "中石化金陵分公司",
+      "shortName": "金陵石化",
+      "province": "江苏",
+      "city": "南京",
+      "address": "江苏省南京市栖霞区甘家巷",
+      "established": 1958,
+      "registered_capital_wan": 670000,
+      "employees": 7200,
+      "products": ["PE", "PP", "STYRENE", "BPA"],
+      "main_categories": ["通用塑料", "化工单体", "化工中间体"],
+      "annual_capacity_ton": 1900000,
+      "min_order_ton": 10,
+      "price_range_per_ton": "8200-14200",
+      "chemical_park": "南京化学工业园",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 290
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 11,
+        "rating": "A",
+        "last_cooperation": "2025-12"
+      },
+      "contact": {
+        "name": "大客户经理",
+        "phone": "025-5868-XXXX",
+        "email": "key@jinlingsh.example.com"
+      }
+    },
+    {
+      "id": "SUP-016",
+      "name": "山东东岳化工有限公司",
+      "shortName": "东岳化工",
+      "province": "山东",
+      "city": "淄博",
+      "address": "山东省淄博市桓台县唐山镇",
+      "established": 1987,
+      "registered_capital_wan": 145000,
+      "employees": 6800,
+      "products": ["ACETONE", "GLYCEROL"],
+      "main_categories": ["溶剂", "醇类"],
+      "annual_capacity_ton": 480000,
+      "min_order_ton": 3,
+      "price_range_per_ton": "7200-11800",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": false
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 760
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0533-8567-XXXX",
+        "email": "sales@dongyue.example.com"
+      }
+    },
+    {
+      "id": "SUP-017",
+      "name": "安徽华尔泰化工股份有限公司",
+      "shortName": "华尔泰化工",
+      "province": "安徽",
+      "city": "宿州",
+      "address": "安徽省宿州市循环经济示范园",
+      "established": 2002,
+      "registered_capital_wan": 38000,
+      "employees": 850,
+      "products": ["MELAMINE", "ADIPIC"],
+      "main_categories": ["化工中间体", "二元酸"],
+      "annual_capacity_ton": 180000,
+      "min_order_ton": 2,
+      "price_range_per_ton": "6800-11200",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": false,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 620
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0557-3358-XXXX",
+        "email": "sales@huaertai.example.com"
+      }
+    },
+    {
+      "id": "SUP-018",
+      "name": "上海赛科石油化工有限责任公司",
+      "shortName": "上海赛科",
+      "province": "上海",
+      "city": "上海",
+      "address": "上海市浦东新区上海化学工业园区",
+      "established": 2001,
+      "registered_capital_wan": 218000,
+      "employees": 1100,
+      "products": ["PE", "PP", "STYRENE", "EG"],
+      "main_categories": ["通用塑料", "化工单体", "醇类"],
+      "annual_capacity_ton": 1300000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "8500-14800",
+      "chemical_park": "上海化学工业园区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 65
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 10,
+        "rating": "A",
+        "last_cooperation": "2025-12"
+      },
+      "contact": {
+        "name": "大客户经理",
+        "phone": "021-3812-XXXX",
+        "email": "key@secco.example.com"
+      }
+    },
+    {
+      "id": "SUP-019",
+      "name": "福建炼化福海创石油化工有限公司",
+      "shortName": "福海创",
+      "province": "福建",
+      "city": "漳州",
+      "address": "福建省漳州市古雷港经济开发区",
+      "established": 2005,
+      "registered_capital_wan": 320000,
+      "employees": 2500,
+      "products": ["PTA", "EG", "STYRENE"],
+      "main_categories": ["二元酸", "醇类", "化工单体"],
+      "annual_capacity_ton": 1100000,
+      "min_order_ton": 10,
+      "price_range_per_ton": "8000-13800",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 920
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0596-3578-XXXX",
+        "email": "sales@fhc.example.com"
+      }
+    },
+    {
+      "id": "SUP-020",
+      "name": "嘉兴石化有限公司",
+      "shortName": "嘉兴石化",
+      "province": "浙江",
+      "city": "嘉兴",
+      "address": "浙江省嘉兴市港区港兴路",
+      "established": 2010,
+      "registered_capital_wan": 78000,
+      "employees": 1300,
+      "products": ["PTA", "EG"],
+      "main_categories": ["二元酸", "醇类"],
+      "annual_capacity_ton": 700000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "8200-13500",
+      "chemical_park": "嘉兴港区化工新材料园",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 130
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 4,
+        "rating": "B",
+        "last_cooperation": "2024-12"
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0573-8328-XXXX",
+        "email": "sales@jxshihua.example.com"
+      }
+    },
+    {
+      "id": "SUP-021",
+      "name": "山东海科化工集团有限公司",
+      "shortName": "海科化工",
+      "province": "山东",
+      "city": "东营",
+      "address": "山东省东营市垦利区永安镇",
+      "established": 1992,
+      "registered_capital_wan": 88000,
+      "employees": 3800,
+      "products": ["PE", "PP", "ACETONE"],
+      "main_categories": ["通用塑料", "溶剂"],
+      "annual_capacity_ton": 620000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "7800-13200",
+      "chemical_park": "山东东营港经济开发区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 880
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0546-8266-XXXX",
+        "email": "sales@haikechem.example.com"
+      }
+    },
+    {
+      "id": "SUP-022",
+      "name": "茂名石化炼油厂",
+      "shortName": "茂名石化",
+      "province": "广东",
+      "city": "茂名",
+      "address": "广东省茂名市茂南区石化大道",
+      "established": 1962,
+      "registered_capital_wan": 480000,
+      "employees": 8800,
+      "products": ["PE", "PP", "STYRENE", "PHENOL"],
+      "main_categories": ["通用塑料", "化工单体", "化工中间体"],
+      "annual_capacity_ton": 1700000,
+      "min_order_ton": 10,
+      "price_range_per_ton": "8400-14500",
+      "chemical_park": "茂名石化工业园区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 1620
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 3,
+        "rating": "B",
+        "last_cooperation": "2024-09"
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0668-2987-XXXX",
+        "email": "sales@maoming.example.com"
+      }
+    },
+    {
+      "id": "SUP-023",
+      "name": "江苏华昌化工股份有限公司",
+      "shortName": "华昌化工",
+      "province": "江苏",
+      "city": "张家港",
+      "address": "江苏省张家港市锦丰镇",
+      "established": 1970,
+      "registered_capital_wan": 105000,
+      "employees": 3200,
+      "products": ["MELAMINE", "ADIPIC", "GLYCEROL"],
+      "main_categories": ["化工中间体", "二元酸", "醇类"],
+      "annual_capacity_ton": 460000,
+      "min_order_ton": 3,
+      "price_range_per_ton": "7300-12000",
+      "chemical_park": "苏州张家港化工园",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 130
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 5,
+        "rating": "B",
+        "last_cooperation": "2025-08"
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0512-5878-XXXX",
+        "email": "sales@huachang.example.com"
+      }
+    },
+    {
+      "id": "SUP-024",
+      "name": "新疆天业(集团)有限公司",
+      "shortName": "新疆天业",
+      "province": "新疆",
+      "city": "石河子",
+      "address": "新疆石河子开发区北二东路",
+      "established": 1996,
+      "registered_capital_wan": 280000,
+      "employees": 9500,
+      "products": ["PE", "PP", "EG"],
+      "main_categories": ["通用塑料", "醇类"],
+      "annual_capacity_ton": 1400000,
+      "min_order_ton": 20,
+      "price_range_per_ton": "7500-12800",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 3300
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0993-2058-XXXX",
+        "email": "sales@xjtianye.example.com"
+      }
+    },
+    {
+      "id": "SUP-025",
+      "name": "河南骏化发展股份有限公司",
+      "shortName": "骏化发展",
+      "province": "河南",
+      "city": "驻马店",
+      "address": "河南省驻马店市经济开发区",
+      "established": 1988,
+      "registered_capital_wan": 42000,
+      "employees": 1500,
+      "products": ["MELAMINE", "ADIPIC"],
+      "main_categories": ["化工中间体", "二元酸"],
+      "annual_capacity_ton": 220000,
+      "min_order_ton": 3,
+      "price_range_per_ton": "6800-11000",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": false,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 950
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0396-2588-XXXX",
+        "email": "sales@junhua.example.com"
+      }
+    },
+    {
+      "id": "SUP-026",
+      "name": "蓝星新材料有限公司",
+      "shortName": "蓝星新材",
+      "province": "江苏",
+      "city": "南通",
+      "address": "江苏省南通市启东市吕四港镇",
+      "established": 1999,
+      "registered_capital_wan": 165000,
+      "employees": 2200,
+      "products": ["PC", "ABS"],
+      "main_categories": ["工程塑料"],
+      "annual_capacity_ton": 360000,
+      "min_order_ton": 3,
+      "price_range_per_ton": "13500-20500",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": false,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 180
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 6,
+        "rating": "B",
+        "last_cooperation": "2025-05"
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0513-8398-XXXX",
+        "email": "sales@bluestar-nm.example.com"
+      }
+    },
+    {
+      "id": "SUP-027",
+      "name": "中石化上海高桥分公司",
+      "shortName": "高桥石化",
+      "province": "上海",
+      "city": "上海",
+      "address": "上海市浦东新区高桥镇",
+      "established": 1979,
+      "registered_capital_wan": 410000,
+      "employees": 6500,
+      "products": ["PE", "PP", "ACETONE", "PHENOL"],
+      "main_categories": ["通用塑料", "溶剂", "化工中间体"],
+      "annual_capacity_ton": 1500000,
+      "min_order_ton": 5,
+      "price_range_per_ton": "8300-14300",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": true,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 25
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 14,
+        "rating": "A",
+        "last_cooperation": "2025-12"
+      },
+      "contact": {
+        "name": "大客户经理",
+        "phone": "021-5897-XXXX",
+        "email": "key@gqshihua.example.com"
+      }
+    },
+    {
+      "id": "SUP-028",
+      "name": "浙江大洋生物科技集团股份有限公司",
+      "shortName": "大洋生物",
+      "province": "浙江",
+      "city": "杭州",
+      "address": "浙江省杭州市建德市新安江街道",
+      "established": 1992,
+      "registered_capital_wan": 28000,
+      "employees": 950,
+      "products": ["GLYCEROL", "BPA"],
+      "main_categories": ["醇类", "化工中间体"],
+      "annual_capacity_ton": 145000,
+      "min_order_ton": 2,
+      "price_range_per_ton": "8200-13000",
+      "chemical_park": null,
+      "licenses": {
+        "hazardous_chemicals": false,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 280
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0571-6432-XXXX",
+        "email": "sales@dayang-bio.example.com"
+      }
+    },
+    {
+      "id": "SUP-029",
+      "name": "泰兴金燕化工有限公司",
+      "shortName": "金燕化工",
+      "province": "江苏",
+      "city": "泰州",
+      "address": "江苏省泰州市泰兴经济开发区",
+      "established": 2007,
+      "registered_capital_wan": 28000,
+      "employees": 480,
+      "products": ["BPA", "PHENOL"],
+      "main_categories": ["化工中间体"],
+      "annual_capacity_ton": 95000,
+      "min_order_ton": 2,
+      "price_range_per_ton": "8500-13800",
+      "chemical_park": "泰兴经济开发区",
+      "licenses": {
+        "hazardous_chemicals": true,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": true,
+        "distance_km_to_shanghai": 245
+      },
+      "sabic_history": {
+        "is_partner": false,
+        "years": 0,
+        "rating": null,
+        "last_cooperation": null
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0523-8729-XXXX",
+        "email": "sales@jinyan.example.com"
+      }
+    },
+    {
+      "id": "SUP-030",
+      "name": "常熟三爱富氟化工有限公司",
+      "shortName": "常熟三爱富",
+      "province": "江苏",
+      "city": "常熟",
+      "address": "江苏省常熟市新材料产业园",
+      "established": 2004,
+      "registered_capital_wan": 92000,
+      "employees": 850,
+      "products": ["PC", "ABS"],
+      "main_categories": ["工程塑料"],
+      "annual_capacity_ton": 180000,
+      "min_order_ton": 2,
+      "price_range_per_ton": "14000-21000",
+      "chemical_park": "常熟新材料产业园",
+      "licenses": {
+        "hazardous_chemicals": false,
+        "safety_production": true,
+        "vat_general": true,
+        "gb_certified": true
+      },
+      "logistics": {
+        "own_fleet": false,
+        "hazmat_transport": false,
+        "distance_km_to_shanghai": 105
+      },
+      "sabic_history": {
+        "is_partner": true,
+        "years": 2,
+        "rating": "B",
+        "last_cooperation": "2025-03"
+      },
+      "contact": {
+        "name": "销售部",
+        "phone": "0512-5278-XXXX",
+        "email": "sales@csaifu.example.com"
+      }
+    }
+  ]
+}

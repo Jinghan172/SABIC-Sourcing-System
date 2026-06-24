@@ -1,0 +1,72 @@
+{
+  "en": "TPE",
+  "cn": "热塑性弹性体",
+  "collected_at": "2026-06-10 11:10",
+  "count": 4,
+  "companies": [
+    {
+      "name": "苏州洪硕弹性体科技有限公司",
+      "credit_code": "91320506566833546F",
+      "legal_person": "张祖森",
+      "reg_capital": "2000万元",
+      "established": "2010-12-13",
+      "status": "在业",
+      "scope": "研发、生产、加工、销售：热塑性弹性体TPE、五金制品、模具及配件；自营和代理各类商品及技术的进出口业务。普通货物道路运输。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "江苏",
+      "city": "",
+      "address": "苏州市吴中区胥口镇新峰路518号",
+      "industry": "塑料制品业",
+      "_qcc_industry": "塑料制品业",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "苏州聚硕弹性体科技有限公司",
+      "credit_code": "91320585053461767E",
+      "legal_person": "杜明敬",
+      "reg_capital": "100万元",
+      "established": "2012-08-30",
+      "status": "存续",
+      "scope": "研发、生产、加工、销售热塑性弹性体（TPE）；经销金属制品、钢材、模具。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "江苏",
+      "city": "",
+      "address": "太仓市沙溪镇工业园区",
+      "industry": "研究和试验发展",
+      "_qcc_industry": "研究和试验发展",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "广东立恩实业有限公司",
+      "credit_code": "9144190031498644XU",
+      "legal_person": "王赛军",
+      "reg_capital": "1088万元",
+      "established": "2014-09-02",
+      "status": "存续",
+      "scope": "研发、生产、销售：高分子材料及制品、其他化工产品（以上经营项目不含危险化学品）、金属制品、电子产品；实业投资；货物进出口、技术进出口。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "广东",
+      "city": "",
+      "address": "东莞市寮步镇金园新路49号",
+      "industry": "其他未列明制造业",
+      "_qcc_industry": "其他未列明制造业",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "广州市凯德热塑性弹性体有限公司",
+      "credit_code": "91440101567942058M",
+      "legal_person": "陈少玲",
+      "reg_capital": "300万元",
+      "established": "2011-01-28",
+      "status": "存续",
+      "scope": "塑料粒料制造;日用塑料制品制造;合成橡胶制造（监控化学品、危险化学品除外）;有机化学原料制造（监控化学品、危险化学品除外）;商品批发贸易（许可审批类商品除外）",
+      "province": "广东",
+      "city": "",
+      "address": "广州市增城永宁街宁西工业园三路8号（厂房A1）",
+      "industry": "塑料零件及其他塑料制品制造",
+      "_qcc_industry": "塑料零件及其他塑料制品制造",
+      "patent_count": 0,
+      "has_chem_patent": false
+    }
+  ]
+}
