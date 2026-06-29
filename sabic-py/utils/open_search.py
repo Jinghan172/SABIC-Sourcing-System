@@ -15,6 +15,7 @@ from utils.qcc_client import (
     classify_role, is_relevant, is_configured,
 )
 from utils.scorer import score_supplier, DEFAULT_WEIGHTS
+from utils import sites
 from utils.sabic_search import get_search_plan, get_qcc_filters
 
 logger = logging.getLogger(__name__)
@@ -307,6 +308,7 @@ def open_search(
     weights: dict | None = None,
     page: int = 1,
     include_traders: bool = False,
+    site_key: str = "SH",
 ) -> dict:
     """
     开放产品搜索：输入任意产品关键词，返回评分排序的供应商列表。
@@ -485,7 +487,9 @@ def open_search(
     scored = []
     for s in suppliers:
         s["main_categories"] = list(set(s.get("main_categories", []) + [query]))
-        scored.append(score_supplier(s, virtual_chem, w, query=query))
+        s.setdefault("logistics", {})["distance_km_to_site"] = \
+            sites.distance_to_site(s.get("province", ""), site_key)
+        scored.append(score_supplier(s, virtual_chem, w, query=query, site_key=site_key))
 
     # ── 阶段五：综合评分降序（同分时工厂 > 工厂兼贸易 > 进口商 > 经销商 > 中介）──
     # 主排序键为综合分，确保列表严格按评分从高到低；角色仅作同分时的次级排序。
@@ -514,7 +518,7 @@ def open_search(
                 s["_qualifications"] = items
                 s["_qual_verified"] = True
                 # 资质齐全的真工厂：重新评分（资质分会提升 compliance）
-                rescored = score_supplier(s, virtual_chem, w, query=query)
+                rescored = score_supplier(s, virtual_chem, w, query=query, site_key=site_key)
                 s["score"] = rescored["score"]
                 s["dimensions"] = rescored["dimensions"]
                 qual_checked += 1

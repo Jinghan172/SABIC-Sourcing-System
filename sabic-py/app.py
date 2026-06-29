@@ -19,6 +19,7 @@ import streamlit as st
 import pandas as pd
 
 from utils.matcher import match_suppliers, LAST_SEARCH_META
+from utils import sites
 from utils.cross_validator import batch_validate, confidence_label
 from utils.chemnet_client import search_chem_suppliers, is_configured as chemnet_ok
 from utils.ibuychem_client import search_by_keyword as ibc_search, is_loaded as ibc_loaded
@@ -26,6 +27,7 @@ from utils.sabic_search import SABIC_SEARCH_STRATEGIES, get_category_priority
 from utils.local_search import list_cache_categories, cache_status
 from utils.scorer import DEFAULT_WEIGHTS, has_hazmat_license, _IND_CHEM, _IND_MFG
 from utils.exporter import export_excel
+from export_master import build_master
 from utils.insights import decision_summary, supply_landscape, why_not_top
 from components.charts import (
     radar_chart, bar_chart, bubble_chart,
@@ -34,6 +36,14 @@ from components.charts import (
 from components.core_materials import (
     render_core_cards, render_core_report, get_material, CORE_CSS,
 )
+from components.services import (
+    render_service_cards, render_service_report, SERVICES_CSS,
+)
+from components.equipment import (
+    render_equipment_cards, render_equipment_report, EQUIPMENT_CSS,
+)
+from components import home as home_nav
+from components.home import HOME_CSS
 
 APP_DIR = Path(__file__).resolve().parent
 
@@ -468,6 +478,16 @@ def _init():
         "active_supplier": None,
         "chart_tab": "radar",
         "core_material": None,
+        "service_cat": None,
+        "equipment_cat": None,
+        "equip_plant": None,
+        "site": "SH",
+        "lane": None,
+        "svc_plant": "SH",
+        "svc_weights": None,
+        "eq_weights": None,
+        "svc_filters": {},
+        "eq_filters": {},
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -480,273 +500,300 @@ _init()
 
 # ── 核心物料样式 + 专家评审报告拦截 ──────────────────────────────────
 st.markdown(CORE_CSS, unsafe_allow_html=True)
-if st.session_state.get("core_material"):
-    render_core_report(st.session_state.core_material)
-    st.stop()
+st.markdown(SERVICES_CSS, unsafe_allow_html=True)
+st.markdown(EQUIPMENT_CSS, unsafe_allow_html=True)
+st.markdown(HOME_CSS, unsafe_allow_html=True)
 
-# ── 计算匹配结果 ──────────────────────────────────────────────────────
-_, results = match_suppliers(
-    query=st.session_state.query,
-    filters=st.session_state.filters,
-    weights=st.session_state.weights,
-)
-
-# ── 交叉验证（仅在真实配置了化工网/买化塑时运行）──────────────────
-_query     = st.session_state.query or ""
-_cn_items  = []
-_ibc_items = []
-_xval_on   = False
-
-if chemnet_ok() and _query:
-    _cn_items = search_chem_suppliers(_query)
-    _xval_on = True
-if ibc_loaded() and _query:
-    _ibc_items = ibc_search(_query)
-    _xval_on = True
-
-if _xval_on and results:
-    results = batch_validate(results, _cn_items, _ibc_items, _query)
-
-sel_ids = st.session_state.selected_ids
-compare_suppliers = (
-    [s for s in results if s["id"] in sel_ids] if sel_ids
-    else results[:5]
-)
-
-# 统计
+# ── 厂区 / 缓存状态：侧栏与报告拦截都要用，需在拦截前算好 ──
+_site_key = st.session_state.get("site", "SH")
+_site = sites.get_site(_site_key)
 _cs = cache_status()
-tier1_count   = sum(1 for s in results if s.get("_tier") == 1)
-factory_count = sum(1 for s in results if s.get("_role") in ("manufacturer", "both"))
-hazmat_count  = sum(1 for s in results if
-    s.get("licenses", {}).get("hazardous_chemicals") or
-    s.get("licenses", {}).get("hazmat_business"))
-avg_score = (
-    round(sum(s.get("score", 0) for s in results) / len(results), 1)
-    if results else "—"
-)
 
-# ═══════════════════════════════════════════════════════════════════════
-# Hero 顶部
-# ═══════════════════════════════════════════════════════════════════════
-st.markdown(f"""
-<div class="sabic-hero">
- <div class="hero-inner">
-  <div class="hero-badge"><span class="pulse"></span>SABIC Shanghai · 智能寻源决策</div>
-  <div class="hero-title"><span class="lead">请输入一种原材料，</span><br>告诉你<span class="key">选哪家供应商</span></div>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-val g">{len(results)}</div>
-      <div class="hero-stat-lbl">当前匹配</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val b">{tier1_count}</div>
-      <div class="hero-stat-lbl">华东一级</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val t">{_cs['count']}</div>
-      <div class="hero-stat-lbl">缓存品类</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val">{avg_score}</div>
-      <div class="hero-stat-lbl">平均评分</div>
-    </div>
-  </div>
- </div>
-</div>
-""", unsafe_allow_html=True)
+def _infer_active_lane() -> str | None:
+    if st.session_state.get("core_material"):  return "core"
+    if st.session_state.get("service_cat"):    return "mro"
+    if st.session_state.get("equipment_cat"):  return "equipment"
+    if st.session_state.get("query"):          return "material"
+    return st.session_state.get("lane")
 
-# ═══════════════════════════════════════════════════════════════════════
-# 侧边栏：筛选 + 权重
-# ═══════════════════════════════════════════════════════════════════════
-with st.sidebar:
-    # ── 筛选器 ──────────────────────────────────────────────────────
-    _side_head("🔎", "筛选条件")
-    f = st.session_state.filters
+_active_lane = _infer_active_lane()
 
-    with open(APP_DIR / "data" / "regions.json", encoding="utf-8") as _f:
-        _regions = json.load(_f)
 
-    # ▶ 地域筛选
-    with st.expander("📍 地域", expanded=True):
-        tier_options = {"一级 (沪苏浙皖)": 1, "二级 (鲁粤鄂豫闽)": 2, "三级 (其余)": 3}
-        sel_tier_labels = st.multiselect(
-            "地理圈层", list(tier_options.keys()),
-            default=[k for k, v in tier_options.items() if v in f.get("tiers", [])],
-            placeholder="不限",
-        )
-        sel_tiers = [tier_options[l] for l in sel_tier_labels]
-
-        tier1_p = _regions["tiers"]["tier1"]["provinces"]
-        tier2_p = _regions["tiers"]["tier2"]["provinces"]
-        tier3_p = _regions["tiers"].get("tier3", {}).get("provinces", [])
-        if sel_tiers:
-            pool = []
-            if 1 in sel_tiers: pool += tier1_p
-            if 2 in sel_tiers: pool += tier2_p
-            if 3 in sel_tiers: pool += tier3_p
-        else:
-            pool = tier1_p + tier2_p + tier3_p
-
-        sel_provinces = st.multiselect(
-            "省份（支持多选）", pool,
-            default=[p for p in f.get("provinces", []) if p in pool],
-            placeholder="不限（全国）",
-        )
-
-    # ▶ 企业信息（来自企查查）
-    with st.expander("🏢 企业信息", expanded=True):
-        status_active = st.checkbox(
-            "仅展示存续/在业企业",
-            value=f.get("status_active", True),
-            help="过滤掉注销、吊销、迁出等状态企业",
-        )
-        company_type = st.radio(
-            "企业类型（默认排除纯中介）",
-            options=["factory_first", "manufacturer", "all"],
-            format_func=lambda x: {
-                "factory_first": "工厂优先（推荐）",
-                "manufacturer":  "只看工厂",
-                "all":           "全部（含贸易商）",
-            }[x],
-            index=["factory_first","manufacturer","all"].index(
-                f.get("company_type","factory_first")
-                if f.get("company_type") in ("factory_first","manufacturer","all") else "factory_first"),
-        )
-        min_capital = st.number_input(
-            "最低注册资本（万元）",
-            min_value=0, max_value=100_000,
-            value=int(f.get("min_capital", 0)),
-            step=100,
-            help="0 = 不限；来自企查查 RegistCapi 字段",
-        )
-        import datetime as _dt
-        current_year = _dt.datetime.now().year
-        est_after = st.slider(
-            "成立年份 ≥",
-            min_value=1980, max_value=current_year,
-            value=f.get("est_after", 1990),
-            help="来自企查查 StartDate 字段",
-        )
-
-    # ▶ 资质与行业
-    with st.expander("📋 资质 & 关键词", expanded=False):
-        only_hazmat = st.checkbox(
-            "含危险化学品经营资质",
-            value=f.get("only_hazmat", False),
-            help="经营范围包含危险化学品关键词（'不含危化品'等否定表述不算）",
-        )
-        scope_keyword = st.text_input(
-            "经营范围额外包含词",
-            value=f.get("scope_keyword", ""),
-            placeholder="例：换热器 / ISO9001 / 出口",
-            help="在企查查经营范围文本中精确匹配",
-        )
-
-    # ▶ 评分门槛
-    with st.expander("🎯 评分门槛", expanded=False):
-        min_score = st.slider(
-            "最低综合评分",
-            min_value=0, max_value=90,
-            value=f.get("min_score", 0),
-            step=5,
-            help="过滤掉低于该分数的企业",
-        )
-
-    new_filters = {
-        "provinces":     sel_provinces,
-        "tiers":         sel_tiers,
-        "status_active": status_active,
-        "company_type":  company_type,
-        "min_capital":   min_capital,
-        "est_after":     est_after,
-        "only_hazmat":   only_hazmat,
-        "scope_keyword": scope_keyword,
-        "min_score":     min_score,
-    }
-    if new_filters != st.session_state.filters:
-        st.session_state.filters = new_filters
-        st.rerun()
-
-    st.divider()
-
-    # ── 权重调节 ─────────────────────────────────────────────────────
-    _side_head("⚖️", "评分权重")
-    st.caption("每家企业的总分 = 三项分数 × 各自权重。拖动滑块调整你看重的方面。")
-
-    with st.expander("📖 每个分数是怎么算出来的？（点击查看）", expanded=False):
-        st.markdown("""
-**总分 = 地理 × 权重 + 规模 × 权重 + 合规 × 权重**
-（三项满分都是 100 分，权重就是右边滑块的百分比）
-
----
-
-**📍 地理位置**　越靠近上海工厂，分越高
-- 看企业注册在哪个省
-- 沪苏浙皖（一级圈）≈ 100 分
-- 鲁粤鄂豫闽（二级圈）≈ 55 分
-- 其他省份（三级圈）≈ 20 分
-- 再根据距上海公里数微调
-
-**🏢 企业规模**　实力越强，分越高
-- 注册资本：10 亿以上 = 100 分，1 亿 = 78 分，1000 万 = 50 分
-- 成立年限：20 年以上 = 100 分，10 年 = 70 分，5 年 = 50 分
-- 两项按 65% : 35% 合并
-
-**✅ 合规资质**　全部来自企查查工商字段，逐项累加
-- 经营状态正常（存续/在业）＝ 25 分
-- 企业角色：工厂 20 / 工厂兼贸易 16 / 进口商 8 / 经销商 4 / 中介 0
-- 危险化学品许可（经营范围，"不含危化品"不算）＝ 20 分
-- 生产/安全许可证关键词 ＝ 10 分
-- 化工园区 10 分（一般工业园区 5 分）
-- 化工类行业 10 分（其他制造业 5 分，看企查查行业分类）
-- 进出口经营资质 ＝ 5 分
-
----
-
-*所有分数都从企查查的工商数据自动算出，没有人工打分。*
-        """)
-
-    w = st.session_state.weights
-    w_geo  = st.slider("📍 地理位置", 0, 100, int(w.get("geography", 0.35) * 100), 5,
-                       help="企业离上海越近分越高。看重物流成本就调高它。")
-    w_scl  = st.slider("🏢 企业规模", 0, 100, int(w.get("scale",    0.35) * 100), 5,
-                       help="注册资本越大、成立越久分越高。看重企业实力就调高它。")
-    w_cmp  = st.slider("✅ 合规资质", 0, 100, int(w.get("compliance",0.30) * 100), 5,
-                       help="证照齐全、是制造商、在化工园区分越高。看重合规就调高它。")
-
-    total_w = w_geo + w_scl + w_cmp
-    if total_w > 0:
-        new_weights = {
-            "geography":  w_geo / total_w,
-            "scale":      w_scl / total_w,
-            "compliance": w_cmp / total_w,
-        }
-        if new_weights != st.session_state.weights:
-            st.session_state.weights = new_weights
+def _render_lane_sidebar(lane: str | None) -> None:
+    """非原料大类的侧栏：服务 / 设备各自的权重滑块 + 专属筛选。"""
+    if lane == "mro":
+        from utils.services_scorer import DIM_KEYS as _K, DIM_CN as _CN, DEFAULT_WEIGHTS as _DW
+        from components.services import get_service as _get_svc
+        _side_head("⚖️", "服务评分权重")
+        st.caption("拖动 5 维权重，服务商排名实时重排（自动归一化）。切换品类自动载入其设计权重。")
+        _cat = st.session_state.get("service_cat")
+        if _cat and st.session_state.get("svc_weights_cat") != _cat:
+            _seed = (_get_svc(_cat) or {}).get("weights") or _DW
+            for k in _K:
+                st.session_state[f"svcw_{k}"] = int(_seed.get(k, _DW[k]))
+            st.session_state.svc_weights_cat = _cat
+        _vals = {k: st.slider(_CN[k], 0, 100, int(_DW[k]), 2, key=f"svcw_{k}")
+                 for k in _K}
+        if st.button("↺ 恢复该品类设计权重", key="svcw_reset", width="stretch"):
+            for k in _K:
+                st.session_state.pop(f"svcw_{k}", None)
+            st.session_state.svc_weights_cat = None   # 触发按品类重新载入设计权重
+            st.session_state.svc_weights = None
             st.rerun()
-        st.caption("已自动归一化，合计 100%")
+        st.session_state.svc_weights = _vals
+        st.divider()
+        _side_head("🔎", "服务筛选")
+        _topt = {"全国头部平台": "national_top", "区域龙头": "regional", "属地厂商": "local"}
+        _sel = st.multiselect("规模圈层", list(_topt.keys()), key="svcf_tiers",
+                              placeholder="不限")
+        _po = st.checkbox("仅看各基地战略首选", key="svcf_primary")
+        st.session_state.svc_filters = {
+            "tiers": [_topt[s] for s in _sel] if _sel else None, "primary_only": _po}
 
-    # 一键预设场景
-    st.caption("不知道怎么调？直接选一个场景：")
-    pcol1, pcol2 = st.columns(2)
-    if pcol1.button("⚖️ 均衡推荐", width='stretch',
-                    help="地理35 规模35 合规30，适合大多数情况"):
-        st.session_state.weights = dict(DEFAULT_WEIGHTS)
-        st.rerun()
-    if pcol2.button("🚚 就近优先", width='stretch',
-                    help="加重地理位置，适合急需交付、看重物流的采购"):
-        st.session_state.weights = {"geography":0.50,"scale":0.25,"compliance":0.25}
-        st.rerun()
-    pcol3, pcol4 = st.columns(2)
-    if pcol3.button("🏆 实力优先", width='stretch',
-                    help="加重企业规模，适合大宗、长期合作采购"):
-        st.session_state.weights = {"geography":0.20,"scale":0.50,"compliance":0.30}
-        st.rerun()
-    if pcol4.button("🛡️ 合规优先", width='stretch',
-                    help="加重合规资质，适合危化品等强监管品类"):
-        st.session_state.weights = {"geography":0.20,"scale":0.30,"compliance":0.50}
-        st.rerun()
+    elif lane == "equipment":
+        from utils.equipment_scorer import DIM_KEYS as _K, DIM_CN as _CN, DEFAULT_WEIGHTS as _DW
+        _side_head("⚖️", "设备评分权重")
+        st.caption("拖动 5 维权重，供应商排名实时重排（自动归一化）。")
+        _cur = st.session_state.get("eq_weights") or dict(_DW)
+        _vals = {k: st.slider(_CN[k], 0, 100, int(_cur.get(k, _DW[k])), 2, key=f"eqw_{k}")
+                 for k in _K}
+        if st.button("↺ 恢复默认权重", key="eqw_reset", width="stretch"):
+            for k in _K:
+                st.session_state.pop(f"eqw_{k}", None)
+            st.session_state.eq_weights = None
+            st.rerun()
+        st.session_state.eq_weights = _vals
+        st.divider()
+        _side_head("🔎", "设备筛选")
+        _lo = st.checkbox("仅看属地供应商", key="eqf_local")
+        _qs = st.multiselect("资质要求",
+                             ["A1", "A2", "API Q1", "ISO 9001", "CE", "特种设备制造许可证（A级）"],
+                             key="eqf_quals", placeholder="不限")
+        _ml = st.slider("最长可接受交期（天）", 30, 200, 200, 10, key="eqf_lead")
+        st.session_state.eq_filters = {
+            "local_only": _lo, "quals": _qs or None,
+            "max_lead": _ml if _ml < 200 else None}
 
+    elif lane == "core":
+        _side_head("⚖️", "评分说明")
+        st.caption("核心原材料采用 6 维专家评审模型（产能 / 资质 / 技术 / 属地 / 规模 / 合规），"
+                   "权重在专家报告内固定标定以体现尽调权威性，暂不开放滑块。")
+    else:
+        _side_head("🧭", "采购大类")
+        st.caption("请在主区先选择采购大类（核心原料 / 其他原料 / 服务 MRO / 化工设备），"
+                   "侧栏会显示该大类专属的评分权重与筛选项。")
+
+
+with st.sidebar:
+    if _active_lane == "material":
+        # ── 采购厂区（决定地理评分锚点）─────────────────────────────────
+        _side_head("🏭", "采购厂区")
+        st.markdown(
+            f"<div style='background:#f3fbf6;border:1px solid #cfeede;border-radius:9px;"
+            f"padding:9px 12px;font-size:13px;color:#15603a'>"
+            f"当前：<b>{_site['cn']}</b> · {_site['cluster']}<br>"
+            f"<span style='font-size:11.5px;color:#5a6780'>一级圈：{'、'.join(_site['home'])}</span></div>",
+            unsafe_allow_html=True,
+        )
+        st.caption("厂区在「其他原料」品类页的四大工厂大地图上选择；服务 / 设备在各自报告内选择。")
+        st.divider()
+
+        # ── 筛选器 ──────────────────────────────────────────────────────
+        _side_head("🔎", "筛选条件")
+        f = st.session_state.filters
+
+        with open(APP_DIR / "data" / "regions.json", encoding="utf-8") as _f:
+            _regions = json.load(_f)
+
+        # ▶ 地域筛选（圈层随所选厂区动态划定）
+        with st.expander("📍 地域", expanded=True):
+            _home_s = "、".join(_site["home"][:4]) + ("…" if len(_site["home"]) > 4 else "")
+            tier_options = {
+                f"一级（{_site['cluster']}：{_home_s}）": 1,
+                f"二级（{_site['cluster']}周边）": 2,
+                "三级（其余外省）": 3,
+            }
+            sel_tier_labels = st.multiselect(
+                "地理圈层", list(tier_options.keys()),
+                default=[k for k, v in tier_options.items() if v in f.get("tiers", [])],
+                placeholder="不限",
+            )
+            sel_tiers = [tier_options[l] for l in sel_tier_labels]
+
+            _all_p = list(_regions.get("provinceCoords", {}).keys())
+            tier1_p = _site["home"]
+            tier2_p = _site["near"]
+            tier3_p = [p for p in _all_p if p not in tier1_p and p not in tier2_p]
+            if sel_tiers:
+                pool = []
+                if 1 in sel_tiers: pool += tier1_p
+                if 2 in sel_tiers: pool += tier2_p
+                if 3 in sel_tiers: pool += tier3_p
+            else:
+                pool = tier1_p + tier2_p + tier3_p
+
+            sel_provinces = st.multiselect(
+                "省份（支持多选）", pool,
+                default=[p for p in f.get("provinces", []) if p in pool],
+                placeholder="不限（全国）",
+            )
+
+        # ▶ 企业信息（来自企查查）
+        with st.expander("🏢 企业信息", expanded=True):
+            status_active = st.checkbox(
+                "仅展示存续/在业企业",
+                value=f.get("status_active", True),
+                help="过滤掉注销、吊销、迁出等状态企业",
+            )
+            company_type = st.radio(
+                "企业类型（默认排除纯中介）",
+                options=["factory_first", "manufacturer", "all"],
+                format_func=lambda x: {
+                    "factory_first": "工厂优先（推荐）",
+                    "manufacturer":  "只看工厂",
+                    "all":           "全部（含贸易商）",
+                }[x],
+                index=["factory_first","manufacturer","all"].index(
+                    f.get("company_type","factory_first")
+                    if f.get("company_type") in ("factory_first","manufacturer","all") else "factory_first"),
+            )
+            min_capital = st.number_input(
+                "最低注册资本（万元）",
+                min_value=0, max_value=100_000,
+                value=int(f.get("min_capital", 0)),
+                step=100,
+                help="0 = 不限；来自企查查 RegistCapi 字段",
+            )
+            import datetime as _dt
+            current_year = _dt.datetime.now().year
+            est_after = st.slider(
+                "成立年份 ≥",
+                min_value=1980, max_value=current_year,
+                value=f.get("est_after", 1990),
+                help="来自企查查 StartDate 字段",
+            )
+
+        # ▶ 资质与行业
+        with st.expander("📋 资质 & 关键词", expanded=False):
+            only_hazmat = st.checkbox(
+                "含危险化学品经营资质",
+                value=f.get("only_hazmat", False),
+                help="经营范围包含危险化学品关键词（'不含危化品'等否定表述不算）",
+            )
+            scope_keyword = st.text_input(
+                "经营范围额外包含词",
+                value=f.get("scope_keyword", ""),
+                placeholder="例：换热器 / ISO9001 / 出口",
+                help="在企查查经营范围文本中精确匹配",
+            )
+
+        # ▶ 评分门槛
+        with st.expander("🎯 评分门槛", expanded=False):
+            min_score = st.slider(
+                "最低综合评分",
+                min_value=0, max_value=90,
+                value=f.get("min_score", 0),
+                step=5,
+                help="过滤掉低于该分数的企业",
+            )
+
+        new_filters = {
+            "provinces":     sel_provinces,
+            "tiers":         sel_tiers,
+            "status_active": status_active,
+            "company_type":  company_type,
+            "min_capital":   min_capital,
+            "est_after":     est_after,
+            "only_hazmat":   only_hazmat,
+            "scope_keyword": scope_keyword,
+            "min_score":     min_score,
+        }
+        if new_filters != st.session_state.filters:
+            st.session_state.filters = new_filters
+            st.rerun()
+
+        st.divider()
+
+        # ── 权重调节 ─────────────────────────────────────────────────────
+        _side_head("⚖️", "评分权重")
+        st.caption("每家企业的总分 = 三项分数 × 各自权重。拖动滑块调整你看重的方面。")
+
+        with st.expander("📖 每个分数是怎么算出来的？（点击查看）", expanded=False):
+            st.markdown(f"""
+    **总分 = 地理 × 权重 + 规模 × 权重 + 合规 × 权重**
+    （三项满分都是 100 分，权重就是右边滑块的百分比）
+
+    ---
+
+    **📍 地理位置**　越靠近**当前厂区（{_site['cn']}）**，分越高
+    - 距离与圈层都以所选厂区独立计算（切换厂区分数随之变化）
+    - {_site['cluster']}一级圈（{'、'.join(_site['home'])}）≈ 95-100 分
+    - {_site['cluster']}周边二级圈 ≈ 50-70 分
+    - 其他外省（三级圈）≈ 10-40 分
+    - 再根据距 {_site['short']} 的真实公里数连续微调
+
+    **🏢 企业规模**　实力越强，分越高
+    - 注册资本：10 亿以上 = 100 分，1 亿 = 78 分，1000 万 = 50 分
+    - 成立年限：20 年以上 = 100 分，10 年 = 70 分，5 年 = 50 分
+    - 两项按 65% : 35% 合并
+
+    **✅ 合规资质**　全部来自企查查工商字段，逐项累加
+    - 经营状态正常（存续/在业）＝ 25 分
+    - 企业角色：工厂 20 / 工厂兼贸易 16 / 进口商 8 / 经销商 4 / 中介 0
+    - 危险化学品许可（经营范围，"不含危化品"不算）＝ 20 分
+    - 生产/安全许可证关键词 ＝ 10 分
+    - 化工园区 10 分（一般工业园区 5 分）
+    - 化工类行业 10 分（其他制造业 5 分，看企查查行业分类）
+    - 进出口经营资质 ＝ 5 分
+
+    ---
+
+    *所有分数都从企查查的工商数据自动算出，没有人工打分。*
+            """)
+
+        w = st.session_state.weights
+        w_geo  = st.slider("📍 地理位置", 0, 100, int(w.get("geography", 0.35) * 100), 5,
+                           help="企业离上海越近分越高。看重物流成本就调高它。")
+        w_scl  = st.slider("🏢 企业规模", 0, 100, int(w.get("scale",    0.35) * 100), 5,
+                           help="注册资本越大、成立越久分越高。看重企业实力就调高它。")
+        w_cmp  = st.slider("✅ 合规资质", 0, 100, int(w.get("compliance",0.30) * 100), 5,
+                           help="证照齐全、是制造商、在化工园区分越高。看重合规就调高它。")
+
+        total_w = w_geo + w_scl + w_cmp
+        if total_w > 0:
+            new_weights = {
+                "geography":  w_geo / total_w,
+                "scale":      w_scl / total_w,
+                "compliance": w_cmp / total_w,
+            }
+            if new_weights != st.session_state.weights:
+                st.session_state.weights = new_weights
+                st.rerun()
+            st.caption("已自动归一化，合计 100%")
+
+        # 一键预设场景
+        st.caption("不知道怎么调？直接选一个场景：")
+        pcol1, pcol2 = st.columns(2)
+        if pcol1.button("⚖️ 均衡推荐", width='stretch',
+                        help="地理35 规模35 合规30，适合大多数情况"):
+            st.session_state.weights = dict(DEFAULT_WEIGHTS)
+            st.rerun()
+        if pcol2.button("🚚 就近优先", width='stretch',
+                        help="加重地理位置，适合急需交付、看重物流的采购"):
+            st.session_state.weights = {"geography":0.50,"scale":0.25,"compliance":0.25}
+            st.rerun()
+        pcol3, pcol4 = st.columns(2)
+        if pcol3.button("🏆 实力优先", width='stretch',
+                        help="加重企业规模，适合大宗、长期合作采购"):
+            st.session_state.weights = {"geography":0.20,"scale":0.50,"compliance":0.30}
+            st.rerun()
+        if pcol4.button("🛡️ 合规优先", width='stretch',
+                        help="加重合规资质，适合危化品等强监管品类"):
+            st.session_state.weights = {"geography":0.20,"scale":0.30,"compliance":0.50}
+            st.rerun()
+
+    else:
+        _render_lane_sidebar(_active_lane)
     st.divider()
 
     # ── 本地缓存状态 ────────────────────────────────────────────
@@ -812,6 +859,94 @@ with st.sidebar:
                "详情卡「⚠️ 深度风险核查」· 手动按钮才调用",
                "填 QCC_RISK_ENDPOINT")
 
+
+if st.session_state.get("core_material"):
+    render_core_report(st.session_state.core_material)
+    st.stop()
+if st.session_state.get("service_cat"):
+    render_service_report(st.session_state.service_cat)
+    st.stop()
+if st.session_state.get("equipment_cat"):
+    render_equipment_report(st.session_state.equipment_cat)
+    st.stop()
+
+# ── 计算匹配结果 ──────────────────────────────────────────────────────
+_site_key = st.session_state.get("site", "SH")
+_site = sites.get_site(_site_key)
+_, results = match_suppliers(
+    query=st.session_state.query,
+    filters=st.session_state.filters,
+    weights=st.session_state.weights,
+    site_key=_site_key,
+)
+
+# ── 交叉验证（仅在真实配置了化工网/买化塑时运行）──────────────────
+_query     = st.session_state.query or ""
+_cn_items  = []
+_ibc_items = []
+_xval_on   = False
+
+if chemnet_ok() and _query:
+    _cn_items = search_chem_suppliers(_query)
+    _xval_on = True
+if ibc_loaded() and _query:
+    _ibc_items = ibc_search(_query)
+    _xval_on = True
+
+if _xval_on and results:
+    results = batch_validate(results, _cn_items, _ibc_items, _query)
+
+sel_ids = st.session_state.selected_ids
+compare_suppliers = (
+    [s for s in results if s["id"] in sel_ids] if sel_ids
+    else results[:5]
+)
+
+# 统计
+_cs = cache_status()
+tier1_count   = sum(1 for s in results if s.get("_tier") == 1)
+factory_count = sum(1 for s in results if s.get("_role") in ("manufacturer", "both"))
+hazmat_count  = sum(1 for s in results if
+    s.get("licenses", {}).get("hazardous_chemicals") or
+    s.get("licenses", {}).get("hazmat_business"))
+avg_score = (
+    round(sum(s.get("score", 0) for s in results) / len(results), 1)
+    if results else "—"
+)
+
+# ═══════════════════════════════════════════════════════════════════════
+# Hero 顶部
+# ═══════════════════════════════════════════════════════════════════════
+st.markdown(f"""
+<div class="sabic-hero">
+ <div class="hero-inner">
+  <div class="hero-badge"><span class="pulse"></span>SABIC {_site['cn']} · 智能寻源决策</div>
+  <div class="hero-title"><span class="lead">请输入一种原材料，</span><br>告诉你<span class="key">选哪家供应商</span></div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-val g">{len(results)}</div>
+      <div class="hero-stat-lbl">当前匹配</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val b">{tier1_count}</div>
+      <div class="hero-stat-lbl">{_site['cluster']}一级</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val t">{_cs['count']}</div>
+      <div class="hero-stat-lbl">缓存品类</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-val">{avg_score}</div>
+      <div class="hero-stat-lbl">平均评分</div>
+    </div>
+  </div>
+ </div>
+</div>
+""", unsafe_allow_html=True)
+
+# ═══════════════════════════════════════════════════════════════════════
+# 侧边栏：按当前大类上下文渲染（每类独立权重 + 专属筛选）
+# ═══════════════════════════════════════════════════════════════════════
 # ═══════════════════════════════════════════════════════════════════════
 # 主体内容
 # ═══════════════════════════════════════════════════════════════════════
@@ -849,10 +984,10 @@ st.markdown(f"""
 <div class="search-head">
   <div class="s-bar"></div>
   <div class="s-txt">
-    <span class="s-title">搜索采购品类</span>
-    <span class="s-sub">输入英文代码或中文名，即时联想本地缓存品类</span>
+    <span class="s-title">全品类搜索</span>
+    <span class="s-sub">输入英文代码或中文名，联想全站：核心原料 · 其他原料 · 服务 MRO · 化工设备</span>
   </div>
-  <span class="s-pill"><span class="dot"></span>{_cs['count']} 个品类已缓存</span>
+  <span class="s-pill"><span class="dot"></span>全站四大类品类联想</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -862,81 +997,52 @@ with search_col:
         "搜索",
         value="",
         key="search_text",
-        placeholder="输入英文代码或中文名联想缓存品类，如 PC / 聚碳酸酯 / PVC / 阻燃剂 / nylon …",
+        placeholder="搜全站品类：PC / 聚碳酸酯 / 换热器 / 离心泵 / 人力外包 / 钛白粉 / nylon …",
         label_visibility="collapsed",
     )
 with btn_col:
     do_search = st.button("搜索", width='stretch', type="primary")
 
-# ── 核心物料快捷入口：命中三类核心物料关键词时，直接进入专家评审报告 ──
-def _core_suggest(text: str) -> list[str]:
-    t = (text or "").strip().lower()
-    if not t:
-        return []
-    hits = []
-    for _key, _kws in _CORE_KEYWORDS.items():
-        if any(t in kw or kw in t for kw in _kws):
-            hits.append(_key)
-    return hits
+# ── 全品类联想：跨「核心原料 / 其他原料 / 服务MRO / 化工设备」四大类 ──
+_KIND_META = {
+    "core":      ("⭐", "核心原料"),
+    "material":  ("🧪", "其他原料"),
+    "mro":       ("🏢", "服务MRO"),
+    "equipment": ("🏭", "化工设备"),
+}
+_sugs = home_nav.unified_suggest(search_text, 12) if search_text else []
 
-_core_hits = _core_suggest(search_text)
-if do_search and _core_key_for(search_text):
-    st.session_state.core_material = _core_key_for(search_text)
-    st.session_state.query = ""
-    st.rerun()
+if search_text and _sugs:
+    st.caption("🔎 全品类联想（核心原料 / 其他原料 / 服务 MRO / 化工设备，点击直接进入报告）：")
+    _scols = st.columns(4)
+    for _i, _it in enumerate(_sugs):
+        _ico, _lane_cn = _KIND_META.get(_it["kind"], ("•", ""))
+        _suffix = "" if _it["kind"] == "equipment" else (
+            f"（{_it['count']}家）" if _it.get("count") != "" else "")
+        with _scols[_i % 4]:
+            if st.button(f"{_ico} {_it['cn']} · {_lane_cn}{_suffix}",
+                         key=f"sug_{_it['kind']}_{_it.get('key', _it['cn'])}_{_i}",
+                         width='stretch'):
+                home_nav.enter_item(_it)
+    if do_search:
+        _exact = next((x for x in _sugs
+                       if search_text.strip().lower() == (x.get("en") or "").lower()
+                       or search_text.strip() == x["cn"]), None)
+        home_nav.enter_item(_exact or _sugs[0])
 
-if _core_hits:
-    st.caption("⭐ 最核心物料 · 点击进入专家评审报告：")
-    _cc = st.columns(min(3, len(_core_hits)))
-    for _i, _ck in enumerate(_core_hits):
-        _cm = get_material(_ck)
-        with _cc[_i % len(_cc)]:
-            if st.button(f"{_cm['icon']} {_cm['cn']}（{len(_cm['companies'])}家）",
-                         key=f"core_hit_{_ck}", width='stretch', type="primary"):
-                st.session_state.core_material = _ck
-                st.session_state.query = ""
-                st.rerun()
-
-# ── 联想栏：每个联想项与一个 local_cache JSON 文件一一对应 ────────────
-_hints = _suggest_categories(search_text, 8) if search_text else []
-
-if search_text and _hints:
-    # 输入恰好精确等于某个品类 → 回车/点搜索直接进入该品类
-    _exact = next((c for c in _hints
-                   if search_text.strip().lower() == c["en"].lower()
-                   or search_text.strip() == c["cn"]), None)
-    st.caption("📦 缓存品类联想（点击直接查看，不消耗 API 额度）：")
-    _hint_cols = st.columns(4)
-    for _i, _c in enumerate(_hints):
-        _prio = SABIC_SEARCH_STRATEGIES.get(_c["cn"], {}).get("priority", 2)
-        _badge = "🔵" if _prio == 1 else "⚪"
-        _lbl = f"{_badge} {_c['en']} · {_c['cn']}（{_c['count']}家）"
-        with _hint_cols[_i % 4]:
-            if st.button(_lbl, key=f"hint_{_c['file']}", width='stretch'):
-                st.session_state.query = _c["cn"]
-                st.session_state.selected_ids = []
-                st.session_state.active_supplier = None
-                st.rerun()
-    if _exact and do_search:
-        st.session_state.query = _exact["cn"]
-        st.session_state.selected_ids = []
-        st.session_state.active_supplier = None
-        st.rerun()
-
-if do_search and search_text:
-    _exact = next((c for c in list_cache_categories()
-                   if search_text.strip().lower() == c["en"].lower()
-                   or search_text.strip() == c["cn"]), None)
-    st.session_state.query = _exact["cn"] if _exact else search_text.strip()
+elif do_search and search_text:
+    # 联想未命中 → 作为原料品类（缓存或企查查实时搜索）
+    st.session_state.lane = "material"
+    st.session_state.query = search_text.strip()
     st.session_state.selected_ids = []
     st.session_state.active_supplier = None
     st.rerun()
 
-if search_text and not _hints:
+if search_text and not _sugs:
     if _qcc_on:
-        st.caption("ℹ️ 本地缓存未收录该关键词，点「搜索」将调用企查查实时接口（消耗额度）")
+        st.caption("ℹ️ 全品类联想未命中，点「搜索」将作为原料品类调用企查查实时接口（消耗额度）")
     else:
-        st.caption("⚠️ 本地缓存未收录该关键词，且未配置企查查 API Key，无法实时搜索")
+        st.caption("⚠️ 全品类联想未命中，且未配置企查查 API Key，无法实时搜索")
 
 # 当前查询状态行
 if st.session_state.query:
@@ -984,7 +1090,7 @@ if st.session_state.query:
             _dossier_html = build_dossier_html(
                 st.session_state.query, results,
                 st.session_state.weights,
-                meta={"source_label": _src_label},
+                meta={"source_label": _src_label, "site_key": _site_key},
             )
             st.download_button(
                 "📄 背调报告",
@@ -1010,43 +1116,83 @@ st.markdown("---")
 # 空查询：搜索引导页（按分组浏览全部缓存品类）
 # ═══════════════════════════════════════════════════════════════════════
 if not st.session_state.query:
-    # ⭐ 最核心物料：三类外销沙特战略物料的专家评审入口（置于全部品类之上）
-    render_core_cards()
-    st.markdown("---")
+    _lane = st.session_state.get("lane")
 
-    st.markdown(
-        "<div style='color:#5a6780;font-size:14px;margin-bottom:10px'>"
-        "在上方搜索框输入品类的<b>英文代码</b>（如 PC、PVC、SEBS）或<b>中文名</b>"
-        "（如 聚碳酸酯、阻燃剂、滑石粉），联想栏会列出已缓存的品类，点击即可查看供应商排名。"
-        "也可以直接浏览下面的全部缓存品类：</div>",
-        unsafe_allow_html=True,
-    )
-    # 钛白粉、木托盘已升级为"最核心物料"（上方专家报告），从普通品类列表移除
-    _all_cats = [c for c in list_cache_categories() if c["file"] not in _CORE_HIDE_FILES]
-    # 按 P1/P2 分两组展示，P1 在前
-    for _prio, _title in [(1, "🔵 SABIC 核心采购品类"), (2, "⚪ 行业扩展品类")]:
-        _grp = [c for c in _all_cats
-                if SABIC_SEARCH_STRATEGIES.get(c["cn"], {}).get("priority", 2) == _prio]
-        if not _grp:
-            continue
-        with st.expander(f"{_title}（{len(_grp)} 个）", expanded=(_prio == 1)):
-            _cols = st.columns(4)
-            for _i, _c in enumerate(_grp):
-                with _cols[_i % 4]:
-                    if st.button(f"{_c['en']} · {_c['cn']}（{_c['count']}）",
-                                 key=f"cat_{_c['file']}", width='stretch'):
-                        st.session_state.query = _c["cn"]
-                        st.session_state.selected_ids = []
-                        st.session_state.active_supplier = None
-                        st.rerun()
+    # ── 首页：未选大类 → 四大类入口 + 全品类总表导出 ──────────────────
+    if _lane is None:
+        home_nav.render_lane_selector()
+        st.markdown("---")
+
+        @st.cache_data(show_spinner="正在汇总全品类供应商总表…")
+        def _master_workbook() -> bytes:
+            return build_master()
+
+        _mc1, _mc2 = st.columns([3, 1])
+        with _mc1:
+            st.markdown(
+                "<div style='padding:6px 0'>"
+                "<span style='font-size:15px;font-weight:700;color:#0a1628'>📊 全品类供应商总表</span>"
+                "<span style='font-size:12.5px;color:#5a6780;margin-left:8px'>"
+                "一份 Excel 汇总全站：① 专家评审核心物料 · ② 核心采购品类 · "
+                "③ 补充扩展品类 · ④ 综合服务 15 品类（各按其评分模型展开，多 Sheet）。</span>"
+                "</div>",
+                unsafe_allow_html=True,
+            )
+        with _mc2:
+            st.download_button(
+                "⬇️ 导出全品类总表",
+                data=_master_workbook(),
+                file_name=f"SABIC_供应商总表_全品类_{__import__('datetime').date.today():%Y%m%d}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                width="stretch", type="primary",
+                help="覆盖网页上全部品类的供应商：专家评审 6 维、工商 3 维、综合服务 5 维，含汇总封面",
+            )
+        st.stop()
+
+    # ── 已选大类 → 返回首页 + 该大类品类卡 ───────────────────────────
+    _lane_meta = home_nav.LANE_BY_KEY.get(_lane, {})
+    if st.button("← 返回首页 · 重新选择采购大类", key="lane_back"):
+        st.session_state.lane = None
+        st.rerun()
+
+    if _lane == "core":
+        render_core_cards()
+    elif _lane == "material":
+        home_nav.render_material_browse()
+    elif _lane == "mro":
+        render_service_cards()
+    elif _lane == "equipment":
+        render_equipment_cards()
     st.stop()
+
+# ═══════════════════════════════════════════════════════════════════════
+# 其他原料：品类报告头部 —— 返回 + 四大工厂总览大地图 + 厂区选择
+# ═══════════════════════════════════════════════════════════════════════
+if st.session_state.get("lane") != "material":
+    st.session_state.lane = "material"
+_mb1, _mb2 = st.columns([3, 1])
+with _mb1:
+    if st.button("← 返回其他原料 · 品类列表", key="mat_back"):
+        st.session_state.query = ""
+        st.session_state.selected_ids = []
+        st.session_state.active_supplier = None
+        st.rerun()
+with _mb2:
+    st.markdown(
+        f"<div style='text-align:right;font-size:12.5px;color:#5a6780;padding-top:6px'>"
+        f"采购厂区：<b style='color:{ _site['color'] if 'color' in _site else '#0E8C3A'}'>"
+        f"{_site['cn']}</b></div>", unsafe_allow_html=True)
+
+st.markdown(f"#### 🗺️ {st.session_state.query} · 四大工厂就近寻源总览 · 选厂区即按该厂独立重算地理分")
+home_nav.render_material_overview(st.session_state.query)
+st.markdown("---")
 
 # ═══════════════════════════════════════════════════════════════════════
 # 智能采购决策卡 —— 本系统区别于企查查的核心：不只给数据，直接给结论
 # ═══════════════════════════════════════════════════════════════════════
 if results:
-    _dec = decision_summary(results)
-    _land = supply_landscape(results)
+    _dec = decision_summary(results, _site_key)
+    _land = supply_landscape(results, _site_key)
 
     if _dec:
         _tags_html = "".join(f"<span class='decide-tag'>{t}</span>" for t in _dec["top_tags"])
@@ -1096,13 +1242,13 @@ if results:
             f"  <div class='land-cell'><div class='land-val'>{_land['n']}<span class='u'> 家</span></div>"
             f"      <div class='land-lbl'>可选供应商</div></div>"
             f"  <div class='land-cell'><div class='land-val'>{_land['tier1']}<span class='u'> 家</span></div>"
-            f"      <div class='land-lbl'>华东一级圈 ({_land['tier1_share']}%)</div></div>"
+            f"      <div class='land-lbl'>{_site['cluster']}一级圈 ({_land['tier1_share']}%)</div></div>"
             f"  <div class='land-cell'><div class='land-val'>{_land['factories']}<span class='u'> 家</span></div>"
             f"      <div class='land-lbl'>工厂/制造商 ({_land['factory_share']}%)</div></div>"
             f"  <div class='land-cell'><div class='land-val'>{_land['hazmat']}<span class='u'> 家</span></div>"
             f"      <div class='land-lbl'>含危化品资质</div></div>"
             f"  <div class='land-cell'><div class='land-val'>{_avg}</div>"
-            f"      <div class='land-lbl'>平均距上海</div></div>"
+            f"      <div class='land-lbl'>平均距{_site['short']}</div></div>"
             f"  <div class='land-cell'><div class='land-val' style='font-size:14px;padding-top:3px'>{_land['leader_name']}</div>"
             f"      <div class='land-lbl'>资本龙头 · {_land['leader_cap']}</div></div>"
             f"  <div class='land-note'>📊 供应版图：主要集中在 <b>{_provs}</b> &nbsp;·&nbsp; {_land['geo_note']}</div>"
@@ -1258,7 +1404,7 @@ with right_col:
     tabs = st.tabs(tab_labels)
 
     with tabs[0]:
-        fig = china_map(results)
+        fig = china_map(results, _site_key)
         st.plotly_chart(fig, width='stretch', config={"displayModeBar": False}, key="chart_map")
         st.caption("颜色深浅：该省供应商数量 · 气泡：供应商位置与评分 · ★：SABIC 上海基地")
 
@@ -1309,8 +1455,8 @@ with right_col:
     # ── 统计卡片 ───────────────────────────────────────────────────────
     st.markdown("---")
     sc1, sc2, sc3, sc4 = st.columns(4)
-    sc1.metric("华东一级圈", f"{tier1_count} 家",
-               delta=None, help="沪苏浙皖四省市")
+    sc1.metric(f"{_site['cluster']}一级圈", f"{tier1_count} 家",
+               delta=None, help=f"{_site['cn']} 一级圈：{'、'.join(_site['home'])}")
     sc2.metric("工厂（制造商）", f"{factory_count} 家",
                delta=None, help="经营范围含生产/制造（含工厂兼贸易）")
     sc3.metric("危化品资质", f"{hazmat_count} 家",
@@ -1371,7 +1517,7 @@ with right_col:
 
         _explain = [
             ("📍 地理位置", _dims.get("geography",0), int(_w.get("geography",0.35)*100),
-             f"注册在 {active.get('province','—')}，距上海约 {active.get('logistics',{}).get('distance_km_to_shanghai','—')} 公里"),
+             f"注册在 {active.get('province','—')}，距{_site['short']}约 {active.get('logistics',{}).get('distance_km_to_site') or active.get('logistics',{}).get('distance_km_to_shanghai','—')} 公里"),
             ("🏢 企业规模", _dims.get("scale",0), int(_w.get("scale",0.35)*100),
              (f"注册资本 {_cap_txt}（资本占65%）"
               + (f" + 成立 {_age} 年（年限占35%）" if _age else "")) ),

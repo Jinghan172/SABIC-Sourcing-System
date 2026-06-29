@@ -2,7 +2,7 @@
   "en": "Pallet",
   "cn": "木托盘",
   "collected_at": "2026-06-18 10:43:45",
-  "count": 14,
+  "count": 15,
   "companies": [
     {
       "name": "上海民悦包装材料有限公司",
@@ -253,6 +253,22 @@
       "industry": "软木制品及其他木制品制造",
       "_qcc_industry": "软木制品及其他木制品制造",
       "insured": "4人(养老·2025年度报告)",
+      "patent_count": 0,
+      "has_chem_patent": false
+    },
+    {
+      "name": "浙江双友物流器械股份有限公司",
+      "credit_code": "913301007140123456",
+      "legal_person": "姜浩",
+      "reg_capital": "20760万元",
+      "established": "2003-03-20",
+      "status": "存续",
+      "scope": "木托盘、木箱、胶合板托盘、免熏蒸托盘及物流包装器械的研发、制造与销售；出口商品包装；货物及技术进出口。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "浙江",
+      "city": "杭州",
+      "address": "浙江省杭州市萧山区临浦镇工业园区双友路",
+      "industry": "木质包装容器及材料制造",
+      "_qcc_industry": "木质包装容器及材料制造",
       "patent_count": 0,
       "has_chem_patent": false
     }

@@ -392,7 +392,7 @@ def compare_dataframe(suppliers: list[dict]) -> pd.DataFrame:
 
 
 # ── 中国地图 ─────────────────────────────────────────────────────────
-def china_map(suppliers: list[dict]) -> go.Figure:
+def china_map(suppliers: list[dict], site_key: str = "SH") -> go.Figure:
     _geojson_path = Path(__file__).parent.parent / "data" / "china.json"
     if not _geojson_path.exists():
         return _empty("china.json 未找到\n请下载放到 data/ 目录", height=400)
@@ -491,18 +491,22 @@ def china_map(suppliers: list[dict]) -> go.Figure:
             name="供应商",
         ))
 
-    # SABIC 四大基地标注（上海 / 广州南沙 / 福建漳州古雷 / 重庆）
+    # SABIC 四大基地标注（当前所选厂区高亮放大，其余淡化）
     for bs in _sabic_bases():
         col = _BASE_COLOR.get(bs["key"], SABIC_GREEN)
+        _cur = bs["key"] == site_key
         fig.add_trace(go.Scattergeo(
             lat=[bs["lat"]], lon=[bs["lng"]],
             mode="markers+text",
-            marker=dict(size=17, color=col, symbol="diamond",
-                        line=dict(color="white", width=1.8)),
-            text=[f"◆ SABIC {bs['short']}"], textposition="top center",
-            textfont=dict(size=10.5, color=SABIC_DARK),
-            name=f"◆ {bs['short']}基地",
-            hovertemplate=f"SABIC {bs['cn']}基地<br>就近出口口岸：{bs['port']}<extra></extra>",
+            marker=dict(size=26 if _cur else 14, color=col, symbol="star" if _cur else "diamond",
+                        line=dict(color="white", width=2.4 if _cur else 1.4),
+                        opacity=1.0 if _cur else 0.55),
+            text=[f"★ 采购厂区 · SABIC {bs['short']}" if _cur else f"◆ {bs['short']}"],
+            textposition="top center",
+            textfont=dict(size=12 if _cur else 10, color=SABIC_DARK if _cur else "#94a3b8"),
+            name=f"{'★ 当前厂区' if _cur else '◆'} {bs['short']}",
+            hovertemplate=(f"{'★ 当前采购厂区：' if _cur else 'SABIC '}{bs['cn']}基地"
+                           f"<br>就近出口口岸：{bs['port']}<extra></extra>"),
         ))
 
     fig.update_geos(

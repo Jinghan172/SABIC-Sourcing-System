@@ -40,8 +40,11 @@ def _role_cn(s: dict) -> str:
     return ROLE_LABEL.get(s.get("_role", "unknown"), "类型待核")
 
 
-def _tier_cn(t: int) -> str:
-    return {1: "一级（沪苏浙皖）", 2: "二级（鲁粤鄂豫闽等）", 3: "三级（其余）"}.get(t, "—")
+from utils import sites
+
+
+def _tier_cn(t: int, site_key: str = "SH") -> str:
+    return sites.tier_label(t, site_key) or "—"
 
 
 def _score_color(v: float) -> str:
@@ -66,10 +69,12 @@ def build_dossier_html(query: str, results: list[dict],
                        meta: dict | None = None) -> str:
     """生成完整背调报告 HTML 字符串。results 为已评分排序的供应商列表。"""
     meta = meta or {}
+    site_key = meta.get("site_key", "SH")
+    site = sites.get_site(site_key)
     now = datetime.now()
     report_id = f"SABIC-DD-{now:%Y%m%d}-{abs(hash(query)) % 9000 + 1000}"
-    dec = decision_summary(results)
-    land = supply_landscape(results)
+    dec = decision_summary(results, site_key)
+    land = supply_landscape(results, site_key)
     top = results[0] if results else None
 
     # ── 封面 ──
@@ -134,10 +139,10 @@ def build_dossier_html(query: str, results: list[dict],
           <h2><span class="num">2</span>供应市场结构</h2>
           <div class="stat-grid">
             <div class="stat"><div class="stat-v">{land['n']}</div><div class="stat-l">可选供应商</div></div>
-            <div class="stat"><div class="stat-v">{land['tier1']}<span>家</span></div><div class="stat-l">华东一级圈 · {land['tier1_share']}%</div></div>
+            <div class="stat"><div class="stat-v">{land['tier1']}<span>家</span></div><div class="stat-l">{site['cluster']}一级圈 · {land['tier1_share']}%</div></div>
             <div class="stat"><div class="stat-v">{land['factories']}<span>家</span></div><div class="stat-l">工厂/制造商 · {land['factory_share']}%</div></div>
             <div class="stat"><div class="stat-v">{land['hazmat']}<span>家</span></div><div class="stat-l">含危化品资质</div></div>
-            <div class="stat"><div class="stat-v">{avg}</div><div class="stat-l">平均距上海</div></div>
+            <div class="stat"><div class="stat-v">{avg}</div><div class="stat-l">平均距{site['short']}</div></div>
             <div class="stat"><div class="stat-v" style="font-size:15px">{_e(land['leader_name'])}</div><div class="stat-l">资本龙头 · {_e(land['leader_cap'])}</div></div>
           </div>
           <p class="note">📊 供应版图主要集中在 <b>{provs}</b>。{_e(land['geo_note'])}。</p>
@@ -176,8 +181,8 @@ def build_dossier_html(query: str, results: list[dict],
                 ("成立年限", _age(top)),
                 ("经营状态", top.get("reg_status") or "存续"),
                 ("所属省市", f"{top.get('province') or '—'} {top.get('city') or ''}".strip()),
-                ("地理圈层", _tier_cn(top.get("_tier", 3))),
-                ("距上海运距", f"约 {top.get('logistics', {}).get('distance_km_to_shanghai', '—')} 公里"),
+                ("地理圈层", _tier_cn(top.get("_tier", 3), site_key)),
+                (f"距{site['short']}运距", f"约 {top.get('logistics', {}).get('distance_km_to_site') or top.get('logistics', {}).get('distance_km_to_shanghai', '—')} 公里"),
                 ("企业角色", _role_cn(top)),
                 ("所属行业", top.get("industry")),
                 ("注册地址", top.get("address")),

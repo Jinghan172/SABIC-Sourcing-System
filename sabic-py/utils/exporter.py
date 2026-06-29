@@ -71,7 +71,8 @@ def export_excel(suppliers: list[dict], title: str = "供应商对比") -> bytes
         dims = s.get("dimensions", {})
         lic  = s.get("licenses", {})
         tier = s.get("_tier", 3)
-        tier_label = ["", "一级(华东)", "二级", "三级"][tier]
+        # _tier 按所选厂区计算；此处用中性圈层名（厂区信息见报告抬头）
+        tier_label = ["", "一级圈", "二级圈", "三级圈"][tier]
 
         values = [
             i + 1,

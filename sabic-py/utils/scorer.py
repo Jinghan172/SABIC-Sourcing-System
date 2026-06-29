@@ -17,6 +17,8 @@ import json
 from pathlib import Path
 from datetime import datetime
 
+from utils import sites
+
 _DATA = Path(__file__).parent.parent / "data"
 with open(_DATA / "regions.json", encoding="utf-8") as f:
     REGIONS = json.load(f)
@@ -74,29 +76,26 @@ def _distance_score(km: float) -> float:
     return _DIST_ANCHORS[-1][1]
 
 
-def score_geography(supplier: dict) -> float:
+def score_geography(supplier: dict, site_key: str = sites.DEFAULT_SITE) -> float:
     """
-    来源字段：province（企查查 Province 字段）+ 真实公里数（regions.json provinceCoords）
-    v3.1 改版：以"距上海真实公里数"为主（连续曲线，同圈层内不同省份不再统一评分），
-    华东核心圈再叠加少量"物流成熟度"加成（公路 1-2 天、危化品合规资源成熟）。
-    解决：二级圈层各省差异很大（山东 680km vs 广东 1450km）却被压成同一基础分的问题。
+    来源字段：province（企查查 Province 字段）+ 到所选厂区的真实公里数。
+    多厂区改版：距离与属地圈层均以『当前所选厂区』为锚点独立计算——
+    选上海就按距上海，选南沙/古雷/重庆就按距该厂区（utils/sites.py 统一口径）。
+    厂区所在经济区一级圈再叠加少量"物流成熟度"加成。
     """
     province = supplier.get("province", "")
-    tier1 = TIERS.get("tier1", {}).get("provinces", [])
-    tier2 = TIERS.get("tier2", {}).get("provinces", [])
 
     distance = (
-        supplier.get("logistics", {}).get("distance_km_to_shanghai")
-        or PROVINCE_COORDS.get(province, {}).get("distance_km")
+        supplier.get("logistics", {}).get("distance_km_to_site")
+        or supplier.get("logistics", {}).get("distance_km_to_shanghai")
     )
-    # 距离缺失时按圈层兜底一个中性距离，避免直接 9999 压到地板
     if distance is None:
-        distance = 350 if province in tier1 else (820 if province in tier2 else 1500)
+        distance = sites.distance_to_site(province, site_key) if province else 1500
 
     base = _distance_score(distance)
 
-    # 华东核心圈物流成熟度加成（衰减，越近加得越多），其余圈层不加
-    if province in tier1:
+    # 厂区一级圈物流成熟度加成（就近公路 1-2 天、合规资源成熟），其余圈层不加
+    if sites.province_tier(province, site_key) == 1:
         base += 5.0
     return round(min(base, 100.0), 1)
 
@@ -278,32 +277,33 @@ def score_supplier(
     chemical: dict | None = None,  # 保留参数兼容旧调用方
     weights: dict | None = None,
     query: str = "",               # 保留参数兼容旧调用方
+    site_key: str = sites.DEFAULT_SITE,
 ) -> dict:
     """
     计算供应商综合得分（三维：地理/规模/合规）。
     所有维度均为客观量化指标，公式透明可解释。
+    geography 与圈层标签按 site_key 所选厂区独立计算。
     """
     w = weights or DEFAULT_WEIGHTS
 
     dims = {
-        "geography":  score_geography(supplier),
+        "geography":  score_geography(supplier, site_key),
         "scale":      score_scale(supplier),
         "compliance": score_compliance(supplier),
     }
 
     total = sum(dims[k] * w.get(k, 0) for k in ["geography", "scale", "compliance"])
 
-    # 圈层标签
+    # 圈层标签（按所选厂区）
     province = supplier.get("province", "")
-    tier1 = TIERS.get("tier1", {}).get("provinces", [])
-    tier2 = TIERS.get("tier2", {}).get("provinces", [])
-    tier  = 1 if province in tier1 else (2 if province in tier2 else 3)
+    tier  = sites.province_tier(province, site_key)
 
     out = {
         **supplier,
         "score":      round(total, 1),
         "dimensions": dims,
         "_tier":      tier,
+        "_site":      site_key,
     }
     # 互联网公开信息核验（若命中）——供详情页展示，解释合规分为何被抬高
     rep = reputation_for(supplier.get("name", ""))
@@ -312,11 +312,5 @@ def score_supplier(
     return out
 
 
-def get_tier_label(province: str) -> str:
-    t1 = TIERS.get("tier1", {}).get("provinces", [])
-    t2 = TIERS.get("tier2", {}).get("provinces", [])
-    if province in t1:
-        return "一级(华东)"
-    if province in t2:
-        return "二级"
-    return "三级"
+def get_tier_label(province: str, site_key: str = sites.DEFAULT_SITE) -> str:
+    return sites.tier_label(sites.province_tier(province, site_key), site_key)

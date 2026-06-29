@@ -49,9 +49,10 @@ def _apply_filters(supplier: dict, filters: dict, score: float = 0) -> bool:
     if f.get("provinces") and province not in f["provinces"]:
         return False
 
-    # 圈层筛选（来自企查查 Province 推算）
+    # 圈层筛选（按所选厂区计算的 _tier；评分时已写入）
     if f.get("tiers"):
-        if _province_tier(province) not in f["tiers"]:
+        s_tier = supplier.get("_tier") or _province_tier(province)
+        if s_tier not in f["tiers"]:
             return False
 
     # 经营状态（来自企查查 Status）
@@ -113,6 +114,7 @@ def match_suppliers(
     filters: dict | None = None,
     weights: dict | None = None,
     use_api: bool | None = None,           # 保留参数兼容旧调用方（始终走真实数据）
+    site_key: str = "SH",
 ) -> tuple[None, list[dict]]:
     """
     主匹配入口（v3.0 仅真实数据）：
@@ -128,7 +130,8 @@ def match_suppliers(
     # ── ① 本地缓存优先（MCP 采集的企查查数据）─────────────────────────
     from utils.local_search import search_local, cache_status
     if cache_status()["count"] > 0:
-        local_result = search_local(query=query, filters=filters, weights=weights)
+        local_result = search_local(query=query, filters=filters, weights=weights,
+                                    site_key=site_key)
         if not local_result.get("cache_missing"):
             _set_meta(
                 total=local_result.get("total", 0),
@@ -147,7 +150,7 @@ def match_suppliers(
         return None, []
 
     from utils.open_search import open_search
-    result = open_search(query=query, filters=filters, weights=weights)
+    result = open_search(query=query, filters=filters, weights=weights, site_key=site_key)
     _set_meta(
         detail_ok=result.get("detail_ok", 0),
         detail_fail=result.get("detail_fail", 0),

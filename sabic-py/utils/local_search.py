@@ -9,17 +9,9 @@ import re
 from pathlib import Path
 
 from utils.scorer import score_supplier, DEFAULT_WEIGHTS, has_hazmat_license
+from utils import sites
 
 CACHE_DIR = Path(__file__).parent.parent / "data" / "local_cache"
-
-_TIER1 = {"上海","江苏","浙江","安徽"}
-_TIER2 = {"山东","广东","湖北","河南","福建","北京","天津"}
-_DIST = {"上海":0,"江苏":280,"浙江":180,"安徽":450,"山东":680,
-         "广东":1450,"湖北":900,"河南":800,"福建":900,
-         "北京":1200,"天津":1100,"河北":1050,"辽宁":1600,"吉林":1900,
-         "黑龙江":2200,"湖南":1000,"江西":750,"四川":2000,"重庆":1800,
-         "陕西":1500,"山西":1300,"贵州":1800,"云南":2400,"广西":1700,
-         "新疆":4000,"甘肃":2500,"内蒙古":1800}
 
 # 城市→省份映射，用于从地址推导省份/城市（不写回 JSON）
 _CITY_PROV = {
@@ -56,15 +48,6 @@ _CITY_PROV = {
 }
 
 _MUNICIPALITIES = {"上海", "北京", "天津", "重庆"}
-
-
-def _tier(province: str) -> int:
-    if province in _TIER1: return 1
-    if province in _TIER2: return 2
-    return 3
-
-def _distance(province: str) -> int:
-    return _DIST.get(province, 1200)
 
 
 def _classify_role(scope: str) -> str:
@@ -122,10 +105,10 @@ def _city_from_address(address: str, province: str = "") -> str:
 
 
 def search_local(query: str, filters: dict = None, weights: dict = None,
-                 top_n: int = 20) -> dict:
+                 top_n: int = 20, site_key: str = sites.DEFAULT_SITE) -> dict:
     """
     从本地 JSON 缓存搜索供应商，返回评分排序结果（三维评分，调 scorer.py）。
-    格式与 open_search() 完全兼容，可直接替换。
+    geography 按 site_key 所选厂区独立计算。格式与 open_search() 完全兼容。
     """
     filters = filters or {}
     weights = weights or dict(DEFAULT_WEIGHTS)
@@ -186,13 +169,13 @@ def search_local(query: str, filters: dict = None, weights: dict = None,
             "licenses":     {"hazardous_chemicals": has_hazmat_license(scope)},
             "chemical_park": any(k in (address + " " + scope) for k in
                                  ["化工园", "化工区", "化工园区", "化学工业园"]),
-            "logistics":    {"distance_km_to_shanghai": _distance(province)},
-            "_tier":        _tier(province),
+            "logistics":    {"distance_km_to_site": sites.distance_to_site(province, site_key)},
+            "_tier":        sites.province_tier(province, site_key),
             "_source":      "local_cache",
             "products":     [],
             "main_categories": [cn],
         }
-        suppliers.append(score_supplier(base, weights=weights))
+        suppliers.append(score_supplier(base, weights=weights, site_key=site_key))
 
     # 综合评分降序（同分时工厂优先）
     role_rank = {"manufacturer":0,"both":1,"importer":2,"trader":3,"unknown":4,"agent":5}

@@ -9,6 +9,8 @@ suppliers 列表（已含 score / dimensions / _role 等字段），无任何外
 from __future__ import annotations
 from datetime import datetime
 
+from utils import sites
+
 ROLE_LABEL = {
     "manufacturer": "工厂",
     "both":         "工厂兼贸易",
@@ -39,14 +41,12 @@ def _has_hazmat(s: dict) -> bool:
     return bool(lic.get("hazardous_chemicals") or lic.get("hazmat_business"))
 
 
-def supplier_highlights(s: dict, max_n: int = 4) -> list[str]:
+def supplier_highlights(s: dict, max_n: int = 4, site_key: str = "SH") -> list[str]:
     """一家供应商最值得说的几个卖点标签（按优先级），用于卡片/推荐理由。"""
     tags: list[str] = []
     tier = s.get("_tier", 3)
-    if tier == 1:
-        tags.append("华东一级圈")
-    elif tier == 2:
-        tags.append("华东周边二级圈")
+    if tier in (1, 2):
+        tags.append(sites.tier_label(tier, site_key))
 
     cap = s.get("registered_capital_wan", 0) or 0
     if cap >= 100000:
@@ -68,20 +68,21 @@ def supplier_highlights(s: dict, max_n: int = 4) -> list[str]:
     if age >= 20:
         tags.append(f"深耕 {age} 年")
 
-    dist = s.get("logistics", {}).get("distance_km_to_shanghai")
+    dist = (s.get("logistics", {}).get("distance_km_to_site")
+            or s.get("logistics", {}).get("distance_km_to_shanghai"))
     if isinstance(dist, (int, float)) and dist <= 300:
-        tags.append(f"距上海约 {int(dist)} 公里")
+        tags.append(f"距{sites.get_site(site_key)['short']}约 {int(dist)} 公里")
 
     return tags[:max_n]
 
 
-def _why(s: dict) -> str:
+def _why(s: dict, site_key: str = "SH") -> str:
     """一句话推荐理由：取最突出的 3 个卖点串起来。"""
-    hl = supplier_highlights(s, 3)
+    hl = supplier_highlights(s, 3, site_key)
     return " · ".join(hl) if hl else "综合工商指标占优"
 
 
-def decision_summary(results: list[dict]) -> dict | None:
+def decision_summary(results: list[dict], site_key: str = "SH") -> dict | None:
     """
     生成采购决策摘要：首选 + 领先幅度 + 三类场景之选。
     返回 None 表示无结果。
@@ -115,7 +116,7 @@ def decision_summary(results: list[dict]) -> dict | None:
                 "name":  pick.get("name"),
                 "full":  pick.get("name"),
                 "score": pick.get("dimensions", {}).get(dim, 0),
-                "why":   _why(pick),
+                "why":   _why(pick, site_key),
                 "id":    pick.get("id"),
             })
 
@@ -123,8 +124,8 @@ def decision_summary(results: list[dict]) -> dict | None:
         "top_name":  top.get("name"),
         "top_short": top.get("shortName") or top.get("name"),
         "top_score": top.get("score", 0),
-        "top_why":   _why(top),
-        "top_tags":  supplier_highlights(top, 4),
+        "top_why":   _why(top, site_key),
+        "top_tags":  supplier_highlights(top, 4, site_key),
         "lead":      lead,
         "runner":    (runner.get("shortName") or runner.get("name")) if runner else None,
         "scenarios": scenarios,
@@ -234,18 +235,20 @@ def why_not_top(active: dict, results: list[dict], weights: dict | None = None) 
     }
 
 
-def supply_landscape(results: list[dict]) -> dict:
+def supply_landscape(results: list[dict], site_key: str = "SH") -> dict:
     """供应市场结构快照：体量 / 地理集中度 / 工厂占比 / 资质 / 资本龙头。"""
     n = len(results)
     if n == 0:
         return {"n": 0}
 
+    cluster = sites.cluster_name(site_key)
     tier1 = sum(1 for s in results if s.get("_tier") == 1)
     tier2 = sum(1 for s in results if s.get("_tier") == 2)
     factories = sum(1 for s in results if s.get("_role") in ("manufacturer", "both"))
     hazmat = sum(1 for s in results if _has_hazmat(s))
 
-    dists = [s.get("logistics", {}).get("distance_km_to_shanghai")
+    dists = [(s.get("logistics", {}).get("distance_km_to_site")
+              or s.get("logistics", {}).get("distance_km_to_shanghai"))
              for s in results]
     dists = [d for d in dists if isinstance(d, (int, float))]
     avg_dist = round(sum(dists) / len(dists)) if dists else None
@@ -264,9 +267,9 @@ def supply_landscape(results: list[dict]) -> dict:
     if n:
         share1 = tier1 / n
         if share1 >= 0.6:
-            geo_note = "供应高度集中在华东，物流半径短、响应快"
+            geo_note = f"供应高度集中在{cluster}，距厂区物流半径短、响应快"
         elif share1 >= 0.3:
-            geo_note = "华东与外省各有分布，可在就近与实力间权衡"
+            geo_note = f"{cluster}与外省各有分布，可在就近与实力间权衡"
         else:
             geo_note = "优质产能多在外省，需关注运距与交期"
     else:

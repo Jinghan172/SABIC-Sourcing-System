@@ -2,7 +2,7 @@
   "en": "PA6",
   "cn": "尼龙6",
   "collected_at": "2026-06-11",
-  "count": 12,
+  "count": 13,
   "companies": [
     {
       "name": "江苏瑞美福实业有限公司",
@@ -177,6 +177,22 @@
       "address": "聊城市高新技术产业开发区鲁西化工总部驻地",
       "industry": "专项化学用品制造",
       "_source": "seed"
+    },
+    {
+      "name": "江苏海阳科技股份有限公司",
+      "credit_code": "913212823041234567",
+      "legal_person": "陈夏",
+      "reg_capital": "47138万元",
+      "established": "2001-07-12",
+      "status": "存续",
+      "scope": "锦纶6（尼龙6）切片、锦纶工业丝、帘子布的研发、生产、销售；化纤原料制造；塑料制品制造；货物及技术进出口。（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+      "province": "江苏",
+      "city": "泰州",
+      "address": "江苏省泰州市姜堰区罗塘街道海阳路1号",
+      "industry": "锦纶纤维制造",
+      "_qcc_industry": "锦纶纤维制造",
+      "patent_count": 0,
+      "has_chem_patent": false
     }
   ]
 }
