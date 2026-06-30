@@ -104,8 +104,8 @@ def distance_to_site(province: str, site_key: str = DEFAULT_SITE) -> float:
 
 def tier_label(tier: int, site_key: str = DEFAULT_SITE) -> str:
     site = get_site(site_key)
-    return {1: f"{site['cluster']}一级圈", 2: f"{site['cluster']}周边二级圈",
-            3: "外省三级圈"}.get(tier, "")
+    return {1: f"{site['cluster']} T1·一级圈", 2: f"{site['cluster']} T2·周边二级圈",
+            3: "T3·外省三级圈"}.get(tier, "")
 
 
 def cluster_name(site_key: str = DEFAULT_SITE) -> str:

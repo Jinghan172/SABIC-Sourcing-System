@@ -36,16 +36,28 @@ _FONT = dict(family="PingFang SC, Microsoft YaHei, sans-serif", size=14)
 
 LANES = [
     {"key": "core", "cn": "核心原材料", "en": "Strategic Raw Materials", "icon": "⭐",
-     "accent": "#0E8C3A", "tagline": "外销沙特战略物料 · 6 维专家评审 + 价格",
+     "accent": "#0E8C3A",
+     "tagline_en": "Saudi-export strategic materials · 6-dimension expert review + pricing",
+     "tagline": "外销沙特战略物料 · 6 维专家评审 + 价格",
+     "desc_en": "TiO₂ / FFS heavy-duty film / export pallets — in-depth due-diligence reports on the most critical materials.",
      "desc": "钛白粉 / FFS 重载膜 / 出口木托盘 —— 最核心物料的深度尽调报告。"},
     {"key": "material", "cn": "其他原材料", "en": "Production Materials", "icon": "🧪",
-     "accent": "#2563eb", "tagline": "生产性物料 · 工商三维评分 · 按厂区独立计算地理分",
+     "accent": "#2563eb",
+     "tagline_en": "Production materials · 3-dimension business scoring · geography scored per plant",
+     "tagline": "生产性物料 · 工商三维评分 · 按厂区独立计算地理分",
+     "desc_en": "Resins / additives / pigments / flame retardants and more — pick a plant to recompute proximity scores.",
      "desc": "树脂 / 助剂 / 颜料 / 阻燃剂等缓存品类，选厂区即重算就近评分。"},
     {"key": "mro", "cn": "综合服务 / MRO", "en": "Services & MRO", "icon": "🏢",
-     "accent": "#7c3aed", "tagline": "15 类间接/服务采购 · 5 维专家 + 费率分析",
+     "accent": "#7c3aed",
+     "tagline_en": "15 indirect / service categories · 5-dimension expert + rate analysis",
+     "tagline": "15 类间接/服务采购 · 5 维专家 + 费率分析",
+     "desc_en": "Local service procurement: staffing / events / IT / security / canteen / MRO / labs.",
      "desc": "人力 / 会务 / IT / 安保 / 食堂 / MRO / 实验室等属地服务采购。"},
     {"key": "equipment", "cn": "化工设备", "en": "Process Equipment", "icon": "🏭",
-     "accent": "#dc2626", "tagline": "9 大设备 · 5 维专家 + 多源价格分析",
+     "accent": "#dc2626",
+     "tagline_en": "9 equipment classes · 5-dimension expert + multi-source price analysis",
+     "tagline": "9 大设备 · 5 维专家 + 多源价格分析",
+     "desc_en": "Heat exchangers / air coolers / columns / reactors / pumps / compressors / valves / cranes.",
      "desc": "换热器 / 空冷器 / 塔器 / 反应釜 / 泵 / 压缩机 / 阀门 / 起重机。"},
 ]
 LANE_BY_KEY = {l["key"]: l for l in LANES}
@@ -159,8 +171,12 @@ def render_lane_selector() -> None:
               "mro": len(_mro_items()), "equipment": len(_equipment_items())}
     st.markdown(
         "<div class='home-band'><div class='home-band-bar'></div><div>"
-        "<div class='home-band-title'>先选采购大类，再选品类与厂区</div>"
-        "<div class='home-band-sub'>四大类统一动线：选大类 → 选品类 → 四大工厂大地图选厂区 → "
+        "<div class='home-band-title'>Pick a procurement category first, then item & plant</div>"
+        "<div class='home-band-title' style='font-size:16px;font-weight:700;color:#cfe0f0;margin-top:2px'>先选采购大类，再选品类与厂区</div>"
+        "<div class='home-band-sub'>Unified flow across four categories: pick category → pick item → "
+        "pick plant on the four-plant map → a detailed supplier comparison & decision report "
+        "(services / equipment include price analysis).<br>"
+        "四大类统一动线：选大类 → 选品类 → 四大工厂大地图选厂区 → "
         "一份细致的供应商对比与决策报告（服务 / 设备含价格分析）。</div>"
         "</div></div>",
         unsafe_allow_html=True,
@@ -171,15 +187,15 @@ def render_lane_selector() -> None:
             st.markdown(
                 f"<div class='home-card' style='--accent:{lane['accent']}'>"
                 f"<div class='home-card-top'><span class='home-ico'>{lane['icon']}</span>"
-                f"<span class='home-tag'>{counts[lane['key']]} 个品类</span></div>"
-                f"<div class='home-name'>{lane['cn']}</div>"
-                f"<div class='home-en'>{lane['en']}</div>"
-                f"<div class='home-tagline'>{lane['tagline']}</div>"
-                f"<div class='home-desc'>{lane['desc']}</div>"
+                f"<span class='home-tag'>{counts[lane['key']]} categories · 个品类</span></div>"
+                f"<div class='home-name'>{lane['en']}</div>"
+                f"<div class='home-name' style='font-size:18px;margin-top:0'>{lane['cn']}</div>"
+                f"<div class='home-tagline'>{lane['tagline_en']}<br>{lane['tagline']}</div>"
+                f"<div class='home-desc'>{lane['desc_en']}<br>{lane['desc']}</div>"
                 f"</div>",
                 unsafe_allow_html=True,
             )
-            if st.button(f"进入 {lane['cn']} →", key=f"lane_{lane['key']}",
+            if st.button(f"Enter · 进入{lane['cn']} →", key=f"lane_{lane['key']}",
                          width="stretch", type="primary"):
                 enter_lane(lane["key"])
 
@@ -191,15 +207,18 @@ def render_material_browse() -> None:
     items = _material_items()
     st.markdown(
         "<div style='color:#5a6780;font-size:14px;margin-bottom:8px'>"
+        "Pick a production-material category, then choose a plant on the <b>four-plant map</b>; "
+        "the system recomputes proximity scores per plant and ranks suppliers.<br>"
         "选择一个生产性物料品类，进入后用<b>四大工厂大地图</b>选厂区，"
         "系统按所选厂区独立计算就近评分并给出供应商排名。</div>",
         unsafe_allow_html=True,
     )
-    for prio, title in [(1, "🔵 SABIC 核心采购品类"), (2, "⚪ 行业扩展品类")]:
+    for prio, title in [(1, "🔵 SABIC Core Procurement · 核心采购品类"),
+                        (2, "⚪ Industry Extension · 行业扩展品类")]:
         grp = [c for c in items if c["prio"] == prio]
         if not grp:
             continue
-        with st.expander(f"{title}（{len(grp)} 个）", expanded=(prio == 1)):
+        with st.expander(f"{title}（{len(grp)}）", expanded=(prio == 1)):
             cols = st.columns(4)
             for i, c in enumerate(grp):
                 with cols[i % 4]:
@@ -241,21 +260,21 @@ def render_material_overview(query: str) -> None:
             is_cur = sk == cur
             nm = (ch.get("name", "")[:12] if ch else "—")
             sc = f"{ch.get('score', 0):.0f}" if ch else "—"
-            hover = (f"<b>SABIC {site['cn']} 工厂</b><br>{site.get('feature','')}<br>"
-                     f"🥇 就近首选：<b>{ch.get('name','—') if ch else '—'}</b>"
-                     f" · <b>{sc} 分</b>" if ch else f"<b>SABIC {site['cn']}</b>")
+            hover = (f"<b>SABIC {site['cn']} Plant · 工厂</b><br>{site.get('feature','')}<br>"
+                     f"🥇 Nearest pick · 就近首选：<b>{ch.get('name','—') if ch else '—'}</b>"
+                     f" · <b>{sc} pts · 分</b>" if ch else f"<b>SABIC {site['cn']}</b>")
             fig.add_trace(go.Scattergeo(
                 lat=[site["lat"]], lon=[site["lng"]], mode="markers+text",
                 marker=dict(size=28 if is_cur else 15, color=col,
                             symbol="star" if is_cur else "diamond",
                             line=dict(color="white", width=2.4 if is_cur else 1.4),
                             opacity=1.0 if is_cur else 0.55),
-                text=[f"★ {site['short']} · {sc}分" if is_cur else f"◆ {site['short']}"],
+                text=[f"★ {site['short']} · {sc}pts" if is_cur else f"◆ {site['short']}"],
                 textposition="top center",
                 textfont=dict(size=12.5 if is_cur else 10,
                               color="#0a1628" if is_cur else "#94a3b8"),
                 hovertemplate=f"{hover}<extra></extra>",
-                name=f"{'★ 当前' if is_cur else '◆'} {site['short']}", showlegend=True,
+                name=f"{'★ Current·当前' if is_cur else '◆'} {site['short']}", showlegend=True,
             ))
         fig.update_geos(
             visible=False, resolution=50, scope="asia",
@@ -273,7 +292,10 @@ def render_material_overview(query: str) -> None:
         st.plotly_chart(fig, width="stretch",
                         config={"displayModeBar": False, "scrollZoom": True},
                         key=f"mat_map_{query}")
-        st.caption("★ 当前采购厂区 · ◆ 其余厂区；标注为各厂就近首选供应商综合分。"
+        st.caption("★ Current plant · ◆ Other plants. Labels show each plant's nearest-pick "
+                   "supplier overall score. Switch plant below to recompute distance & "
+                   "proximity scores per plant.  \n"
+                   "★ 当前采购厂区 · ◆ 其余厂区；标注为各厂就近首选供应商综合分。"
                    "切换下方厂区，距离与就近评分将以该厂独立重算。")
 
     # 厂区选择（与全局 site 绑定）

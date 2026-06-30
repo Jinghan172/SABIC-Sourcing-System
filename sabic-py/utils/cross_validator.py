@@ -147,8 +147,8 @@ def batch_validate(
 
 def confidence_label(conf: float) -> tuple[str, str]:
     """返回 (中文标签, 颜色hex)"""
-    if conf >= 90: return ("极高置信",  "#15803d")
-    if conf >= 75: return ("高置信",    "#059669")
-    if conf >= 60: return ("中等置信",  "#d97706")
-    if conf >= 45: return ("低置信",    "#dc2626")
-    return ("待验证", "#9ca3af")
+    if conf >= 90: return ("Very high · 极高置信",  "#15803d")
+    if conf >= 75: return ("High · 高置信",    "#059669")
+    if conf >= 60: return ("Medium · 中等置信",  "#d97706")
+    if conf >= 45: return ("Low · 低置信",    "#dc2626")
+    return ("To verify · 待验证", "#9ca3af")

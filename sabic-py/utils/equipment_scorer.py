@@ -31,6 +31,13 @@ DIM_CN = {
     "qual":     "资质合规等级",
     "scale":    "规模与品牌背书",
 }
+DIM_EN = {
+    "price":    "Price competitiveness",
+    "delivery": "Delivery assurance",
+    "local":    "Local fulfillment",
+    "qual":     "Qualification level",
+    "scale":    "Scale & brand backing",
+}
 DEFAULT_WEIGHTS = {"price": 32, "delivery": 22, "local": 18, "qual": 16, "scale": 12}
 
 # 资质权威度 → 分值
@@ -104,11 +111,11 @@ def verdict_for(scored: dict) -> str:
         return ""
     top = max(dims, key=dims.get)
     lead = {
-        "price":    "到厂价格最具竞争力",
-        "delivery": "交期最短、履约最快",
-        "local":    "属地就近响应最强",
-        "qual":     "资质等级最权威",
-        "scale":    "规模品牌背书最硬",
-    }.get(top, "综合均衡")
-    role = "🥇 入围首选" if scored.get("rank") == 1 else "入围候选"
+        "price":    "most competitive delivered price · 到厂价格最具竞争力",
+        "delivery": "shortest lead time, fastest fulfillment · 交期最短、履约最快",
+        "local":    "strongest local proximity response · 属地就近响应最强",
+        "qual":     "most authoritative qualification level · 资质等级最权威",
+        "scale":    "hardest scale & brand backing · 规模品牌背书最硬",
+    }.get(top, "balanced overall · 综合均衡")
+    role = "🥇 Top pick · 入围首选" if scored.get("rank") == 1 else "Shortlisted · 入围候选"
     return f"{role} · {lead}"

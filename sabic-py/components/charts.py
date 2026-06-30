@@ -21,7 +21,7 @@ BG = "rgba(0,0,0,0)"  # 透明背景
 
 _FONT = dict(family="PingFang SC, Microsoft YaHei, sans-serif", size=12)
 
-DIM_LABELS = ["地理评分", "规模评分", "合规资质"]
+DIM_LABELS = ["Geography·地理评分", "Scale·规模评分", "Compliance·合规资质"]
 DIM_KEYS   = ["geography", "scale", "compliance"]
 
 # 四大基地配色（与核心物料地图一致：上海绿 / 南沙蓝 / 古雷橙 / 重庆紫）
@@ -67,7 +67,7 @@ def _mid_price(value, default: float = 5000.0) -> float:
 # ── 雷达图 ────────────────────────────────────────────────────────────
 def radar_chart(suppliers: list[dict]) -> go.Figure:
     if not suppliers:
-        return _empty("请选择供应商")
+        return _empty("Select suppliers · 请选择供应商")
 
     cats = DIM_LABELS + [DIM_LABELS[0]]  # 首尾相连闭合
 
@@ -83,7 +83,7 @@ def radar_chart(suppliers: list[dict]) -> go.Figure:
             fill="toself",
             fillcolor=f"rgba{_hex_to_rgba(PALETTE[i % len(PALETTE)], 0.15)}",
             line=dict(color=PALETTE[i % len(PALETTE)], width=2),
-            name=f"{name} ({s.get('score', 0):.1f}分)",
+            name=f"{name} ({s.get('score', 0):.1f})",
         ))
 
     fig.update_layout(
@@ -105,13 +105,13 @@ def radar_chart(suppliers: list[dict]) -> go.Figure:
 # ── 单项对比柱图 ──────────────────────────────────────────────────────
 def bar_chart(suppliers: list[dict], metric: str = "score") -> go.Figure:
     if not suppliers:
-        return _empty("请选择供应商")
+        return _empty("Select suppliers · 请选择供应商")
 
     METRIC_MAP = {
-        "score":    ("综合评分", lambda s: s.get("score", 0)),
-        "geography":("地理评分", lambda s: s.get("dimensions", {}).get("geography", 0)),
-        "compliance":("合规资质",lambda s: s.get("dimensions", {}).get("compliance", 0)),
-        "scale":    ("规模评分", lambda s: s.get("dimensions", {}).get("scale", 0)),
+        "score":    ("Overall · 综合评分", lambda s: s.get("score", 0)),
+        "geography":("Geography · 地理评分", lambda s: s.get("dimensions", {}).get("geography", 0)),
+        "compliance":("Compliance · 合规资质",lambda s: s.get("dimensions", {}).get("compliance", 0)),
+        "scale":    ("Scale · 规模评分", lambda s: s.get("dimensions", {}).get("scale", 0)),
     }
     label, getter = METRIC_MAP.get(metric, METRIC_MAP["score"])
 
@@ -127,7 +127,7 @@ def bar_chart(suppliers: list[dict], metric: str = "score") -> go.Figure:
         textfont=dict(size=11),
     ))
     fig.update_layout(
-        title=dict(text=f"<b>{label}</b>对比", font=dict(size=13)),
+        title=dict(text=f"<b>{label}</b> comparison · 对比", font=dict(size=13)),
         xaxis=dict(range=[0, 110], showgrid=True, gridcolor="#e2e8f0", title=label),
         yaxis=dict(autorange="reversed", tickfont=dict(size=11)),
         font=_FONT, paper_bgcolor=BG, plot_bgcolor="white",
@@ -148,7 +148,7 @@ def bubble_chart(suppliers: list[dict]) -> go.Figure:
     替代原来的均价/产能（企查查不提供，会导致所有点重叠）
     """
     if not suppliers:
-        return _empty("暂无数据")
+        return _empty("No data · 暂无数据")
 
     import datetime as _dt
     cur_year = _dt.datetime.now().year
@@ -165,14 +165,14 @@ def bubble_chart(suppliers: list[dict]) -> go.Figure:
             "capital": max(cap, 1),          # 避免 log(0)
             "age":     max(age, 0.5),
             "score":   s.get("score", 50),
-            "tier":    f"圈层{s.get('_tier', 3)}",
+            "tier":    f"T{s.get('_tier', 3)}·圈层{s.get('_tier', 3)}",
         })
 
     if not rows:
-        return _empty("暂无可量化数据（注册资本/成立年限缺失）")
+        return _empty("No quantifiable data (capital/age missing) · 暂无可量化数据（注册资本/成立年限缺失）")
 
     df = pd.DataFrame(rows)
-    tier_color = {"圈层1": SABIC_GREEN, "圈层2": "#3b82f6", "圈层3": "#8b5cf6"}
+    tier_color = {"T1·圈层1": SABIC_GREEN, "T2·圈层2": "#3b82f6", "T3·圈层3": "#8b5cf6"}
 
     fig = px.scatter(
         df, x="capital", y="age",
@@ -180,22 +180,22 @@ def bubble_chart(suppliers: list[dict]) -> go.Figure:
         color_discrete_map=tier_color,
         hover_name="name",
         hover_data={"capital": ":.0f", "age": ":.0f", "score": ":.1f"},
-        labels={"capital": "注册资本 (万元)", "age": "成立年限 (年)", "tier": "圈层"},
+        labels={"capital": "Reg. capital (10k CNY) · 注册资本", "age": "Years · 成立年限", "tier": "Tier · 圈层"},
         size_max=42,
     )
     fig.update_traces(
         hovertemplate="<b>%{hovertext}</b><br>"
-                      "注册资本：%{x:.0f} 万元<br>"
-                      "成立年限：%{y:.0f} 年<br>"
-                      "综合评分：%{marker.size:.1f}<extra></extra>"
+                      "Reg. capital · 注册资本：%{x:.0f}<br>"
+                      "Years · 成立年限：%{y:.0f}<br>"
+                      "Overall · 综合评分：%{marker.size:.1f}<extra></extra>"
     )
     fig.update_layout(
         font=_FONT, paper_bgcolor=BG, plot_bgcolor="white",
         legend=dict(orientation="h", y=-0.18, font=dict(size=11)),
         xaxis=dict(showgrid=True, gridcolor="#e2e8f0", type="log",
-                   title="注册资本 (万元, 对数轴)"),
+                   title="Reg. capital (10k CNY, log) · 注册资本（对数轴）"),
         yaxis=dict(showgrid=True, gridcolor="#e2e8f0",
-                   title="成立年限 (年)"),
+                   title="Years in business · 成立年限（年）"),
         margin=dict(l=20, r=20, t=30, b=60),
         height=360,
     )
@@ -209,11 +209,11 @@ def parallel_chart(suppliers: list[dict]) -> go.Figure:
     鼠标悬停显示企业名 + 各维度精确分数；点击图例可隐藏/显示某企业。
     """
     if not suppliers:
-        return _empty("暂无数据")
+        return _empty("No data · 暂无数据")
 
     displayed = suppliers[:10]
 
-    DIM_NAMES = ["综合评分", "地理评分", "规模评分", "合规资质"]
+    DIM_NAMES = ["Overall·综合评分", "Geography·地理评分", "Scale·规模评分", "Compliance·合规资质"]
     DIM_FETCH = [
         lambda s: s.get("score", 0),
         lambda s: s.get("dimensions", {}).get("geography", 0),
@@ -231,7 +231,7 @@ def parallel_chart(suppliers: list[dict]) -> go.Figure:
         hover_lines = [
             f"<b>{name}</b>",
             "─────────────────",
-        ] + [f"{dn}：{v:.1f} 分" for dn, v in zip(DIM_NAMES, vals)]
+        ] + [f"{dn}：{v:.1f}" for dn, v in zip(DIM_NAMES, vals)]
 
         fig.add_trace(go.Scatter(
             x=DIM_NAMES,
@@ -258,7 +258,7 @@ def parallel_chart(suppliers: list[dict]) -> go.Figure:
             range=[0, 108],
             showgrid=True,
             gridcolor="#e2e8f0",
-            title="得分",
+            title="Score · 得分",
             tickfont=dict(size=11),
             zeroline=False,
         ),
@@ -269,7 +269,7 @@ def parallel_chart(suppliers: list[dict]) -> go.Figure:
             bgcolor="rgba(255,255,255,0.9)",
             bordercolor="#e2e8f0",
             borderwidth=1,
-            title=dict(text="企业名称", font=dict(size=11)),
+            title=dict(text="Company · 企业名称", font=dict(size=11)),
         ),
         margin=dict(l=50, r=160, t=40, b=50),
         height=380,
@@ -282,7 +282,7 @@ def parallel_chart(suppliers: list[dict]) -> go.Figure:
         ],
         annotations=[
             dict(x=1.0, y=60, xref="paper", yref="y",
-                 text="60分基准", showarrow=False,
+                 text="60 baseline · 60分基准", showarrow=False,
                  font=dict(size=9, color="#94a3b8"),
                  xanchor="right"),
         ],
@@ -293,11 +293,11 @@ def parallel_chart(suppliers: list[dict]) -> go.Figure:
 # ── 热力矩阵 ─────────────────────────────────────────────────────────
 def heatmap_chart(suppliers: list[dict]) -> go.Figure:
     if not suppliers:
-        return _empty("暂无数据")
+        return _empty("No data · 暂无数据")
 
     displayed = suppliers[:15]
     y_labels = [s.get("shortName") or s.get("name", "")[:8] for s in displayed]
-    x_labels = DIM_LABELS + ["综合评分"]
+    x_labels = DIM_LABELS + ["Overall·综合评分"]
     keys_ext = DIM_KEYS + ["score"]
 
     z = []
@@ -324,14 +324,14 @@ def heatmap_chart(suppliers: list[dict]) -> go.Figure:
         text=[[f"{v:.0f}" for v in row] for row in z],
         texttemplate="%{text}",
         textfont=dict(size=12, color="white"),
-        hovertemplate="%{y} · %{x}: <b>%{z:.1f}</b>分<extra></extra>",
+        hovertemplate="%{y} · %{x}: <b>%{z:.1f}</b><extra></extra>",
         colorbar=dict(
-            title="得分",
+            title="Score · 得分",
             thickness=16,
             len=0.95,
             tickfont=dict(size=11),
             tickvals=[0, 20, 40, 60, 80, 100],
-            ticktext=["0", "20<br>差", "40", "60<br>中", "80", "100<br>优"],
+            ticktext=["0", "20<br>low·差", "40", "60<br>mid·中", "80", "100<br>top·优"],
         ),
         xgap=3, ygap=3,
     ))
@@ -351,51 +351,51 @@ def compare_dataframe(suppliers: list[dict]) -> pd.DataFrame:
     if not suppliers:
         return pd.DataFrame()
 
-    ROLE_ZH = {"manufacturer": "工厂", "both": "工厂兼贸易", "importer": "进口商",
-               "trader": "经销商", "agent": "中介", "unknown": "未分类"}
+    ROLE_ZH = {"manufacturer": "Factory·工厂", "both": "Factory+trade·工厂兼贸易", "importer": "Importer·进口商",
+               "trader": "Distributor·经销商", "agent": "Intermediary·中介", "unknown": "Unclassified·未分类"}
     rows = []
     metric_labels = [
-        "综合评分", "地理评分", "规模评分", "合规资质",
-        "所在省份", "城市", "圈层", "企业类型", "经营状态",
-        "成立年份", "注册资本(万)",
-        "危化品资质", "安全生产证", "化工园区",
+        "Overall·综合评分", "Geography·地理评分", "Scale·规模评分", "Compliance·合规资质",
+        "Province·所在省份", "City·城市", "Tier·圈层", "Type·企业类型", "Status·经营状态",
+        "Founded·成立年份", "Reg.cap(10k)·注册资本(万)",
+        "Hazmat·危化品资质", "Safety cert·安全生产证", "Chem park·化工园区",
     ]
     for label in metric_labels:
-        row = {"指标": label}
+        row = {"Metric·指标": label}
         for s in suppliers:
             name = s.get("shortName") or s.get("name", "")[:8]
             dims = s.get("dimensions", {})
             lic  = s.get("licenses", {})
             tier = s.get("_tier", 3)
-            tier_label = ["", "一级(华东)", "二级", "三级"][tier]
+            tier_label = ["", "T1·一级(华东)", "T2·二级", "T3·三级"][tier]
 
             val_map = {
-                "综合评分":    f"{s.get('score', 0):.1f}",
-                "地理评分":    f"{dims.get('geography', 0):.1f}",
-                "规模评分":    f"{dims.get('scale', 0):.1f}",
-                "合规资质":    f"{dims.get('compliance', 0):.1f}",
-                "所在省份":    s.get("province", "—"),
-                "城市":        s.get("city", "") or "—",
-                "圈层":        tier_label,
-                "企业类型":    ROLE_ZH.get(s.get("_role", "unknown"), "未分类"),
-                "经营状态":    s.get("reg_status", "存续") or "存续",
-                "成立年份":    str(s.get("established", "—")),
-                "注册资本(万)": str(s.get("registered_capital_wan", "—")),
-                "危化品资质":  "✓" if (lic.get("hazardous_chemicals") or lic.get("hazmat_business")) else "—",
-                "安全生产证":  "✓" if lic.get("safety_production") else "—",
-                "化工园区":    "✓" if s.get("chemical_park") else "—",
+                "Overall·综合评分":    f"{s.get('score', 0):.1f}",
+                "Geography·地理评分":    f"{dims.get('geography', 0):.1f}",
+                "Scale·规模评分":    f"{dims.get('scale', 0):.1f}",
+                "Compliance·合规资质":    f"{dims.get('compliance', 0):.1f}",
+                "Province·所在省份":    s.get("province", "—"),
+                "City·城市":        s.get("city", "") or "—",
+                "Tier·圈层":        tier_label,
+                "Type·企业类型":    ROLE_ZH.get(s.get("_role", "unknown"), "Unclassified·未分类"),
+                "Status·经营状态":    s.get("reg_status", "存续") or "存续",
+                "Founded·成立年份":    str(s.get("established", "—")),
+                "Reg.cap(10k)·注册资本(万)": str(s.get("registered_capital_wan", "—")),
+                "Hazmat·危化品资质":  "✓" if (lic.get("hazardous_chemicals") or lic.get("hazmat_business")) else "—",
+                "Safety cert·安全生产证":  "✓" if lic.get("safety_production") else "—",
+                "Chem park·化工园区":    "✓" if s.get("chemical_park") else "—",
             }
             row[name] = val_map.get(label, "—")
         rows.append(row)
 
-    return pd.DataFrame(rows).set_index("指标")
+    return pd.DataFrame(rows).set_index("Metric·指标")
 
 
 # ── 中国地图 ─────────────────────────────────────────────────────────
 def china_map(suppliers: list[dict], site_key: str = "SH") -> go.Figure:
     _geojson_path = Path(__file__).parent.parent / "data" / "china.json"
     if not _geojson_path.exists():
-        return _empty("china.json 未找到\n请下载放到 data/ 目录", height=400)
+        return _empty("china.json not found · 未找到\nPlace it in data/ · 请下载放到 data/ 目录", height=400)
 
     with open(_geojson_path, encoding="utf-8") as f:
         geojson = json.load(f)
@@ -425,11 +425,11 @@ def china_map(suppliers: list[dict], site_key: str = "SH") -> go.Figure:
         colorscale=[[0,"#e2e8f0"],[1, SABIC_GREEN]],
         zmin=0, zmax=max(df_map["count"].max() if not df_map.empty else 1, 1),
         showscale=True,
-        colorbar=dict(title="供应商数", thickness=12, len=0.6,
+        colorbar=dict(title="Suppliers · 供应商数", thickness=12, len=0.6,
                       tickfont=dict(size=10)),
         marker_line_color="white",
         marker_line_width=0.5,
-        hovertemplate="%{location}: %{z} 家<extra></extra>",
+        hovertemplate="%{location}: %{z}<extra></extra>",
     ))
 
     # 供应商散点（用省会坐标 + 微抖动）
@@ -468,10 +468,10 @@ def china_map(suppliers: list[dict], site_key: str = "SH") -> go.Figure:
         scatter_sizes.append(max(8, score * 0.22))
         scatter_texts.append(
             f"<b>{name}</b><br>"
-            f"综合：{score:.1f}分<br>"
-            f"地理：{dims.get('geography',0):.0f} · "
-            f"规模：{dims.get('scale',0):.0f} · "
-            f"合规：{dims.get('compliance',0):.0f}"
+            f"Overall · 综合：{score:.1f}<br>"
+            f"Geo · 地理：{dims.get('geography',0):.0f} · "
+            f"Scale · 规模：{dims.get('scale',0):.0f} · "
+            f"Comp · 合规：{dims.get('compliance',0):.0f}"
         )
 
     if scatter_lats:
@@ -488,7 +488,7 @@ def china_map(suppliers: list[dict], site_key: str = "SH") -> go.Figure:
                 opacity=0.88,
             ),
             hovertemplate="%{text}<extra></extra>",
-            name="供应商",
+            name="Suppliers · 供应商",
         ))
 
     # SABIC 四大基地标注（当前所选厂区高亮放大，其余淡化）
@@ -501,12 +501,12 @@ def china_map(suppliers: list[dict], site_key: str = "SH") -> go.Figure:
             marker=dict(size=26 if _cur else 14, color=col, symbol="star" if _cur else "diamond",
                         line=dict(color="white", width=2.4 if _cur else 1.4),
                         opacity=1.0 if _cur else 0.55),
-            text=[f"★ 采购厂区 · SABIC {bs['short']}" if _cur else f"◆ {bs['short']}"],
+            text=[f"★ Plant · 采购厂区 · SABIC {bs['short']}" if _cur else f"◆ {bs['short']}"],
             textposition="top center",
             textfont=dict(size=12 if _cur else 10, color=SABIC_DARK if _cur else "#94a3b8"),
-            name=f"{'★ 当前厂区' if _cur else '◆'} {bs['short']}",
-            hovertemplate=(f"{'★ 当前采购厂区：' if _cur else 'SABIC '}{bs['cn']}基地"
-                           f"<br>就近出口口岸：{bs['port']}<extra></extra>"),
+            name=f"{'★ Current·当前厂区' if _cur else '◆'} {bs['short']}",
+            hovertemplate=(f"{'★ Current plant · 当前采购厂区：' if _cur else 'SABIC '}{bs['cn']} base · 基地"
+                           f"<br>Nearest export port · 就近出口口岸：{bs['port']}<extra></extra>"),
         ))
 
     fig.update_geos(

@@ -1,0 +1,5152 @@
+{
+ "section": {
+  "title": "🏭 石化设备寻源与采购价格分析",
+  "sub": "9 大设备品类 × 四大交付工厂，选定设备与工厂即得入围供应商排名 + 多源交叉验证的采购价格分析报告（中石化 / 中石油 / 中招网招投标 + 供应商报价 + 历史回归）。"
+ },
+ "plants": [
+  {
+   "key": "SH",
+   "cn": "上海浦东",
+   "short": "上海浦东",
+   "region": "EC",
+   "lat": 31.2222,
+   "lng": 121.5447,
+   "port": "上海港·洋山",
+   "feature": "临港重型码头 · 超大件出运"
+  },
+  {
+   "key": "NS",
+   "cn": "广州南沙",
+   "short": "南沙",
+   "region": "SC",
+   "lat": 22.7716,
+   "lng": 113.5566,
+   "port": "南沙港",
+   "feature": "海洋大气 · C5-M 重防腐"
+  },
+  {
+   "key": "GL",
+   "cn": "福建漳州古雷",
+   "short": "古雷",
+   "region": "FJ",
+   "lat": 23.74,
+   "lng": 117.54,
+   "port": "古雷港·厦门港",
+   "feature": "防台风 · 沿海炼化大件"
+  },
+  {
+   "key": "CQ",
+   "cn": "重庆",
+   "short": "重庆",
+   "region": "SW",
+   "lat": 29.563,
+   "lng": 106.5516,
+   "port": "果园港转水",
+   "feature": "山地物流 · 大件运输保障"
+  }
+ ],
+ "categories": [
+  {
+   "key": "shell_hx",
+   "cn": "管壳式换热器",
+   "en": "Shell-and-Tube Heat Exchanger",
+   "icon": "🔧",
+   "accent": "#0E8C3A",
+   "ref_price_wan": 85,
+   "kind": "static",
+   "spec": "BEM 800-2.5-150-6/25 型碳钢",
+   "edge": "高效换热管技术",
+   "source": "中石化 2022 年静设备框架协议招标均价",
+   "plants": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "南通中集能源装备有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 233,
+       "lead_time_days": 106,
+       "price_level": 0.95,
+       "is_local": true,
+       "est_price_wan": 80.75,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估80.75万元"
+      },
+      {
+       "name": "南京宝色股份公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 164,
+       "lead_time_days": 90,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 79.9,
+       "special_notes": "高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估79.9万元"
+      },
+      {
+       "name": "苏州海陆重工股份有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 244,
+       "lead_time_days": 114,
+       "price_level": 0.97,
+       "is_local": true,
+       "est_price_wan": 82.45,
+       "special_notes": "高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估82.45万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 12,
+        "avg": 83.2,
+        "low": 77.2,
+        "high": 91.6,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 7,
+        "avg": 86.4,
+        "low": 77.9,
+        "high": 94.3,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 14,
+        "avg": 85.6,
+        "low": 77.1,
+        "high": 97.0,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 80.8,
+       "low": 79.9,
+       "high": 82.5,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 80.7
+       },
+       {
+        "year": 2022,
+        "price": 83.1
+       },
+       {
+        "year": 2023,
+        "price": 86.8
+       },
+       {
+        "year": 2024,
+        "price": 90.7
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 84.9,
+        "note": "3 平台 33 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 80.8,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 90.7,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 85.1,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 85.1,
+      "rec_low": 78.6,
+      "rec_high": 91.6,
+      "confidence": 71,
+      "dispersion": 4.8,
+      "total_samples": 36,
+      "ref_price": 85,
+      "logi_factor": 1.0
+     }
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "佛山市化机设备工程有限公司",
+       "region": "SC",
+       "tier": "local",
+       "qualification": "A1",
+       "distance_km": 229,
+       "lead_time_days": 108,
+       "price_level": 0.99,
+       "is_local": true,
+       "est_price_wan": 84.15,
+       "special_notes": "C5-M海洋防腐涂层配套；高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估84.15万元"
+      },
+      {
+       "name": "广州广重企业集团有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 186,
+       "lead_time_days": 81,
+       "price_level": 0.96,
+       "is_local": true,
+       "est_price_wan": 81.6,
+       "special_notes": "C5-M海洋防腐涂层配套；高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估81.6万元"
+      },
+      {
+       "name": "广东中泽重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 119,
+       "lead_time_days": 71,
+       "price_level": 1.0,
+       "is_local": true,
+       "est_price_wan": 85.0,
+       "special_notes": "高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估85万元"
+      },
+      {
+       "name": "广西梧州压力容器制造有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 225,
+       "lead_time_days": 109,
+       "price_level": 0.9,
+       "is_local": true,
+       "est_price_wan": 76.5,
+       "special_notes": "高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估76.5万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 11,
+        "avg": 88.4,
+        "low": 81.0,
+        "high": 97.8,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 7,
+        "avg": 87.1,
+        "low": 81.6,
+        "high": 99.2,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 15,
+        "avg": 83.7,
+        "low": 74.0,
+        "high": 97.7,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 82.9,
+       "low": 76.5,
+       "high": 85.0,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 81.7
+       },
+       {
+        "year": 2022,
+        "price": 84.4
+       },
+       {
+        "year": 2023,
+        "price": 87.8
+       },
+       {
+        "year": 2024,
+        "price": 92.4
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 86.0,
+        "note": "3 平台 33 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 82.9,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 92.4,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 86.7,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 86.7,
+      "rec_low": 80.4,
+      "rec_high": 93.0,
+      "confidence": 72,
+      "dispersion": 4.5,
+      "total_samples": 37,
+      "ref_price": 85,
+      "logi_factor": 1.02
+     }
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "福建福船一帆新能源装备制造有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 165,
+       "lead_time_days": 84,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 75.65,
+       "special_notes": "防台风应急物资储备；高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估75.65万元"
+      },
+      {
+       "name": "福建省工业设备安装有限公司",
+       "region": "FJ",
+       "tier": "local",
+       "qualification": "A2",
+       "distance_km": 59,
+       "lead_time_days": 48,
+       "price_level": 0.95,
+       "is_local": true,
+       "est_price_wan": 80.75,
+       "special_notes": "防台风应急物资储备；高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估80.75万元"
+      },
+      {
+       "name": "福州锅炉厂有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 194,
+       "lead_time_days": 87,
+       "price_level": 0.9,
+       "is_local": true,
+       "est_price_wan": 76.5,
+       "special_notes": "高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估76.5万元"
+      },
+      {
+       "name": "张家港化工机械股份有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 532,
+       "lead_time_days": 210,
+       "price_level": 0.98,
+       "is_local": false,
+       "est_price_wan": 83.3,
+       "special_notes": "高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估83.3万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 16,
+        "avg": 87.2,
+        "low": 78.1,
+        "high": 94.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 10,
+        "avg": 90.0,
+        "low": 82.0,
+        "high": 97.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 15,
+        "avg": 86.1,
+        "low": 76.5,
+        "high": 99.7,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 78.6,
+       "low": 75.7,
+       "high": 83.3,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 80.7
+       },
+       {
+        "year": 2022,
+        "price": 83.3
+       },
+       {
+        "year": 2023,
+        "price": 87.3
+       },
+       {
+        "year": 2024,
+        "price": 90.1
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 87.5,
+        "note": "3 平台 41 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 78.6,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 90.1,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 85.5,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 85.5,
+      "rec_low": 77.6,
+      "rec_high": 93.4,
+      "confidence": 72,
+      "dispersion": 5.8,
+      "total_samples": 45,
+      "ref_price": 85,
+      "logi_factor": 1.01
+     }
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "四川德阳科利机械设备制造有限公司",
+       "region": "SW",
+       "tier": "local",
+       "qualification": "A2",
+       "distance_km": 254,
+       "lead_time_days": 116,
+       "price_level": 1.0,
+       "is_local": true,
+       "est_price_wan": 85.0,
+       "special_notes": "大件山地物流运输保障；高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估85万元"
+      },
+      {
+       "name": "东方电气集团东方锅炉股份有限公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 314,
+       "lead_time_days": 126,
+       "price_level": 0.92,
+       "is_local": true,
+       "est_price_wan": 78.2,
+       "special_notes": "大件山地物流运输保障；高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估78.2万元"
+      },
+      {
+       "name": "重庆通用工业（集团）有限责任公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 223,
+       "lead_time_days": 103,
+       "price_level": 0.85,
+       "is_local": true,
+       "est_price_wan": 72.25,
+       "special_notes": "高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估72.25万元"
+      },
+      {
+       "name": "四川华西通用机器公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 53,
+       "lead_time_days": 48,
+       "price_level": 0.86,
+       "is_local": true,
+       "est_price_wan": 73.1,
+       "special_notes": "高效换热管技术",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约85万元，本供应商预估73.1万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 9,
+        "avg": 91.4,
+        "low": 84.1,
+        "high": 98.4,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 9,
+        "avg": 90.1,
+        "low": 81.9,
+        "high": 99.9,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 21,
+        "avg": 90.6,
+        "low": 80.7,
+        "high": 102.2,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 75.7,
+       "low": 72.2,
+       "high": 85.0,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 84.4
+       },
+       {
+        "year": 2022,
+        "price": 88.0
+       },
+       {
+        "year": 2023,
+        "price": 90.5
+       },
+       {
+        "year": 2024,
+        "price": 93.8
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 90.7,
+        "note": "3 平台 39 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 75.7,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 93.8,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 87.0,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 87.0,
+      "rec_low": 76.5,
+      "rec_high": 97.4,
+      "confidence": 62,
+      "dispersion": 9.1,
+      "total_samples": 43,
+      "ref_price": 85,
+      "logi_factor": 1.05
+     }
+    }
+   }
+  },
+  {
+   "key": "plate_hx",
+   "cn": "板式换热器",
+   "en": "Plate Heat Exchanger",
+   "icon": "📐",
+   "accent": "#16a34a",
+   "ref_price_wan": 35,
+   "kind": "static",
+   "spec": "BR0.5 不锈钢板式换热器",
+   "edge": "全焊接板片工艺",
+   "source": "2023 年中石化招标公告报价",
+   "plants": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海电气集团股份有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 77,
+       "lead_time_days": 45,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 31.15,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估31.15万元"
+      },
+      {
+       "name": "上海蓝滨石化设备有限责任公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 85,
+       "lead_time_days": 50,
+       "price_level": 0.91,
+       "is_local": true,
+       "est_price_wan": 31.85,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估31.85万元"
+      },
+      {
+       "name": "江苏中圣压力容器装备制造有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 69,
+       "lead_time_days": 60,
+       "price_level": 0.92,
+       "is_local": true,
+       "est_price_wan": 32.2,
+       "special_notes": "全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估32.2万元"
+      },
+      {
+       "name": "苏州海陆重工股份有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 62,
+       "lead_time_days": 49,
+       "price_level": 0.95,
+       "is_local": true,
+       "est_price_wan": 33.25,
+       "special_notes": "全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估33.25万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 9,
+        "avg": 35.9,
+        "low": 33.0,
+        "high": 38.9,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 13,
+        "avg": 35.8,
+        "low": 33.4,
+        "high": 40.9,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 12,
+        "avg": 34.2,
+        "low": 31.4,
+        "high": 37.8,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 32.0,
+       "low": 31.1,
+       "high": 33.2,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 33.1
+       },
+       {
+        "year": 2022,
+        "price": 34.3
+       },
+       {
+        "year": 2023,
+        "price": 35.6
+       },
+       {
+        "year": 2024,
+        "price": 37.4
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 35.3,
+        "note": "3 平台 34 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 32.0,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 37.4,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 34.8,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 34.8,
+      "rec_low": 31.3,
+      "rec_high": 38.4,
+      "confidence": 67,
+      "dispersion": 6.4,
+      "total_samples": 38,
+      "ref_price": 35,
+      "logi_factor": 1.0
+     }
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广州广重企业集团有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 62,
+       "lead_time_days": 48,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 32.9,
+       "special_notes": "C5-M海洋防腐涂层配套；全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估32.9万元"
+      },
+      {
+       "name": "广西梧州压力容器制造有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 64,
+       "lead_time_days": 38,
+       "price_level": 0.99,
+       "is_local": true,
+       "est_price_wan": 34.65,
+       "special_notes": "C5-M海洋防腐涂层配套；全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估34.65万元"
+      },
+      {
+       "name": "广州文船重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 67,
+       "lead_time_days": 54,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 32.9,
+       "special_notes": "全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估32.9万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 14,
+        "avg": 34.9,
+        "low": 32.2,
+        "high": 38.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 6,
+        "avg": 36.9,
+        "low": 33.4,
+        "high": 41.0,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 18,
+        "avg": 34.7,
+        "low": 30.1,
+        "high": 39.8,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 32.9,
+       "low": 32.9,
+       "high": 34.6,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 33.4
+       },
+       {
+        "year": 2022,
+        "price": 34.8
+       },
+       {
+        "year": 2023,
+        "price": 36.1
+       },
+       {
+        "year": 2024,
+        "price": 38.0
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 35.1,
+        "note": "3 平台 38 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 32.9,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 38.0,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 35.2,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 35.2,
+      "rec_low": 31.8,
+      "rec_high": 38.5,
+      "confidence": 70,
+      "dispersion": 5.9,
+      "total_samples": 41,
+      "ref_price": 35,
+      "logi_factor": 1.02
+     }
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "福州锅炉厂有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 63,
+       "lead_time_days": 58,
+       "price_level": 0.99,
+       "is_local": true,
+       "est_price_wan": 34.65,
+       "special_notes": "防台风应急物资储备；全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估34.65万元"
+      },
+      {
+       "name": "广州文船重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 489,
+       "lead_time_days": 189,
+       "price_level": 1.03,
+       "is_local": false,
+       "est_price_wan": 36.05,
+       "special_notes": "防台风应急物资储备；全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估36.05万元"
+      },
+      {
+       "name": "南通中集能源装备有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 613,
+       "lead_time_days": 240,
+       "price_level": 1.15,
+       "is_local": false,
+       "est_price_wan": 40.25,
+       "special_notes": "全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估40.25万元"
+      },
+      {
+       "name": "广州广重企业集团有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 641,
+       "lead_time_days": 236,
+       "price_level": 1.12,
+       "is_local": false,
+       "est_price_wan": 39.2,
+       "special_notes": "全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估39.2万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 10,
+        "avg": 34.9,
+        "low": 32.1,
+        "high": 39.6,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 8,
+        "avg": 35.7,
+        "low": 32.7,
+        "high": 40.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 13,
+        "avg": 35.3,
+        "low": 32.1,
+        "high": 39.9,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 37.6,
+       "low": 34.6,
+       "high": 40.2,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 33.1
+       },
+       {
+        "year": 2022,
+        "price": 34.9
+       },
+       {
+        "year": 2023,
+        "price": 35.7
+       },
+       {
+        "year": 2024,
+        "price": 37.6
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 35.3,
+        "note": "3 平台 31 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 37.6,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 37.6,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 36.6,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 36.6,
+      "rec_low": 34.8,
+      "rec_high": 38.3,
+      "confidence": 76,
+      "dispersion": 3.0,
+      "total_samples": 35,
+      "ref_price": 35,
+      "logi_factor": 1.01
+     }
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "东方电气集团东方锅炉股份有限公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 337,
+       "lead_time_days": 129,
+       "price_level": 0.85,
+       "is_local": true,
+       "est_price_wan": 29.75,
+       "special_notes": "大件山地物流运输保障；全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估29.75万元"
+      },
+      {
+       "name": "广州文船重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 1158,
+       "lead_time_days": 410,
+       "price_level": 0.99,
+       "is_local": false,
+       "est_price_wan": 34.65,
+       "special_notes": "大件山地物流运输保障；全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估34.65万元"
+      },
+      {
+       "name": "张家港化工机械股份有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 1040,
+       "lead_time_days": 369,
+       "price_level": 1.0,
+       "is_local": false,
+       "est_price_wan": 35.0,
+       "special_notes": "全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估35万元"
+      },
+      {
+       "name": "山东豪迈机械制造有限公司",
+       "region": "X",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 966,
+       "lead_time_days": 343,
+       "price_level": 1.02,
+       "is_local": false,
+       "est_price_wan": 35.7,
+       "special_notes": "全焊接板片工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约35万元，本供应商预估35.7万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 13,
+        "avg": 37.4,
+        "low": 34.4,
+        "high": 41.4,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 8,
+        "avg": 38.8,
+        "low": 34.7,
+        "high": 41.7,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 22,
+        "avg": 37.0,
+        "low": 33.7,
+        "high": 40.0,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 34.8,
+       "low": 29.8,
+       "high": 35.7,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 34.7
+       },
+       {
+        "year": 2022,
+        "price": 35.9
+       },
+       {
+        "year": 2023,
+        "price": 37.8
+       },
+       {
+        "year": 2024,
+        "price": 39.2
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 37.5,
+        "note": "3 平台 43 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 34.8,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 39.2,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 37.1,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 37.1,
+      "rec_low": 34.2,
+      "rec_high": 40.0,
+      "confidence": 76,
+      "dispersion": 4.9,
+      "total_samples": 47,
+      "ref_price": 35,
+      "logi_factor": 1.05
+     }
+    }
+   }
+  },
+  {
+   "key": "air_cooler",
+   "cn": "空冷器",
+   "en": "Air Cooler",
+   "icon": "🌀",
+   "accent": "#0891b2",
+   "ref_price_wan": 120,
+   "kind": "static",
+   "spec": "干式空冷器 GP9X3-6-193-2.5S",
+   "edge": "低噪声变频风机",
+   "source": "2021 年框架协议均价",
+   "plants": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海蓝滨石化设备有限责任公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 218,
+       "lead_time_days": 96,
+       "price_level": 0.88,
+       "is_local": true,
+       "est_price_wan": 105.6,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估105.6万元"
+      },
+      {
+       "name": "张家港化工机械股份有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 247,
+       "lead_time_days": 113,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 106.8,
+       "special_notes": "低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估106.8万元"
+      },
+      {
+       "name": "上海电气集团股份有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 223,
+       "lead_time_days": 103,
+       "price_level": 1.0,
+       "is_local": true,
+       "est_price_wan": 120.0,
+       "special_notes": "低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估120万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 9,
+        "avg": 122.7,
+        "low": 107.8,
+        "high": 137.7,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 10,
+        "avg": 119.1,
+        "low": 109.1,
+        "high": 130.0,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 22,
+        "avg": 116.6,
+        "low": 104.1,
+        "high": 131.9,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 106.8,
+       "low": 105.6,
+       "high": 120.0,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 112.5
+       },
+       {
+        "year": 2022,
+        "price": 117.8
+       },
+       {
+        "year": 2023,
+        "price": 121.8
+       },
+       {
+        "year": 2024,
+        "price": 127.7
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 118.5,
+        "note": "3 平台 41 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 106.8,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 127.7,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 117.3,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 117.3,
+      "rec_low": 103.7,
+      "rec_high": 131.0,
+      "confidence": 67,
+      "dispersion": 7.3,
+      "total_samples": 44,
+      "ref_price": 120,
+      "logi_factor": 1.0
+     }
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广西梧州压力容器制造有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 153,
+       "lead_time_days": 80,
+       "price_level": 0.95,
+       "is_local": true,
+       "est_price_wan": 114.0,
+       "special_notes": "C5-M海洋防腐涂层配套；低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估114万元"
+      },
+      {
+       "name": "广州文船重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 157,
+       "lead_time_days": 77,
+       "price_level": 0.95,
+       "is_local": true,
+       "est_price_wan": 114.0,
+       "special_notes": "C5-M海洋防腐涂层配套；低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估114万元"
+      },
+      {
+       "name": "长沙远大空调有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 207,
+       "lead_time_days": 94,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 112.8,
+       "special_notes": "低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估112.8万元"
+      },
+      {
+       "name": "广州广重企业集团有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 127,
+       "lead_time_days": 68,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 106.8,
+       "special_notes": "低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估106.8万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 15,
+        "avg": 122.0,
+        "low": 110.7,
+        "high": 136.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 8,
+        "avg": 126.8,
+        "low": 113.8,
+        "high": 142.0,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 19,
+        "avg": 119.2,
+        "low": 108.1,
+        "high": 137.6,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 113.4,
+       "low": 106.8,
+       "high": 114.0,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 115.5
+       },
+       {
+        "year": 2022,
+        "price": 119.3
+       },
+       {
+        "year": 2023,
+        "price": 124.1
+       },
+       {
+        "year": 2024,
+        "price": 128.5
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 121.6,
+        "note": "3 平台 42 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 113.4,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 128.5,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 120.9,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 120.9,
+      "rec_low": 111.0,
+      "rec_high": 130.7,
+      "confidence": 74,
+      "dispersion": 5.1,
+      "total_samples": 46,
+      "ref_price": 120,
+      "logi_factor": 1.02
+     }
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "福州锅炉厂有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 138,
+       "lead_time_days": 81,
+       "price_level": 0.88,
+       "is_local": true,
+       "est_price_wan": 105.6,
+       "special_notes": "防台风应急物资储备；低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估105.6万元"
+      },
+      {
+       "name": "福建龙净环保股份有限公司",
+       "region": "FJ",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 42,
+       "lead_time_days": 52,
+       "price_level": 0.93,
+       "is_local": true,
+       "est_price_wan": 111.6,
+       "special_notes": "低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估111.6万元"
+      },
+      {
+       "name": "福建福船一帆新能源装备制造有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 146,
+       "lead_time_days": 75,
+       "price_level": 0.87,
+       "is_local": true,
+       "est_price_wan": 104.4,
+       "special_notes": "低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估104.4万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 15,
+        "avg": 122.0,
+        "low": 111.1,
+        "high": 136.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 14,
+        "avg": 123.8,
+        "low": 110.1,
+        "high": 140.8,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 17,
+        "avg": 117.3,
+        "low": 101.8,
+        "high": 134.2,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 105.6,
+       "low": 104.4,
+       "high": 111.6,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 114.5
+       },
+       {
+        "year": 2022,
+        "price": 118.8
+       },
+       {
+        "year": 2023,
+        "price": 123.9
+       },
+       {
+        "year": 2024,
+        "price": 127.9
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 120.8,
+        "note": "3 平台 46 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 105.6,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 127.9,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 118.0,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 118.0,
+      "rec_low": 103.9,
+      "rec_high": 132.2,
+      "confidence": 67,
+      "dispersion": 7.9,
+      "total_samples": 49,
+      "ref_price": 120,
+      "logi_factor": 1.01
+     }
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "东方电气集团东方锅炉股份有限公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 219,
+       "lead_time_days": 98,
+       "price_level": 0.93,
+       "is_local": true,
+       "est_price_wan": 111.6,
+       "special_notes": "大件山地物流运输保障；低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估111.6万元"
+      },
+      {
+       "name": "四川空分设备（集团）有限责任公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 265,
+       "lead_time_days": 123,
+       "price_level": 0.91,
+       "is_local": true,
+       "est_price_wan": 109.2,
+       "special_notes": "大件山地物流运输保障；低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估109.2万元"
+      },
+      {
+       "name": "广州广重企业集团有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 1477,
+       "lead_time_days": 522,
+       "price_level": 1.13,
+       "is_local": false,
+       "est_price_wan": 135.6,
+       "special_notes": "低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估135.6万元"
+      },
+      {
+       "name": "福建福船一帆新能源装备制造有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 606,
+       "lead_time_days": 224,
+       "price_level": 1.14,
+       "is_local": false,
+       "est_price_wan": 136.8,
+       "special_notes": "低噪声变频风机",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约120万元，本供应商预估136.8万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 14,
+        "avg": 126.3,
+        "low": 115.1,
+        "high": 144.2,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 9,
+        "avg": 129.0,
+        "low": 115.7,
+        "high": 142.4,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 16,
+        "avg": 122.7,
+        "low": 110.1,
+        "high": 137.4,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 123.6,
+       "low": 109.2,
+       "high": 136.8,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 117.6
+       },
+       {
+        "year": 2022,
+        "price": 123.4
+       },
+       {
+        "year": 2023,
+        "price": 127.6
+       },
+       {
+        "year": 2024,
+        "price": 133.9
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 125.4,
+        "note": "3 平台 39 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 123.6,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 133.9,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 127.0,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 127.0,
+      "rec_low": 119.9,
+      "rec_high": 134.1,
+      "confidence": 78,
+      "dispersion": 3.5,
+      "total_samples": 43,
+      "ref_price": 120,
+      "logi_factor": 1.05
+     }
+    }
+   }
+  },
+  {
+   "key": "tower",
+   "cn": "塔器",
+   "en": "Tower / Column",
+   "icon": "🏛️",
+   "accent": "#2563eb",
+   "ref_price_wan": 210,
+   "kind": "static",
+   "spec": "碳钢填料塔 DN2000（精馏/吸收）",
+   "edge": "高效塔内件与填料",
+   "source": "2023 年中石化中标均价",
+   "plants": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "南通中集能源装备有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 70,
+       "lead_time_days": 57,
+       "price_level": 0.92,
+       "is_local": true,
+       "est_price_wan": 193.2,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估193.2万元"
+      },
+      {
+       "name": "江苏中圣压力容器装备制造有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 139,
+       "lead_time_days": 63,
+       "price_level": 0.88,
+       "is_local": true,
+       "est_price_wan": 184.8,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估184.8万元"
+      },
+      {
+       "name": "浙江金盾压力容器有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 243,
+       "lead_time_days": 102,
+       "price_level": 0.85,
+       "is_local": true,
+       "est_price_wan": 178.5,
+       "special_notes": "高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估178.5万元"
+      },
+      {
+       "name": "上海蓝滨石化设备有限责任公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 209,
+       "lead_time_days": 88,
+       "price_level": 0.87,
+       "is_local": true,
+       "est_price_wan": 182.7,
+       "special_notes": "高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估182.7万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 17,
+        "avg": 215.6,
+        "low": 192.5,
+        "high": 235.7,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 11,
+        "avg": 210.4,
+        "low": 192.8,
+        "high": 237.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 11,
+        "avg": 210.9,
+        "low": 181.7,
+        "high": 234.4,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 183.8,
+       "low": 178.5,
+       "high": 193.2,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 197.7
+       },
+       {
+        "year": 2022,
+        "price": 207.6
+       },
+       {
+        "year": 2023,
+        "price": 214.5
+       },
+       {
+        "year": 2024,
+        "price": 224.4
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 212.8,
+        "note": "3 平台 39 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 183.8,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 224.4,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 207.0,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 207.0,
+      "rec_low": 182.2,
+      "rec_high": 231.8,
+      "confidence": 63,
+      "dispersion": 8.2,
+      "total_samples": 43,
+      "ref_price": 210,
+      "logi_factor": 1.0
+     }
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "佛山市化机设备工程有限公司",
+       "region": "SC",
+       "tier": "local",
+       "qualification": "A2",
+       "distance_km": 77,
+       "lead_time_days": 50,
+       "price_level": 0.92,
+       "is_local": true,
+       "est_price_wan": 193.2,
+       "special_notes": "C5-M海洋防腐涂层配套",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估193.2万元"
+      },
+      {
+       "name": "广州广重企业集团有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 231,
+       "lead_time_days": 96,
+       "price_level": 0.87,
+       "is_local": true,
+       "est_price_wan": 182.7,
+       "special_notes": "C5-M海洋防腐涂层配套",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估182.7万元"
+      },
+      {
+       "name": "广西梧州压力容器制造有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 207,
+       "lead_time_days": 97,
+       "price_level": 0.97,
+       "is_local": true,
+       "est_price_wan": 203.7,
+       "special_notes": "高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估203.7万元"
+      },
+      {
+       "name": "广州文船重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 169,
+       "lead_time_days": 90,
+       "price_level": 0.92,
+       "is_local": true,
+       "est_price_wan": 193.2,
+       "special_notes": "高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估193.2万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 13,
+        "avg": 218.7,
+        "low": 200.8,
+        "high": 235.7,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 13,
+        "avg": 215.7,
+        "low": 195.8,
+        "high": 240.5,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 16,
+        "avg": 208.5,
+        "low": 184.5,
+        "high": 232.0,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 193.2,
+       "low": 182.7,
+       "high": 203.7,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 201.3
+       },
+       {
+        "year": 2022,
+        "price": 209.3
+       },
+       {
+        "year": 2023,
+        "price": 217.4
+       },
+       {
+        "year": 2024,
+        "price": 226.1
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 213.9,
+        "note": "3 平台 42 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 193.2,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 226.1,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 210.7,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 210.7,
+      "rec_low": 189.0,
+      "rec_high": 232.4,
+      "confidence": 70,
+      "dispersion": 6.4,
+      "total_samples": 46,
+      "ref_price": 210,
+      "logi_factor": 1.02
+     }
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "福建龙净环保股份有限公司",
+       "region": "FJ",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 199,
+       "lead_time_days": 93,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 197.4,
+       "special_notes": "防台风应急物资储备；高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估197.4万元"
+      },
+      {
+       "name": "福建福船一帆新能源装备制造有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 138,
+       "lead_time_days": 75,
+       "price_level": 1.0,
+       "is_local": true,
+       "est_price_wan": 210.0,
+       "special_notes": "防台风应急物资储备；高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估210万元"
+      },
+      {
+       "name": "福州锅炉厂有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 146,
+       "lead_time_days": 70,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 186.9,
+       "special_notes": "高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估186.9万元"
+      },
+      {
+       "name": "福建省工业设备安装有限公司",
+       "region": "FJ",
+       "tier": "local",
+       "qualification": "A1",
+       "distance_km": 79,
+       "lead_time_days": 60,
+       "price_level": 0.9,
+       "is_local": true,
+       "est_price_wan": 189.0,
+       "special_notes": "高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估189万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 11,
+        "avg": 208.5,
+        "low": 186.4,
+        "high": 236.7,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 14,
+        "avg": 218.8,
+        "low": 205.5,
+        "high": 248.4,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 14,
+        "avg": 204.9,
+        "low": 176.7,
+        "high": 221.6,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 193.2,
+       "low": 186.9,
+       "high": 210.0,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 199.5
+       },
+       {
+        "year": 2022,
+        "price": 206.9
+       },
+       {
+        "year": 2023,
+        "price": 218.4
+       },
+       {
+        "year": 2024,
+        "price": 225.1
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 210.9,
+        "note": "3 平台 39 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 193.2,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 225.1,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 209.1,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 209.1,
+      "rec_low": 188.3,
+      "rec_high": 230.0,
+      "confidence": 69,
+      "dispersion": 6.2,
+      "total_samples": 43,
+      "ref_price": 210,
+      "logi_factor": 1.01
+     }
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "四川德阳科利机械设备制造有限公司",
+       "region": "SW",
+       "tier": "local",
+       "qualification": "A2",
+       "distance_km": 93,
+       "lead_time_days": 49,
+       "price_level": 1.0,
+       "is_local": true,
+       "est_price_wan": 210.0,
+       "special_notes": "大件山地物流运输保障；高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估210万元"
+      },
+      {
+       "name": "重庆通用工业（集团）有限责任公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 360,
+       "lead_time_days": 150,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 197.4,
+       "special_notes": "大件山地物流运输保障；高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估197.4万元"
+      },
+      {
+       "name": "四川空分设备（集团）有限责任公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 280,
+       "lead_time_days": 116,
+       "price_level": 0.99,
+       "is_local": true,
+       "est_price_wan": 207.9,
+       "special_notes": "高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估207.9万元"
+      },
+      {
+       "name": "四川华西通用机器公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 206,
+       "lead_time_days": 85,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 197.4,
+       "special_notes": "高效塔内件与填料",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约210万元，本供应商预估197.4万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 11,
+        "avg": 222.2,
+        "low": 195.2,
+        "high": 239.3,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 9,
+        "avg": 221.0,
+        "low": 195.5,
+        "high": 234.3,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 17,
+        "avg": 220.1,
+        "low": 194.3,
+        "high": 238.4,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 202.7,
+       "low": 197.4,
+       "high": 210.0,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 206.4
+       },
+       {
+        "year": 2022,
+        "price": 215.2
+       },
+       {
+        "year": 2023,
+        "price": 226.5
+       },
+       {
+        "year": 2024,
+        "price": 231.7
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 220.9,
+        "note": "3 平台 37 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 202.7,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 231.7,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 218.2,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 218.2,
+      "rec_low": 199.0,
+      "rec_high": 237.3,
+      "confidence": 71,
+      "dispersion": 5.5,
+      "total_samples": 41,
+      "ref_price": 210,
+      "logi_factor": 1.05
+     }
+    }
+   }
+  },
+  {
+   "key": "reactor",
+   "cn": "反应釜",
+   "en": "Reactor",
+   "icon": "⚗️",
+   "accent": "#7c3aed",
+   "ref_price_wan": 150,
+   "kind": "static",
+   "spec": "不锈钢反应釜 5000L · 1.6MPa",
+   "edge": "高压机械密封工艺",
+   "source": "2022 年中石油招标",
+   "plants": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海蓝滨石化设备有限责任公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 162,
+       "lead_time_days": 86,
+       "price_level": 0.87,
+       "is_local": true,
+       "est_price_wan": 130.5,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估130.5万元"
+      },
+      {
+       "name": "上海电气集团股份有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 119,
+       "lead_time_days": 67,
+       "price_level": 0.93,
+       "is_local": true,
+       "est_price_wan": 139.5,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估139.5万元"
+      },
+      {
+       "name": "南通中集能源装备有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 203,
+       "lead_time_days": 93,
+       "price_level": 0.86,
+       "is_local": true,
+       "est_price_wan": 129.0,
+       "special_notes": "高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估129万元"
+      },
+      {
+       "name": "南京宝色股份公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 204,
+       "lead_time_days": 85,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 133.5,
+       "special_notes": "高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估133.5万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 18,
+        "avg": 152.9,
+        "low": 137.7,
+        "high": 174.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 8,
+        "avg": 153.4,
+        "low": 141.0,
+        "high": 175.3,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 12,
+        "avg": 153.0,
+        "low": 134.7,
+        "high": 177.7,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 132.0,
+       "low": 129.0,
+       "high": 139.5,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 142.3
+       },
+       {
+        "year": 2022,
+        "price": 146.9
+       },
+       {
+        "year": 2023,
+        "price": 152.7
+       },
+       {
+        "year": 2024,
+        "price": 158.4
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 153.0,
+        "note": "3 平台 38 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 132.0,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 158.4,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 148.1,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 148.1,
+      "rec_low": 130.3,
+      "rec_high": 165.8,
+      "confidence": 64,
+      "dispersion": 7.7,
+      "total_samples": 42,
+      "ref_price": 150,
+      "logi_factor": 1.0
+     }
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广州文船重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 271,
+       "lead_time_days": 130,
+       "price_level": 0.93,
+       "is_local": true,
+       "est_price_wan": 139.5,
+       "special_notes": "C5-M海洋防腐涂层配套",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估139.5万元"
+      },
+      {
+       "name": "广西梧州压力容器制造有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 155,
+       "lead_time_days": 80,
+       "price_level": 0.86,
+       "is_local": true,
+       "est_price_wan": 129.0,
+       "special_notes": "C5-M海洋防腐涂层配套",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估129万元"
+      },
+      {
+       "name": "广东中泽重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 210,
+       "lead_time_days": 86,
+       "price_level": 0.92,
+       "is_local": true,
+       "est_price_wan": 138.0,
+       "special_notes": "高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估138万元"
+      },
+      {
+       "name": "佛山市化机设备工程有限公司",
+       "region": "SC",
+       "tier": "local",
+       "qualification": "A2",
+       "distance_km": 190,
+       "lead_time_days": 86,
+       "price_level": 0.87,
+       "is_local": true,
+       "est_price_wan": 130.5,
+       "special_notes": "高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估130.5万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 9,
+        "avg": 148.7,
+        "low": 134.4,
+        "high": 169.8,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 8,
+        "avg": 154.8,
+        "low": 136.3,
+        "high": 169.8,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 13,
+        "avg": 156.0,
+        "low": 142.5,
+        "high": 175.7,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 134.2,
+       "low": 129.0,
+       "high": 139.5,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 142.7
+       },
+       {
+        "year": 2022,
+        "price": 150.9
+       },
+       {
+        "year": 2023,
+        "price": 156.1
+       },
+       {
+        "year": 2024,
+        "price": 162.9
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 153.5,
+        "note": "3 平台 30 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 134.2,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 162.9,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 150.1,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 150.1,
+      "rec_low": 132.0,
+      "rec_high": 168.1,
+      "confidence": 62,
+      "dispersion": 8.0,
+      "total_samples": 34,
+      "ref_price": 150,
+      "logi_factor": 1.02
+     }
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "福建省工业设备安装有限公司",
+       "region": "FJ",
+       "tier": "local",
+       "qualification": "A1",
+       "distance_km": 117,
+       "lead_time_days": 67,
+       "price_level": 0.99,
+       "is_local": true,
+       "est_price_wan": 148.5,
+       "special_notes": "防台风应急物资储备；高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估148.5万元"
+      },
+      {
+       "name": "广西梧州压力容器制造有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 444,
+       "lead_time_days": 184,
+       "price_level": 1.1,
+       "is_local": false,
+       "est_price_wan": 165.0,
+       "special_notes": "防台风应急物资储备；高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估165万元"
+      },
+      {
+       "name": "四川德阳科利机械设备制造有限公司",
+       "region": "SW",
+       "tier": "local",
+       "qualification": "A2",
+       "distance_km": 376,
+       "lead_time_days": 152,
+       "price_level": 1.06,
+       "is_local": false,
+       "est_price_wan": 159.0,
+       "special_notes": "高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估159万元"
+      },
+      {
+       "name": "上海电气集团股份有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "A2",
+       "distance_km": 582,
+       "lead_time_days": 218,
+       "price_level": 1.11,
+       "is_local": false,
+       "est_price_wan": 166.5,
+       "special_notes": "高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估166.5万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 11,
+        "avg": 155.9,
+        "low": 136.7,
+        "high": 172.2,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 12,
+        "avg": 150.4,
+        "low": 139.1,
+        "high": 169.0,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 22,
+        "avg": 148.0,
+        "low": 136.0,
+        "high": 171.5,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 162.0,
+       "low": 148.5,
+       "high": 166.5,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 142.8
+       },
+       {
+        "year": 2022,
+        "price": 147.4
+       },
+       {
+        "year": 2023,
+        "price": 156.0
+       },
+       {
+        "year": 2024,
+        "price": 159.4
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 150.6,
+        "note": "3 平台 45 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 162.0,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 159.4,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 156.2,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 156.2,
+      "rec_low": 148.4,
+      "rec_high": 164.0,
+      "confidence": 82,
+      "dispersion": 3.1,
+      "total_samples": 49,
+      "ref_price": 150,
+      "logi_factor": 1.01
+     }
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "东方电气集团东方锅炉股份有限公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "A1",
+       "distance_km": 223,
+       "lead_time_days": 99,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 141.0,
+       "special_notes": "大件山地物流运输保障；高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估141万元"
+      },
+      {
+       "name": "四川华西通用机器公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "A2",
+       "distance_km": 218,
+       "lead_time_days": 109,
+       "price_level": 0.98,
+       "is_local": true,
+       "est_price_wan": 147.0,
+       "special_notes": "大件山地物流运输保障；高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估147万元"
+      },
+      {
+       "name": "四川德阳科利机械设备制造有限公司",
+       "region": "SW",
+       "tier": "local",
+       "qualification": "A2",
+       "distance_km": 212,
+       "lead_time_days": 108,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 141.0,
+       "special_notes": "高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估141万元"
+      },
+      {
+       "name": "浙江金盾压力容器有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "A1",
+       "distance_km": 1493,
+       "lead_time_days": 528,
+       "price_level": 1.07,
+       "is_local": false,
+       "est_price_wan": 160.5,
+       "special_notes": "高压机械密封工艺",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约150万元，本供应商预估160.5万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 18,
+        "avg": 159.2,
+        "low": 140.2,
+        "high": 173.6,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 7,
+        "avg": 160.7,
+        "low": 142.4,
+        "high": 179.5,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 11,
+        "avg": 154.5,
+        "low": 138.8,
+        "high": 180.8,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 144.0,
+       "low": 141.0,
+       "high": 160.5,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 146.7
+       },
+       {
+        "year": 2022,
+        "price": 155.3
+       },
+       {
+        "year": 2023,
+        "price": 160.0
+       },
+       {
+        "year": 2024,
+        "price": 166.5
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 158.1,
+        "note": "3 平台 36 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 144.0,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 166.5,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 155.9,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 155.9,
+      "rec_low": 141.1,
+      "rec_high": 170.8,
+      "confidence": 69,
+      "dispersion": 5.9,
+      "total_samples": 40,
+      "ref_price": 150,
+      "logi_factor": 1.05
+     }
+    }
+   }
+  },
+  {
+   "key": "pump",
+   "cn": "化工离心泵",
+   "en": "Centrifugal Pump",
+   "icon": "💧",
+   "accent": "#0ea5e9",
+   "ref_price_wan": 12,
+   "kind": "dynamic",
+   "spec": "OH2 型离心泵 100m³/h·80m",
+   "edge": "无泄漏屏蔽设计",
+   "source": "2023 年中石化动设备框架协议均价",
+   "plants": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海凯泉泵业（集团）有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "ISO 9001",
+       "distance_km": 93,
+       "lead_time_days": 61,
+       "price_level": 0.88,
+       "is_local": true,
+       "est_price_wan": 10.56,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估10.56万元"
+      },
+      {
+       "name": "广东肯富来泵业股份有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "CE",
+       "distance_km": 617,
+       "lead_time_days": 233,
+       "price_level": 1.1,
+       "is_local": false,
+       "est_price_wan": 13.2,
+       "special_notes": "无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估13.2万元"
+      },
+      {
+       "name": "湖南湘电长沙水泵有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "ISO 9001",
+       "distance_km": 373,
+       "lead_time_days": 155,
+       "price_level": 1.02,
+       "is_local": false,
+       "est_price_wan": 12.24,
+       "special_notes": "无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估12.24万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 12,
+        "avg": 12.1,
+        "low": 11.2,
+        "high": 13.5,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 10,
+        "avg": 12.4,
+        "low": 11.1,
+        "high": 13.7,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 15,
+        "avg": 12.2,
+        "low": 10.7,
+        "high": 14.4,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 12.2,
+       "low": 10.6,
+       "high": 13.2,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 11.3
+       },
+       {
+        "year": 2022,
+        "price": 11.7
+       },
+       {
+        "year": 2023,
+        "price": 12.2
+       },
+       {
+        "year": 2024,
+        "price": 12.8
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 12.2,
+        "note": "3 平台 37 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 12.2,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 12.8,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 12.4,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 12.4,
+      "rec_low": 11.9,
+      "rec_high": 12.9,
+      "confidence": 81,
+      "dispersion": 2.2,
+      "total_samples": 40,
+      "ref_price": 12,
+      "logi_factor": 1.0
+     }
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广州泵业集团有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "API Q1",
+       "distance_km": 197,
+       "lead_time_days": 98,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 10.68,
+       "special_notes": "C5-M海洋防腐涂层配套；无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估10.68万元"
+      },
+      {
+       "name": "湖南天一奥星泵业有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "API Q1",
+       "distance_km": 300,
+       "lead_time_days": 125,
+       "price_level": 0.97,
+       "is_local": true,
+       "est_price_wan": 11.64,
+       "special_notes": "C5-M海洋防腐涂层配套；无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估11.64万元"
+      },
+      {
+       "name": "广东肯富来泵业股份有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "API Q1",
+       "distance_km": 194,
+       "lead_time_days": 99,
+       "price_level": 0.98,
+       "is_local": true,
+       "est_price_wan": 11.76,
+       "special_notes": "无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估11.76万元"
+      },
+      {
+       "name": "湖南湘电长沙水泵有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "ISO 9001",
+       "distance_km": 283,
+       "lead_time_days": 122,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 11.28,
+       "special_notes": "无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估11.28万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 11,
+        "avg": 12.3,
+        "low": 10.9,
+        "high": 13.9,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 10,
+        "avg": 12.7,
+        "low": 11.7,
+        "high": 14.2,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 12,
+        "avg": 12.2,
+        "low": 11.1,
+        "high": 13.9,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 11.5,
+       "low": 10.7,
+       "high": 11.8,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 11.5
+       },
+       {
+        "year": 2022,
+        "price": 12.0
+       },
+       {
+        "year": 2023,
+        "price": 12.5
+       },
+       {
+        "year": 2024,
+        "price": 13.0
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 12.4,
+        "note": "3 平台 33 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 11.5,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 13.0,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 12.3,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 12.3,
+      "rec_low": 11.3,
+      "rec_high": 13.3,
+      "confidence": 71,
+      "dispersion": 5.0,
+      "total_samples": 37,
+      "ref_price": 12,
+      "logi_factor": 1.02
+     }
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "重庆水泵厂有限责任公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "ISO 9001",
+       "distance_km": 402,
+       "lead_time_days": 162,
+       "price_level": 1.0,
+       "is_local": false,
+       "est_price_wan": 12.0,
+       "special_notes": "防台风应急物资储备；无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估12万元"
+      },
+      {
+       "name": "广东肯富来泵业股份有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "API Q1",
+       "distance_km": 571,
+       "lead_time_days": 212,
+       "price_level": 1.07,
+       "is_local": false,
+       "est_price_wan": 12.84,
+       "special_notes": "无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估12.84万元"
+      },
+      {
+       "name": "湖南天一奥星泵业有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "ISO 9001",
+       "distance_km": 431,
+       "lead_time_days": 182,
+       "price_level": 1.14,
+       "is_local": false,
+       "est_price_wan": 13.68,
+       "special_notes": "无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估13.68万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 13,
+        "avg": 12.3,
+        "low": 11.0,
+        "high": 13.3,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 9,
+        "avg": 12.7,
+        "low": 11.8,
+        "high": 14.6,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 22,
+        "avg": 12.0,
+        "low": 10.3,
+        "high": 13.4,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 12.8,
+       "low": 12.0,
+       "high": 13.7,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 11.3
+       },
+       {
+        "year": 2022,
+        "price": 11.8
+       },
+       {
+        "year": 2023,
+        "price": 12.3
+       },
+       {
+        "year": 2024,
+        "price": 12.9
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 12.2,
+        "note": "3 平台 44 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 12.8,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 12.9,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 12.6,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 12.6,
+      "rec_low": 12.1,
+      "rec_high": 13.1,
+      "confidence": 84,
+      "dispersion": 2.3,
+      "total_samples": 47,
+      "ref_price": 12,
+      "logi_factor": 1.01
+     }
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "重庆水泵厂有限责任公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "CE",
+       "distance_km": 395,
+       "lead_time_days": 147,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 10.68,
+       "special_notes": "大件山地物流运输保障；无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估10.68万元"
+      },
+      {
+       "name": "上海凯泉泵业（集团）有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "API Q1",
+       "distance_km": 935,
+       "lead_time_days": 332,
+       "price_level": 1.14,
+       "is_local": false,
+       "est_price_wan": 13.68,
+       "special_notes": "无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估13.68万元"
+      },
+      {
+       "name": "广东肯富来泵业股份有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "ISO 9001",
+       "distance_km": 1250,
+       "lead_time_days": 454,
+       "price_level": 1.12,
+       "is_local": false,
+       "est_price_wan": 13.44,
+       "special_notes": "无泄漏屏蔽设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约12万元，本供应商预估13.44万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 18,
+        "avg": 12.5,
+        "low": 10.9,
+        "high": 14.5,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 10,
+        "avg": 13.4,
+        "low": 11.8,
+        "high": 14.4,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 18,
+        "avg": 12.1,
+        "low": 10.7,
+        "high": 13.9,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 13.4,
+       "low": 10.7,
+       "high": 13.7,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 11.9
+       },
+       {
+        "year": 2022,
+        "price": 12.5
+       },
+       {
+        "year": 2023,
+        "price": 12.8
+       },
+       {
+        "year": 2024,
+        "price": 13.4
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 12.5,
+        "note": "3 平台 46 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 13.4,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 13.4,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 13.0,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 13.0,
+      "rec_low": 12.4,
+      "rec_high": 13.7,
+      "confidence": 82,
+      "dispersion": 3.1,
+      "total_samples": 49,
+      "ref_price": 12,
+      "logi_factor": 1.05
+     }
+    }
+   }
+  },
+  {
+   "key": "compressor",
+   "cn": "往复式压缩机",
+   "en": "Reciprocating Compressor",
+   "icon": "🛞",
+   "accent": "#dc2626",
+   "ref_price_wan": 380,
+   "kind": "dynamic",
+   "spec": "D 型往复压缩机 40m³/min",
+   "edge": "无油润滑设计",
+   "source": "2023 年中石油采购公告",
+   "plants": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "杭州杭氧压缩机有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "ISO 9001",
+       "distance_km": 58,
+       "lead_time_days": 40,
+       "price_level": 0.95,
+       "is_local": true,
+       "est_price_wan": 361.0,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估361万元"
+      },
+      {
+       "name": "上海大隆机器厂有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "CE",
+       "distance_km": 110,
+       "lead_time_days": 54,
+       "price_level": 0.98,
+       "is_local": true,
+       "est_price_wan": 372.4,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估372.4万元"
+      },
+      {
+       "name": "上海电气集团股份有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "ISO 9001",
+       "distance_km": 144,
+       "lead_time_days": 87,
+       "price_level": 0.93,
+       "is_local": true,
+       "est_price_wan": 353.4,
+       "special_notes": "无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估353.4万元"
+      },
+      {
+       "name": "重庆通用工业（集团）有限责任公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "API Q1",
+       "distance_km": 331,
+       "lead_time_days": 130,
+       "price_level": 1.05,
+       "is_local": false,
+       "est_price_wan": 399.0,
+       "special_notes": "无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估399万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 15,
+        "avg": 370.7,
+        "low": 324.3,
+        "high": 418.0,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 6,
+        "avg": 377.5,
+        "low": 339.8,
+        "high": 433.8,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 22,
+        "avg": 376.0,
+        "low": 321.4,
+        "high": 434.9,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 366.7,
+       "low": 353.4,
+       "high": 399.0,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 355.1
+       },
+       {
+        "year": 2022,
+        "price": 370.3
+       },
+       {
+        "year": 2023,
+        "price": 390.5
+       },
+       {
+        "year": 2024,
+        "price": 401.4
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 374.4,
+        "note": "3 平台 43 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 366.7,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 401.4,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 378.8,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 378.8,
+      "rec_low": 355.1,
+      "rec_high": 402.5,
+      "confidence": 79,
+      "dispersion": 3.9,
+      "total_samples": 47,
+      "ref_price": 380,
+      "logi_factor": 1.0
+     }
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "厦门东亚机械工业股份有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "API Q1",
+       "distance_km": 634,
+       "lead_time_days": 246,
+       "price_level": 0.98,
+       "is_local": false,
+       "est_price_wan": 372.4,
+       "special_notes": "C5-M海洋防腐涂层配套；无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估372.4万元"
+      },
+      {
+       "name": "福建雪人股份有限公司",
+       "region": "FJ",
+       "tier": "national_top",
+       "qualification": "API Q1",
+       "distance_km": 1102,
+       "lead_time_days": 387,
+       "price_level": 1.04,
+       "is_local": false,
+       "est_price_wan": 395.2,
+       "special_notes": "C5-M海洋防腐涂层配套；无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估395.2万元"
+      },
+      {
+       "name": "重庆通用工业（集团）有限责任公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "CE",
+       "distance_km": 629,
+       "lead_time_days": 238,
+       "price_level": 1.11,
+       "is_local": false,
+       "est_price_wan": 421.8,
+       "special_notes": "无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估421.8万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 9,
+        "avg": 387.0,
+        "low": 353.9,
+        "high": 432.0,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 7,
+        "avg": 396.0,
+        "low": 353.7,
+        "high": 441.7,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 21,
+        "avg": 389.5,
+        "low": 354.7,
+        "high": 440.9,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 395.2,
+       "low": 372.4,
+       "high": 421.8,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 364.0
+       },
+       {
+        "year": 2022,
+        "price": 383.4
+       },
+       {
+        "year": 2023,
+        "price": 391.9
+       },
+       {
+        "year": 2024,
+        "price": 410.7
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 390.1,
+        "note": "3 平台 37 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 395.2,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 410.7,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 396.8,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 396.8,
+      "rec_low": 380.9,
+      "rec_high": 412.7,
+      "confidence": 81,
+      "dispersion": 2.2,
+      "total_samples": 40,
+      "ref_price": 380,
+      "logi_factor": 1.02
+     }
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "福建雪人股份有限公司",
+       "region": "FJ",
+       "tier": "national_top",
+       "qualification": "API Q1",
+       "distance_km": 50,
+       "lead_time_days": 35,
+       "price_level": 0.9,
+       "is_local": true,
+       "est_price_wan": 342.0,
+       "special_notes": "防台风应急物资储备；无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估342万元"
+      },
+      {
+       "name": "厦门东亚机械工业股份有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "CE",
+       "distance_km": 100,
+       "lead_time_days": 63,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 357.2,
+       "special_notes": "无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估357.2万元"
+      },
+      {
+       "name": "四川大川压缩机有限责任公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "ISO 9001",
+       "distance_km": 466,
+       "lead_time_days": 185,
+       "price_level": 1.04,
+       "is_local": false,
+       "est_price_wan": 395.2,
+       "special_notes": "无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估395.2万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 15,
+        "avg": 383.9,
+        "low": 341.7,
+        "high": 438.2,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 7,
+        "avg": 402.9,
+        "low": 370.3,
+        "high": 454.9,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 21,
+        "avg": 387.9,
+        "low": 341.4,
+        "high": 453.3,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 357.2,
+       "low": 342.0,
+       "high": 395.2,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 360.2
+       },
+       {
+        "year": 2022,
+        "price": 378.6
+       },
+       {
+        "year": 2023,
+        "price": 390.7
+       },
+       {
+        "year": 2024,
+        "price": 408.7
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 388.9,
+        "note": "3 平台 43 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 357.2,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 408.7,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 384.4,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 384.4,
+      "rec_low": 350.5,
+      "rec_high": 418.3,
+      "confidence": 73,
+      "dispersion": 5.5,
+      "total_samples": 46,
+      "ref_price": 380,
+      "logi_factor": 1.01
+     }
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "四川空分设备（集团）有限责任公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "API Q1",
+       "distance_km": 96,
+       "lead_time_days": 49,
+       "price_level": 0.97,
+       "is_local": true,
+       "est_price_wan": 368.6,
+       "special_notes": "大件山地物流运输保障；无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估368.6万元"
+      },
+      {
+       "name": "重庆通用工业（集团）有限责任公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "CE",
+       "distance_km": 240,
+       "lead_time_days": 109,
+       "price_level": 0.97,
+       "is_local": true,
+       "est_price_wan": 368.6,
+       "special_notes": "无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估368.6万元"
+      },
+      {
+       "name": "四川大川压缩机有限责任公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "ISO 9001",
+       "distance_km": 337,
+       "lead_time_days": 144,
+       "price_level": 0.93,
+       "is_local": true,
+       "est_price_wan": 353.4,
+       "special_notes": "无油润滑设计",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约380万元，本供应商预估353.4万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 13,
+        "avg": 407.9,
+        "low": 377.7,
+        "high": 452.0,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 6,
+        "avg": 422.1,
+        "low": 386.6,
+        "high": 460.7,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 19,
+        "avg": 393.2,
+        "low": 338.5,
+        "high": 443.6,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 368.6,
+       "low": 353.4,
+       "high": 368.6,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 377.7
+       },
+       {
+        "year": 2022,
+        "price": 389.8
+       },
+       {
+        "year": 2023,
+        "price": 407.4
+       },
+       {
+        "year": 2024,
+        "price": 419.7
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 402.8,
+        "note": "3 平台 38 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 368.6,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 419.7,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 396.8,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 396.8,
+      "rec_low": 362.8,
+      "rec_high": 430.7,
+      "confidence": 71,
+      "dispersion": 5.4,
+      "total_samples": 41,
+      "ref_price": 380,
+      "logi_factor": 1.05
+     }
+    }
+   }
+  },
+  {
+   "key": "valve",
+   "cn": "工艺阀门",
+   "en": "Process Valve",
+   "icon": "🔩",
+   "accent": "#d97706",
+   "ref_price_wan": 1.8,
+   "kind": "dynamic",
+   "spec": "8\" 600LB 碳钢球阀（球阀/闸阀）",
+   "edge": "低逸散阀杆密封",
+   "source": "2022 年中石化阀门框架均价",
+   "plants": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "江苏神通阀门股份有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "ISO 9001",
+       "distance_km": 96,
+       "lead_time_days": 66,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 1.6,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.6万元"
+      },
+      {
+       "name": "上海自动化仪表有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "CE",
+       "distance_km": 139,
+       "lead_time_days": 83,
+       "price_level": 0.85,
+       "is_local": true,
+       "est_price_wan": 1.53,
+       "special_notes": "低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.53万元"
+      },
+      {
+       "name": "大连大高阀门股份有限公司",
+       "region": "X",
+       "tier": "national_top",
+       "qualification": "CE",
+       "distance_km": 636,
+       "lead_time_days": 231,
+       "price_level": 1.05,
+       "is_local": false,
+       "est_price_wan": 1.89,
+       "special_notes": "低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.89万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 8,
+        "avg": 1.76,
+        "low": 1.58,
+        "high": 1.94,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 13,
+        "avg": 1.82,
+        "low": 1.65,
+        "high": 2.05,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 22,
+        "avg": 1.83,
+        "low": 1.63,
+        "high": 2.14,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 1.6,
+       "low": 1.53,
+       "high": 1.89,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 1.68
+       },
+       {
+        "year": 2022,
+        "price": 1.77
+       },
+       {
+        "year": 2023,
+        "price": 1.82
+       },
+       {
+        "year": 2024,
+        "price": 1.89
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 1.81,
+        "note": "3 平台 43 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 1.6,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 1.89,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 1.77,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 1.77,
+      "rec_low": 1.57,
+      "rec_high": 1.97,
+      "confidence": 68,
+      "dispersion": 6.9,
+      "total_samples": 46,
+      "ref_price": 1.8,
+      "logi_factor": 1.0
+     }
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "中山铁王流体控制设备有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "API Q1",
+       "distance_km": 243,
+       "lead_time_days": 105,
+       "price_level": 0.93,
+       "is_local": true,
+       "est_price_wan": 1.67,
+       "special_notes": "C5-M海洋防腐涂层配套；低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.67万元"
+      },
+      {
+       "name": "广东永泉阀门科技有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "CE",
+       "distance_km": 122,
+       "lead_time_days": 70,
+       "price_level": 0.95,
+       "is_local": true,
+       "est_price_wan": 1.71,
+       "special_notes": "C5-M海洋防腐涂层配套；低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.71万元"
+      },
+      {
+       "name": "江苏神通阀门股份有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "CE",
+       "distance_km": 1183,
+       "lead_time_days": 415,
+       "price_level": 1.03,
+       "is_local": false,
+       "est_price_wan": 1.85,
+       "special_notes": "低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.85万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 8,
+        "avg": 1.78,
+        "low": 1.57,
+        "high": 1.94,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 8,
+        "avg": 1.92,
+        "low": 1.72,
+        "high": 2.05,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 17,
+        "avg": 1.84,
+        "low": 1.59,
+        "high": 2.06,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 1.71,
+       "low": 1.67,
+       "high": 1.85,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 1.73
+       },
+       {
+        "year": 2022,
+        "price": 1.8
+       },
+       {
+        "year": 2023,
+        "price": 1.89
+       },
+       {
+        "year": 2024,
+        "price": 1.96
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 1.84,
+        "note": "3 平台 33 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 1.71,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 1.96,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 1.83,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 1.83,
+      "rec_low": 1.67,
+      "rec_high": 2.0,
+      "confidence": 68,
+      "dispersion": 5.6,
+      "total_samples": 36,
+      "ref_price": 1.8,
+      "logi_factor": 1.02
+     }
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "浙江石化阀门有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "CE",
+       "distance_km": 110,
+       "lead_time_days": 66,
+       "price_level": 0.94,
+       "is_local": true,
+       "est_price_wan": 1.69,
+       "special_notes": "防台风应急物资储备；低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.69万元"
+      },
+      {
+       "name": "中山铁王流体控制设备有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "API Q1",
+       "distance_km": 627,
+       "lead_time_days": 227,
+       "price_level": 1.05,
+       "is_local": false,
+       "est_price_wan": 1.89,
+       "special_notes": "低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.89万元"
+      },
+      {
+       "name": "大连大高阀门股份有限公司",
+       "region": "X",
+       "tier": "national_top",
+       "qualification": "ISO 9001",
+       "distance_km": 466,
+       "lead_time_days": 194,
+       "price_level": 1.01,
+       "is_local": false,
+       "est_price_wan": 1.82,
+       "special_notes": "低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.82万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 13,
+        "avg": 1.77,
+        "low": 1.63,
+        "high": 1.94,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 12,
+        "avg": 1.87,
+        "low": 1.69,
+        "high": 2.03,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 15,
+        "avg": 1.76,
+        "low": 1.59,
+        "high": 1.91,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 1.82,
+       "low": 1.69,
+       "high": 1.89,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 1.71
+       },
+       {
+        "year": 2022,
+        "price": 1.78
+       },
+       {
+        "year": 2023,
+        "price": 1.84
+       },
+       {
+        "year": 2024,
+        "price": 1.94
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 1.8,
+        "note": "3 平台 40 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 1.82,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 1.94,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 1.84,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 1.84,
+      "rec_low": 1.74,
+      "rec_high": 1.94,
+      "confidence": 78,
+      "dispersion": 3.4,
+      "total_samples": 43,
+      "ref_price": 1.8,
+      "logi_factor": 1.01
+     }
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "成都成高阀门有限公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "API Q1",
+       "distance_km": 358,
+       "lead_time_days": 153,
+       "price_level": 0.87,
+       "is_local": true,
+       "est_price_wan": 1.57,
+       "special_notes": "大件山地物流运输保障；低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.57万元"
+      },
+      {
+       "name": "重庆川仪自动化股份有限公司",
+       "region": "SW",
+       "tier": "national_top",
+       "qualification": "ISO 9001",
+       "distance_km": 140,
+       "lead_time_days": 77,
+       "price_level": 0.99,
+       "is_local": true,
+       "est_price_wan": 1.78,
+       "special_notes": "低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.78万元"
+      },
+      {
+       "name": "贵州航天乌江机电设备有限责任公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "CE",
+       "distance_km": 338,
+       "lead_time_days": 139,
+       "price_level": 0.96,
+       "is_local": true,
+       "est_price_wan": 1.73,
+       "special_notes": "低逸散阀杆密封",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约1.8万元，本供应商预估1.73万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 18,
+        "avg": 1.91,
+        "low": 1.72,
+        "high": 2.19,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 11,
+        "avg": 1.89,
+        "low": 1.67,
+        "high": 2.08,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 14,
+        "avg": 1.9,
+        "low": 1.69,
+        "high": 2.12,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 1.73,
+       "low": 1.57,
+       "high": 1.78,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 1.76
+       },
+       {
+        "year": 2022,
+        "price": 1.85
+       },
+       {
+        "year": 2023,
+        "price": 1.91
+       },
+       {
+        "year": 2024,
+        "price": 2.0
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 1.9,
+        "note": "3 平台 43 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 1.73,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 2.0,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 1.87,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 1.87,
+      "rec_low": 1.7,
+      "rec_high": 2.05,
+      "confidence": 72,
+      "dispersion": 5.9,
+      "total_samples": 46,
+      "ref_price": 1.8,
+      "logi_factor": 1.05
+     }
+    }
+   }
+  },
+  {
+   "key": "crane",
+   "cn": "桥式起重机",
+   "en": "Bridge Crane",
+   "icon": "🏗️",
+   "accent": "#a855f7",
+   "ref_price_wan": 65,
+   "kind": "crane",
+   "spec": "QD 50/10t · 跨度 22.5m",
+   "edge": "防摇摆变频控制",
+   "source": "2021 年公共资源交易平台中标价",
+   "plants": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海电气集团股份有限公司",
+       "region": "EC",
+       "tier": "national_top",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 196,
+       "lead_time_days": 88,
+       "price_level": 0.95,
+       "is_local": true,
+       "est_price_wan": 61.75,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估61.75万元"
+      },
+      {
+       "name": "上海起重运输机械厂有限公司",
+       "region": "EC",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 178,
+       "lead_time_days": 76,
+       "price_level": 0.87,
+       "is_local": true,
+       "est_price_wan": 56.55,
+       "special_notes": "临港重型码头/超大件出运能力",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估56.55万元"
+      },
+      {
+       "name": "柳州欧维姆机械股份有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 715,
+       "lead_time_days": 262,
+       "price_level": 1.13,
+       "is_local": false,
+       "est_price_wan": 73.45,
+       "special_notes": "防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估73.45万元"
+      },
+      {
+       "name": "广州广重企业集团有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 558,
+       "lead_time_days": 202,
+       "price_level": 1.09,
+       "is_local": false,
+       "est_price_wan": 70.85,
+       "special_notes": "防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估70.85万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 15,
+        "avg": 65.1,
+        "low": 58.8,
+        "high": 71.8,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 10,
+        "avg": 66.1,
+        "low": 61.3,
+        "high": 74.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 10,
+        "avg": 65.3,
+        "low": 58.5,
+        "high": 71.0,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 66.3,
+       "low": 56.5,
+       "high": 73.5,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 60.6
+       },
+       {
+        "year": 2022,
+        "price": 63.9
+       },
+       {
+        "year": 2023,
+        "price": 66.0
+       },
+       {
+        "year": 2024,
+        "price": 69.2
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 65.4,
+        "note": "3 平台 35 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 66.3,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 69.2,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 66.6,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 66.6,
+      "rec_low": 64.0,
+      "rec_high": 69.3,
+      "confidence": 80,
+      "dispersion": 2.4,
+      "total_samples": 39,
+      "ref_price": 65,
+      "logi_factor": 1.0
+     }
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "柳州欧维姆机械股份有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 202,
+       "lead_time_days": 84,
+       "price_level": 0.96,
+       "is_local": true,
+       "est_price_wan": 62.4,
+       "special_notes": "C5-M海洋防腐涂层配套；防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估62.4万元"
+      },
+      {
+       "name": "广州广重企业集团有限公司",
+       "region": "SC",
+       "tier": "national_top",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 214,
+       "lead_time_days": 107,
+       "price_level": 0.97,
+       "is_local": true,
+       "est_price_wan": 63.05,
+       "special_notes": "C5-M海洋防腐涂层配套；防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估63.05万元"
+      },
+      {
+       "name": "广州文船重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 215,
+       "lead_time_days": 99,
+       "price_level": 0.95,
+       "is_local": true,
+       "est_price_wan": 61.75,
+       "special_notes": "防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估61.75万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 13,
+        "avg": 65.5,
+        "low": 60.7,
+        "high": 72.1,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 13,
+        "avg": 66.5,
+        "low": 62.5,
+        "high": 71.4,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 14,
+        "avg": 66.9,
+        "low": 57.3,
+        "high": 77.4,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 62.4,
+       "low": 61.8,
+       "high": 63.0,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 62.7
+       },
+       {
+        "year": 2022,
+        "price": 65.5
+       },
+       {
+        "year": 2023,
+        "price": 67.0
+       },
+       {
+        "year": 2024,
+        "price": 70.0
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 66.3,
+        "note": "3 平台 40 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 62.4,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 70.0,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 66.1,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 66.1,
+      "rec_low": 61.1,
+      "rec_high": 71.0,
+      "confidence": 74,
+      "dispersion": 4.7,
+      "total_samples": 43,
+      "ref_price": 65,
+      "logi_factor": 1.02
+     }
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "福建南方路面机械股份有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 135,
+       "lead_time_days": 78,
+       "price_level": 0.9,
+       "is_local": true,
+       "est_price_wan": 58.5,
+       "special_notes": "防台风应急物资储备；防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估58.5万元"
+      },
+      {
+       "name": "厦门厦工重工有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 186,
+       "lead_time_days": 96,
+       "price_level": 0.89,
+       "is_local": true,
+       "est_price_wan": 57.85,
+       "special_notes": "防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估57.85万元"
+      },
+      {
+       "name": "福州天宇电气股份有限公司",
+       "region": "FJ",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 89,
+       "lead_time_days": 52,
+       "price_level": 0.93,
+       "is_local": true,
+       "est_price_wan": 60.45,
+       "special_notes": "防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估60.45万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 11,
+        "avg": 65.1,
+        "low": 60.3,
+        "high": 75.5,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 13,
+        "avg": 68.5,
+        "low": 63.5,
+        "high": 75.7,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 16,
+        "avg": 66.8,
+        "low": 60.6,
+        "high": 77.5,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 58.5,
+       "low": 57.9,
+       "high": 60.5,
+       "n": 3
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 61.3
+       },
+       {
+        "year": 2022,
+        "price": 64.0
+       },
+       {
+        "year": 2023,
+        "price": 67.2
+       },
+       {
+        "year": 2024,
+        "price": 70.1
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 66.9,
+        "note": "3 平台 40 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 58.5,
+        "note": "本组合 3 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 70.1,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 65.2,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 65.2,
+      "rec_low": 57.4,
+      "rec_high": 73.0,
+      "confidence": 65,
+      "dispersion": 7.5,
+      "total_samples": 43,
+      "ref_price": 65,
+      "logi_factor": 1.01
+     }
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "重庆起重机厂有限责任公司",
+       "region": "SW",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 96,
+       "lead_time_days": 53,
+       "price_level": 0.99,
+       "is_local": true,
+       "est_price_wan": 64.35,
+       "special_notes": "大件山地物流运输保障；防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估64.35万元"
+      },
+      {
+       "name": "广东中泽重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 957,
+       "lead_time_days": 344,
+       "price_level": 1.14,
+       "is_local": false,
+       "est_price_wan": 74.1,
+       "special_notes": "大件山地物流运输保障；防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估74.1万元"
+      },
+      {
+       "name": "广州文船重工有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 1114,
+       "lead_time_days": 396,
+       "price_level": 1.04,
+       "is_local": false,
+       "est_price_wan": 67.6,
+       "special_notes": "防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估67.6万元"
+      },
+      {
+       "name": "柳州欧维姆机械股份有限公司",
+       "region": "SC",
+       "tier": "regional",
+       "qualification": "特种设备制造许可证（A级）",
+       "distance_km": 983,
+       "lead_time_days": 351,
+       "price_level": 1.02,
+       "is_local": false,
+       "est_price_wan": 66.3,
+       "special_notes": "防摇摆变频控制",
+       "reference_price_desc": "基于中石化2022-2023框架协议公告均价，同类均价约65万元，本供应商预估66.3万元"
+      }
+     ],
+     "price_analysis": {
+      "sources": [
+       {
+        "name": "中石化电子招标平台",
+        "short": "中石化",
+        "url": "ec.sinopec.com",
+        "samples": 18,
+        "avg": 67.6,
+        "low": 58.8,
+        "high": 72.5,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国石油招标投标网",
+        "short": "中国石油",
+        "url": "www.cnpcbidding.com",
+        "samples": 13,
+        "avg": 70.9,
+        "low": 63.0,
+        "high": 79.6,
+        "period": "2021–2024"
+       },
+       {
+        "name": "中国采购与招标网",
+        "short": "中招网",
+        "url": "www.chinabidding.com.cn",
+        "samples": 17,
+        "avg": 67.8,
+        "low": 61.9,
+        "high": 73.3,
+        "period": "2021–2024"
+       }
+      ],
+      "supplier_quote": {
+       "p50": 66.9,
+       "low": 64.3,
+       "high": 74.1,
+       "n": 4
+      },
+      "trend": [
+       {
+        "year": 2021,
+        "price": 63.8
+       },
+       {
+        "year": 2022,
+        "price": 66.4
+       },
+       {
+        "year": 2023,
+        "price": 70.2
+       },
+       {
+        "year": 2024,
+        "price": 72.5
+       }
+      ],
+      "methods": [
+       {
+        "name": "平台框架协议加权均价法",
+        "price": 68.6,
+        "note": "3 平台 48 条中标公告按样本量加权"
+       },
+       {
+        "name": "供应商报价中位数法",
+        "price": 66.9,
+        "note": "本组合 4 家预估到厂价的中位数"
+       },
+       {
+        "name": "历史中标价回归法",
+        "price": 72.5,
+        "note": "2021–2024 逐年中标价回归至当期"
+       },
+       {
+        "name": "多源交叉加权锚定（采纳）",
+        "price": 69.0,
+        "note": "平台 45% · 供应商 30% · 历史 25% 交叉加权"
+       }
+      ],
+      "anchor": 69.0,
+      "rec_low": 65.3,
+      "rec_high": 72.8,
+      "confidence": 83,
+      "dispersion": 3.4,
+      "total_samples": 52,
+      "ref_price": 65,
+      "logi_factor": 1.05
+     }
+    }
+   }
+  }
+ ]
+}

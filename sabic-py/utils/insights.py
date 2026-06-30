@@ -12,12 +12,12 @@ from datetime import datetime
 from utils import sites
 
 ROLE_LABEL = {
-    "manufacturer": "工厂",
-    "both":         "工厂兼贸易",
-    "importer":     "进口商",
-    "trader":       "经销商",
-    "agent":        "中介",
-    "unknown":      "类型待核",
+    "manufacturer": "Factory·工厂",
+    "both":         "Factory+trade·工厂兼贸易",
+    "importer":     "Importer·进口商",
+    "trader":       "Distributor·经销商",
+    "agent":        "Intermediary·中介",
+    "unknown":      "Type TBD·类型待核",
 }
 
 
@@ -25,10 +25,10 @@ def cap_text(wan) -> str:
     """注册资本（万元）→ 人类可读。"""
     wan = wan or 0
     if wan >= 10000:
-        return f"注册资本 {wan / 10000:.1f} 亿"
+        return f"Capital · 注册资本 {wan / 10000:.1f} 亿"
     if wan > 0:
-        return f"注册资本 {wan:.0f} 万"
-    return "资本未披露"
+        return f"Capital · 注册资本 {wan:.0f} 万"
+    return "Capital undisclosed · 资本未披露"
 
 
 def _age(s: dict) -> int:
@@ -50,28 +50,28 @@ def supplier_highlights(s: dict, max_n: int = 4, site_key: str = "SH") -> list[s
 
     cap = s.get("registered_capital_wan", 0) or 0
     if cap >= 100000:
-        tags.append("资本超 10 亿")
+        tags.append("Capital >1B · 资本超 10 亿")
     elif cap >= 10000:
-        tags.append(f"资本 {cap / 10000:.1f} 亿")
+        tags.append(f"Capital · 资本 {cap / 10000:.1f} 亿")
 
     role = s.get("_role", "unknown")
     if role in ("manufacturer", "both"):
         tags.append(ROLE_LABEL[role])
 
     if _has_hazmat(s):
-        tags.append("危化品资质")
+        tags.append("Hazmat license · 危化品资质")
 
     if s.get("chemical_park"):
-        tags.append("化工园区内")
+        tags.append("In chemical park · 化工园区内")
 
     age = _age(s)
     if age >= 20:
-        tags.append(f"深耕 {age} 年")
+        tags.append(f"{age}y in business · 深耕 {age} 年")
 
     dist = (s.get("logistics", {}).get("distance_km_to_site")
             or s.get("logistics", {}).get("distance_km_to_shanghai"))
     if isinstance(dist, (int, float)) and dist <= 300:
-        tags.append(f"距{sites.get_site(site_key)['short']}约 {int(dist)} 公里")
+        tags.append(f"~{int(dist)} km to {sites.get_site(site_key)['short']} · 距{sites.get_site(site_key)['short']}约 {int(dist)} 公里")
 
     return tags[:max_n]
 
@@ -79,7 +79,7 @@ def supplier_highlights(s: dict, max_n: int = 4, site_key: str = "SH") -> list[s
 def _why(s: dict, site_key: str = "SH") -> str:
     """一句话推荐理由：取最突出的 3 个卖点串起来。"""
     hl = supplier_highlights(s, 3, site_key)
-    return " · ".join(hl) if hl else "综合工商指标占优"
+    return " · ".join(hl) if hl else "Strong overall business metrics · 综合工商指标占优"
 
 
 def decision_summary(results: list[dict], site_key: str = "SH") -> dict | None:
@@ -105,9 +105,9 @@ def decision_summary(results: list[dict], site_key: str = "SH") -> dict | None:
     scenarios = []
     _seen = {top.get("id")}
     for label, icon, pick, dim in [
-        ("就近交付", "🚚", near,      "geography"),
-        ("实力优先", "🏆", strong,    "scale"),
-        ("合规优先", "🛡️", compliant, "compliance"),
+        ("Proximity delivery · 就近交付", "🚚", near,      "geography"),
+        ("Strength first · 实力优先", "🏆", strong,    "scale"),
+        ("Compliance first · 合规优先", "🛡️", compliant, "compliance"),
     ]:
         if pick.get("id") not in _seen:
             _seen.add(pick.get("id"))
@@ -133,9 +133,9 @@ def decision_summary(results: list[dict], site_key: str = "SH") -> dict | None:
     }
 
 
-DIM_LABEL = {"geography": "地理位置", "scale": "企业规模", "compliance": "合规资质"}
+DIM_LABEL = {"geography": "Geography·地理位置", "scale": "Scale·企业规模", "compliance": "Compliance·合规资质"}
 DIM_ICON  = {"geography": "📍", "scale": "🏢", "compliance": "✅"}
-SCENARIO_BY_DIM = {"geography": "就近交付", "scale": "实力优先", "compliance": "合规优先"}
+SCENARIO_BY_DIM = {"geography": "Proximity·就近交付", "scale": "Strength·实力优先", "compliance": "Compliance·合规优先"}
 # 与 local_search 的排序优先级一致（数字越小越靠前）
 _ROLE_RANK = {"manufacturer": 0, "both": 1, "importer": 2, "trader": 3, "unknown": 4, "agent": 5}
 
@@ -188,7 +188,7 @@ def why_not_top(active: dict, results: list[dict], weights: dict | None = None) 
         for d in best_in
     ]
 
-    role_label = ROLE_LABEL.get(active.get("_role", "unknown"), "类型待核")
+    role_label = ROLE_LABEL.get(active.get("_role", "unknown"), "Type TBD·类型待核")
     top_role   = top.get("_role", "unknown")
     role_priority_reason = (
         a_score >= t_score and not is_top
@@ -197,26 +197,36 @@ def why_not_top(active: dict, results: list[dict], weights: dict | None = None) 
 
     # 生成叙事
     if is_top:
-        verdict = "✅ 它就是当前首选推荐"
-        narrative = "在当前筛选与权重下，这家综合表现最优，无需对比。"
+        verdict = "✅ This is the current top recommendation · 它就是当前首选推荐"
+        narrative = ("Under the current filters and weights, it ranks best overall — no comparison needed. · "
+                     "在当前筛选与权重下，这家综合表现最优，无需对比。")
     elif role_priority_reason:
-        verdict = f"综合分其实持平甚至更高，但寻源默认「工厂优先」"
-        narrative = (f"它综合 {a_score} 分，并不低于首选「{top.get('shortName') or top.get('name')}」"
+        verdict = ("Overall score is actually on par or higher, but sourcing defaults to 'factory first' · "
+                   "综合分其实持平甚至更高，但寻源默认「工厂优先」")
+        narrative = (f"It scores {a_score} overall, not below the top pick "
+                     f"「{top.get('shortName') or top.get('name')}」 ({t_score}); but the top pick's role is "
+                     f"「{ROLE_LABEL.get(top_role, top_role)}」 and this one is 「{role_label}」, and ranking "
+                     f"prioritizes factory > factory+trade > importer > distributor, so it lands lower. · "
+                     f"它综合 {a_score} 分，并不低于首选「{top.get('shortName') or top.get('name')}」"
                      f"（{t_score} 分），但首选的经营角色是"
                      f"「{ROLE_LABEL.get(top_role, top_role)}」、本企业是「{role_label}」，"
                      f"排序按工厂 > 工厂兼贸易 > 进口商 > 经销商优先，故它排在后面。")
     else:
-        verdict = f"综合 {a_score} 分，落后首选 {gap} 分"
+        verdict = f"Overall {a_score}, behind the top pick by {gap} · 综合 {a_score} 分，落后首选 {gap} 分"
         if losses:
             main = losses[0]
-            parts = [f"主要差距在【{main['icon']} {main['label']}】"
-                     f"（{main['a']:.0f} vs 首选 {main['t']:.0f}，加权拉开 {abs(main['weighted']):.1f} 分）"]
+            parts = [f"Main gap in 【{main['icon']} {main['label']}】 "
+                     f"({main['a']:.0f} vs top {main['t']:.0f}, weighted gap {abs(main['weighted']):.1f})"]
+            cn_parts = [f"主要差距在【{main['icon']} {main['label']}】"
+                        f"（{main['a']:.0f} vs 首选 {main['t']:.0f}，加权拉开 {abs(main['weighted']):.1f} 分）"]
             if len(losses) > 1:
                 second = losses[1]
-                parts.append(f"其次是【{second['label']}】（{second['a']:.0f} vs {second['t']:.0f}）")
-            narrative = "；".join(parts) + "。"
+                parts.append(f"then 【{second['label']}】 ({second['a']:.0f} vs {second['t']:.0f})")
+                cn_parts.append(f"其次是【{second['label']}】（{second['a']:.0f} vs {second['t']:.0f}）")
+            narrative = "; ".join(parts) + ". · " + "；".join(cn_parts) + "。"
         else:
-            narrative = "各维度与首选接近，差距来自综合加权的细微差异。"
+            narrative = ("All dimensions are close to the top pick; the gap is just fine weighted differences. · "
+                         "各维度与首选接近，差距来自综合加权的细微差异。")
 
     return {
         "is_top": is_top,
@@ -256,7 +266,7 @@ def supply_landscape(results: list[dict], site_key: str = "SH") -> dict:
     # 省份分布（取前 3）
     prov_count: dict[str, int] = {}
     for s in results:
-        p = s.get("province") or "未知"
+        p = s.get("province") or "—"
         prov_count[p] = prov_count.get(p, 0) + 1
     top_provs = sorted(prov_count.items(), key=lambda x: -x[1])[:3]
 
@@ -267,11 +277,14 @@ def supply_landscape(results: list[dict], site_key: str = "SH") -> dict:
     if n:
         share1 = tier1 / n
         if share1 >= 0.6:
-            geo_note = f"供应高度集中在{cluster}，距厂区物流半径短、响应快"
+            geo_note = (f"Supply highly concentrated in {cluster} — short logistics radius, fast response · "
+                        f"供应高度集中在{cluster}，距厂区物流半径短、响应快")
         elif share1 >= 0.3:
-            geo_note = f"{cluster}与外省各有分布，可在就近与实力间权衡"
+            geo_note = (f"Spread across {cluster} and other provinces — balance proximity vs. strength · "
+                        f"{cluster}与外省各有分布，可在就近与实力间权衡")
         else:
-            geo_note = "优质产能多在外省，需关注运距与交期"
+            geo_note = ("Premium capacity mostly out-of-province — watch distance & lead time · "
+                        "优质产能多在外省，需关注运距与交期")
     else:
         geo_note = ""
 

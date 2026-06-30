@@ -1,0 +1,5760 @@
+{
+ "section": {
+  "title": "🏢 综合服务与属地采购 · 四大基地供应商导航",
+  "sub": "人力 / 会务 / 广告 / 办公 / IT / 咨询 / 通勤 / 安保 / 食堂 / 保险 / MRO / 实验室 等 15 类间接与服务采购 —— 按『全国头部平台 + 属地兜底』双轨布局，点击品类进入地图导航，一图看清四大基地（上海·南沙·古雷·重庆）各自的首选服务商。"
+ },
+ "bases": [
+  {
+   "key": "SH",
+   "cn": "上海浦东",
+   "short": "上海",
+   "lat": 31.2222,
+   "lng": 121.5447,
+   "port": "上海港·洋山",
+   "feature": "外资合规与数字化标杆"
+  },
+  {
+   "key": "NS",
+   "cn": "广州南沙",
+   "short": "南沙",
+   "lat": 22.7716,
+   "lng": 113.5566,
+   "port": "南沙港",
+   "feature": "临海高防腐·自贸区合规"
+  },
+  {
+   "key": "GL",
+   "cn": "福建漳州古雷",
+   "short": "古雷",
+   "lat": 23.74,
+   "lng": 117.54,
+   "port": "古雷港·厦门港",
+   "feature": "极端天气防台·危废零停产"
+  },
+  {
+   "key": "CQ",
+   "cn": "重庆",
+   "short": "重庆",
+   "lat": 29.563,
+   "lng": 106.5516,
+   "port": "果园港转水",
+   "feature": "山地工况·西南供应链枢纽"
+  }
+ ],
+ "dim_keys": [
+  "qual",
+  "sector",
+  "local",
+  "scale",
+  "service"
+ ],
+ "dim_cn": {
+  "qual": "资质合规达标",
+  "sector": "石化行业适配",
+  "local": "属地履约响应",
+  "scale": "规模与品牌背书",
+  "service": "服务保障与兜底"
+ },
+ "default_weights": {
+  "qual": 30,
+  "sector": 22,
+  "local": 20,
+  "scale": 16,
+  "service": 12
+ },
+ "categories": [
+  {
+   "key": "manpower",
+   "en": "Manpower Outsource",
+   "cn": "人力外包",
+   "icon": "👥",
+   "accent": "#2563eb",
+   "tagline": "RBA 劳工合规审查 · 属地用工派遣",
+   "model": "国际派遣龙头 + 本地兜底双轨",
+   "redline": "拒签《反商业贿赂协议》、无法配合 SABIC RBA 供应链审计者，一票否决。",
+   "compliance": [
+    "RBA 责任商业联盟劳工准则",
+    "反商业贿赂协议",
+    "社保合规缴纳",
+    "外资用工资质"
+   ],
+   "tips": [
+    "优先选用具备外资化工派遣经验、可承接 RBA 劳工审计的属地龙头",
+    "炼化/封闭厂区用工须适配 EHS 现场管理标准"
+   ],
+   "weights": {
+    "qual": 34,
+    "sector": 18,
+    "local": 18,
+    "scale": 18,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "外企德科 FESCO Adecco 浦东分公司",
+       "type": "国际派遣龙头",
+       "note": "外资化工首选，RBA 劳工合规体系成熟",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "RBA一级",
+        "外资合规",
+        "反贿赂"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "中智上海浦东分公司",
+       "type": "国企人力",
+       "note": "人事代理+员工福利一体，审计经验丰富",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "RBA一级",
+        "社保合规",
+        "福利一体"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "任仕达上海浦东分公司",
+       "type": "全球人力",
+       "note": "高端技术人才寻访+岗位外包",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "RBA一级",
+        "高端寻访"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海卧阳人力资源",
+       "type": "园区派遣",
+       "note": "张江注册，浦东化工园区一线批量用工",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "RBA二级",
+        "园区深耕"
+       ],
+       "local": [
+        "local_branch",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海中蓝企业服务集团",
+       "type": "劳务派遣",
+       "note": "浦东人才港，派遣+社保公积金全代理",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "RBA二级",
+        "社保代理"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "外企德科广州南沙分公司",
+       "type": "国际派遣龙头",
+       "note": "外资企业专属，RBA 合规体系完善",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "RBA一级",
+        "外资专属"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州南仕邦人力南沙分公司",
+       "type": "属地龙头",
+       "note": "长期服务化工外企，南沙头部",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "RBA二级",
+        "化工外企"
+       ],
+       "local": [
+        "local_branch",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "红海人力集团南沙分公司",
+       "type": "本土龙头",
+       "note": "派遣+灵活用工全覆盖",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "RBA二级",
+        "灵活用工"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州仕邦人力南沙分部",
+       "type": "自贸区服务",
+       "note": "石化企业用工合规经验",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "RBA二级",
+        "石化用工"
+       ],
+       "local": [
+        "local_branch",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州南方人才租赁南沙办事处",
+       "type": "国企背景",
+       "note": "大批量一线岗位外包",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "RBA二级",
+        "批量外包"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "外企德科厦门分公司古雷项目部",
+       "type": "国际派遣龙头",
+       "note": "漳厦联动，外资炼化 RBA 合规适配",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "petrochem",
+       "quals": [
+        "RBA一级",
+        "炼化合规"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "漳州红海人力古雷办事处",
+       "type": "炼化驻点",
+       "note": "古雷驻点，一线劳务外包核心",
+       "tier": "local",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "RBA二级",
+        "炼化驻点"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门仕邦人力古雷项目部",
+       "type": "外资经验",
+       "note": "外资化工岗位外包，两地联动保供",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "RBA二级",
+        "外资化工"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州漳浦劳务派遣有限公司",
+       "type": "本地用工",
+       "note": "属地注册，园区本地资源深厚",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "RBA二级",
+        "本地用工"
+       ],
+       "local": [
+        "local_branch",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "福建海峡人力古雷服务站",
+       "type": "省属平台",
+       "note": "省属人力平台，适配大型项目用工",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "RBA二级",
+        "省属平台"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "外企德科重庆分公司",
+       "type": "国际派遣龙头",
+       "note": "外资化工人事外包首选，全球合规审计",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "RBA一级",
+        "外资合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆中智人力资源",
+       "type": "国企人力",
+       "note": "员工福利+社保一体化",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "RBA一级",
+        "福利一体"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆新强人力资源",
+       "type": "川渝龙头",
+       "note": "派遣+岗位外包+人事代理",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "RBA二级",
+        "川渝龙头"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆外服人力资源",
+       "type": "老牌服务",
+       "note": "制造/化工用工经验丰富",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "RBA二级",
+        "化工用工"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆汇博人才服务有限公司",
+       "type": "区域头部",
+       "note": "批量+灵活用工全覆盖",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "RBA二级",
+        "灵活用工"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "event",
+   "en": "Event",
+   "cn": "会务活动",
+   "icon": "🎤",
+   "accent": "#db2777",
+   "tagline": "年会 / 客户接待 / 技术研讨会统筹",
+   "model": "属地合规会务 · 阳光招待留痕",
+   "redline": "招待、礼品须符合反商业贿赂规范，全程发票与流程留痕可审计。",
+   "compliance": [
+    "反商业贿赂（招待/礼品合规）",
+    "发票与流程留痕",
+    "活动安全预案"
+   ],
+   "tips": [
+    "大型活动须提前报备安全与消防预案",
+    "招待标准对标 FCPA 反贿赂红线"
+   ],
+   "weights": {
+    "qual": 24,
+    "sector": 16,
+    "local": 22,
+    "scale": 26,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海中旅国际会展浦东分公司",
+       "type": "外资峰会",
+       "note": "外宾接待经验丰富，适配国际化",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "合规招待",
+        "双语执行"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "上海励展展览服务浦东分部",
+       "type": "大型展会",
+       "note": "客户开放日全案执行",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "industrial",
+       "quals": [
+        "合规招待",
+        "全案执行"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海博华国际展览浦东办事处",
+       "type": "工业展会",
+       "note": "石化行业专场活动经验",
+       "tier": "regional",
+       "nature": "joint",
+       "sector": "petrochem",
+       "quals": [
+        "石化专场"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海奥达会展服务有限公司",
+       "type": "园区会务",
+       "note": "张江工业园区技术交流会",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "园区合规"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海张江会务服务中心",
+       "type": "属地平台",
+       "note": "张江科学城会场+执行一体",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "属地留痕"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广州广交会展览南沙分部",
+       "type": "大型展会",
+       "note": "产品发布会全案执行",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "合规招待",
+        "全案执行"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州南沙自贸区会展服务中心",
+       "type": "官方平台",
+       "note": "自贸区政策宣讲+企业峰会配套",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "自贸区合规",
+        "官方平台"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州毕加展览南沙分公司",
+       "type": "搭建策划",
+       "note": "展台搭建+活动策划一体",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "园区合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州米修会务服务有限公司",
+       "type": "本地落地",
+       "note": "企业年会、客户答谢落地强",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "本地执行"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州叁鑫会务南沙项目部",
+       "type": "属地执行",
+       "note": "商务会议、技术交流响应快",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "属地留痕"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "厦门会展集团漳州项目部",
+       "type": "大型会议",
+       "note": "漳厦联动，炼化行业会议全案",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "合规招待",
+        "炼化会议"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "漳州古雷港会务服务中心",
+       "type": "园区官方",
+       "note": "石化峰会、项目对接专属服务",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "港区合规",
+        "官方平台"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门艾迪会展古雷分部",
+       "type": "外资经验",
+       "note": "外宾接待+双语执行",
+       "tier": "regional",
+       "nature": "joint",
+       "sector": "chemical",
+       "quals": [
+        "双语执行"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州龙文会务服务有限公司",
+       "type": "本地执行",
+       "note": "企业年会、厂区活动落地",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "本地执行"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州盛典会务策划有限公司",
+       "type": "属地团队",
+       "note": "园区开放日、安全主题活动",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "安全主题"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "重庆国际博览中心会务分公司",
+       "type": "官方执行",
+       "note": "大型工业展会、行业峰会官方团队",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "合规招待",
+        "官方平台"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆艾斯会展服务有限公司",
+       "type": "外资经验",
+       "note": "双语执行+外宾接待",
+       "tier": "regional",
+       "nature": "joint",
+       "sector": "chemical",
+       "quals": [
+        "双语执行"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆宏帆会务服务有限公司",
+       "type": "园区活动",
+       "note": "技术交流会全案服务",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "园区合规"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆西部会展服务中心",
+       "type": "属地平台",
+       "note": "西永/九龙坡产业园企业年会",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "产业园合规"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆嘉华会务策划有限公司",
+       "type": "本地落地",
+       "note": "厂区安全活动、品牌发布",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "安全主题"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "advertising",
+   "en": "Advertising",
+   "cn": "广告宣传",
+   "icon": "📢",
+   "accent": "#f59e0b",
+   "tagline": "品牌物料 / 展陈 / 宣传设计",
+   "model": "属地合规广告 · 设计执行一体",
+   "redline": "广告内容须符合《广告法》，对外宣传口径经品牌审核。",
+   "compliance": [
+    "《广告法》合规",
+    "反商业贿赂",
+    "品牌口径审核"
+   ],
+   "tips": [
+    "对外物料统一品牌视觉规范",
+    "供应商须可开具合规发票"
+   ],
+   "weights": {
+    "qual": 24,
+    "sector": 16,
+    "local": 22,
+    "scale": 26,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "奥美广告上海浦东分公司",
+       "type": "品牌全案",
+       "note": "企业形象宣传，适配外资全球标准",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "general",
+       "quals": [
+        "广告法合规",
+        "品牌审核"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "上海蓝标广告浦东分部",
+       "type": "工业传播",
+       "note": "工业品牌、展会物料、厂区文化",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "广告法合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海墨马广告有限公司",
+       "type": "厂区标识",
+       "note": "VI 系统、宣传物料制作",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "设计制作"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海灵思广告张江分公司",
+       "type": "科技工业",
+       "note": "数字化宣传物料",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "数字物料"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海浦东广告传播有限公司",
+       "type": "属地国企",
+       "note": "户外广告、厂区宣传栏制作安装",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "属地制作"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广东省广集团南沙分公司",
+       "type": "品牌全案",
+       "note": "石化企业形象宣传、展会物料",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "广告法合规",
+        "品牌审核",
+        "石化经验"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州盛世长城南沙项目部",
+       "type": "外资服务",
+       "note": "品牌视觉标准化",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "广告法合规",
+        "品牌审核"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州蓝色创意广告南沙分部",
+       "type": "工业推广",
+       "note": "厂区文化墙、宣传物料",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "设计制作"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州南沙广告有限公司",
+       "type": "属地国企",
+       "note": "园区户外广告、厂区标识",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "属地制作"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州晶彩广告南沙分公司",
+       "type": "快速落地",
+       "note": "喷绘、标识、宣传栏",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "快速响应"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "厦门广告集团漳州分公司",
+       "type": "品牌宣传",
+       "note": "漳厦联动，石化企业 VI 系统落地",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "广告法合规",
+        "石化经验"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "厦门华亿传媒古雷分部",
+       "type": "工业经验",
+       "note": "安全文化、品牌物料制作",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "安全文化"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州古雷港广告传媒中心",
+       "type": "园区官方",
+       "note": "厂区标识、安全宣传物料",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "港区合规",
+        "官方平台"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州鸿图广告有限公司",
+       "type": "本地制作",
+       "note": "厂区宣传栏、户外广告安装",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "属地制作"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州先锋广告策划有限公司",
+       "type": "快速响应",
+       "note": "喷绘、标识、活动物料",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "快速响应"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "重庆奥美广告分公司",
+       "type": "外资品牌",
+       "note": "全球化视觉标准适配",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "广告法合规",
+        "品牌审核"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆高戈广告有限公司",
+       "type": "西南头部",
+       "note": "工业企业品牌推广、展会物料",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "广告法合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆广告产业园传媒公司",
+       "type": "工业全案",
+       "note": "厂区视觉系统、宣传物料",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "设计制作"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆西部广告传媒有限公司",
+       "type": "属地制作",
+       "note": "西永产业园厂区标识、宣传栏",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "产业园合规"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆智派广告策划有限公司",
+       "type": "快速响应",
+       "note": "喷绘、灯箱、安全标识",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "快速响应"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "office_leasing",
+   "en": "Office Leasing",
+   "cn": "办公租赁",
+   "icon": "🏢",
+   "accent": "#0891b2",
+   "tagline": "甲级写字楼 / 园区办公选址代理",
+   "model": "专业代理选址 · 合同与消防合规",
+   "redline": "租赁物业须通过消防验收，合同条款经法务审核。",
+   "compliance": [
+    "租赁合同合规",
+    "消防验收",
+    "产权核验"
+   ],
+   "tips": [
+    "优先国际地产代理，议价与尽调更透明",
+    "核验消防验收与产权证明"
+   ],
+   "weights": {
+    "qual": 24,
+    "sector": 14,
+    "local": 26,
+    "scale": 24,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "仲量联行（JLL）浦东商业地产部",
+       "type": "国际代理",
+       "note": "办公/研发楼选址+租赁谈判",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "general",
+       "quals": [
+        "合同合规",
+        "消防验收",
+        "尽调透明"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "戴德梁行浦东分部",
+       "type": "国际代理",
+       "note": "工业地产+写字楼一体化",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "industrial",
+       "quals": [
+        "合同合规",
+        "消防验收"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "第一太平戴维斯浦东分公司",
+       "type": "高端写字楼",
+       "note": "外资企业总部办公选址",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "general",
+       "quals": [
+        "合同合规",
+        "产权核验"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海张江高科租赁服务中心",
+       "type": "园区官方",
+       "note": "张江科学城研发办公楼",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "官方平台",
+        "产权核验"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海外高桥保税区租赁服务公司",
+       "type": "保税办公",
+       "note": "保税办公+仓储一体",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "保税合规"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "仲量联行南沙商业地产部",
+       "type": "国际代理",
+       "note": "自贸区写字楼、产业园选址",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "general",
+       "quals": [
+        "合同合规",
+        "消防验收",
+        "尽调透明"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "戴德梁行广州南沙分部",
+       "type": "国际代理",
+       "note": "工业配套办公、总部楼租赁",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "industrial",
+       "quals": [
+        "合同合规",
+        "消防验收"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "南沙自贸区写字楼租赁服务中心",
+       "type": "官方平台",
+       "note": "自贸区政策适配办公场地",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "官方平台",
+        "自贸区合规"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "合富辉煌南沙商业租赁部",
+       "type": "本土龙头",
+       "note": "工业园区办公选址",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "产权核验"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州南沙城投租赁服务部",
+       "type": "区属国企",
+       "note": "产业园办公楼、配套场地",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "官方平台"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "厦门链家商业地产古雷分部",
+       "type": "区域代理",
+       "note": "漳厦联动，写字楼、产业园选址",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "合同合规",
+        "产权核验"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "古雷港经济开发区招商租赁中心",
+       "type": "园区官方",
+       "note": "园区配套办公楼、研发楼租赁",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "官方平台",
+        "港区合规"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州古雷城投办公租赁服务部",
+       "type": "区属国企",
+       "note": "炼化项目配套办公场地",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "官方平台"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "福建中原地产古雷项目部",
+       "type": "工业地产",
+       "note": "配套办公+倒班宿舍一体租赁",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "产权核验"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州漳浦写字楼租赁服务中心",
+       "type": "属地平台",
+       "note": "县城+园区办公场地联动",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "属地服务"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "仲量联行重庆商业地产部",
+       "type": "国际代理",
+       "note": "写字楼、产业园办公选址",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "general",
+       "quals": [
+        "合同合规",
+        "消防验收",
+        "尽调透明"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "戴德梁行重庆分公司",
+       "type": "国际代理",
+       "note": "工业配套办公、总部楼租赁",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "industrial",
+       "quals": [
+        "合同合规",
+        "消防验收"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆龙湖商业租赁事业部",
+       "type": "本土龙头",
+       "note": "高端写字楼、产业园办公",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "产权核验"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆两江新区写字楼租赁中心",
+       "type": "官方平台",
+       "note": "产业园、研发办公楼租赁",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "官方平台"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆九龙坡产业园租赁服务部",
+       "type": "属地平台",
+       "note": "工业园区配套办公场地",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "产业园合规"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "office_maint",
+   "en": "Office Maintenance",
+   "cn": "办公运维",
+   "icon": "🧹",
+   "accent": "#16a34a",
+   "tagline": "保洁 / 绿化 / 厂区设施常态化维保",
+   "model": "属地物业 · 常态化设施维保",
+   "redline": "消防维保检测正式归入本品类：须绑定应急管理部「社会消防技术服务信息系统」备案的消防机构，承担月度维保与年度消电检技术责任；高空/用电特种作业持证上岗。",
+   "compliance": [
+    "消防维保机构备案（应急管理部）",
+    "特种作业持证（高空/用电）",
+    "EHS 现场管理",
+    "年度消电检"
+   ],
+   "tips": [
+    "消防维保与法定检测由物业主体对接备案机构，权责与安保完全分离",
+    "设施维保纳入 EHS 作业许可，明确保洁/绿化/消防 SLA 标准"
+   ],
+   "weights": {
+    "qual": 32,
+    "sector": 16,
+    "local": 24,
+    "scale": 16,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海松林物业浦东分公司",
+       "type": "化工物业",
+       "note": "保洁+维保+绿化一体，绑定备案消防机构维保与年度消电检",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "消防维保备案",
+        "特种作业持证",
+        "EHS适配",
+        "年度消电检"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "上海永升物业浦东项目部",
+       "type": "上市物业",
+       "note": "办公区保洁、设施巡检、报修响应",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "特种作业持证",
+        "EHS适配",
+        "消防协作"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海上房物业浦东分公司",
+       "type": "国企物业",
+       "note": "办公楼运维、保洁标准化，可对接消防检测",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "特种作业持证",
+        "消防协作"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海浦江物业张江分部",
+       "type": "园区运维",
+       "note": "保洁、设施维修、绿植养护",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "EHS适配",
+        "消防协作"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海蓝盾保洁服务有限公司",
+       "type": "专项保洁",
+       "note": "办公区日常清洁",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "环卫资质"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广州保利物业南沙项目部",
+       "type": "上市物业",
+       "note": "工业园区办公运维+绿化，绑定备案消防检测",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "消防维保备案",
+        "特种作业持证",
+        "EHS适配",
+        "年度消电检"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州越秀物业南沙分公司",
+       "type": "国企物业",
+       "note": "办公楼运维、保洁标准化+消防技术服务",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "消防维保备案",
+        "特种作业持证"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州南沙物业运维服务中心",
+       "type": "园区官方",
+       "note": "办公区保洁+设施维保，绑定建筑消防检测中心",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "消防维保备案",
+        "官方平台",
+        "年度消电检"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州城建物业南沙分部",
+       "type": "本土物业",
+       "note": "办公设施维保+保洁一体",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "EHS适配",
+        "消防协作"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州洁特保洁服务有限公司",
+       "type": "专项保洁",
+       "note": "办公区日常清洁",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "环卫资质"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "厦门联发物业古雷项目部",
+       "type": "园区运维",
+       "note": "漳厦联动，办公运维标准化，对接备案消防服务",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "消防维保备案",
+        "特种作业持证",
+        "EHS适配"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "古雷港园区物业运维中心",
+       "type": "园区官方",
+       "note": "保洁+维保+绿化，绑定本地备案消防机构维保检测",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "消防维保备案",
+        "官方平台",
+        "年度消电检"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "福建恒安物业古雷分部",
+       "type": "工业物业",
+       "note": "办公区运维+安全巡检",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "特种作业持证",
+        "消防协作"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州漳浦物业保洁服务公司",
+       "type": "属地团队",
+       "note": "办公日常保洁、设施维修",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "环卫资质"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州洁美保洁服务有限公司",
+       "type": "专项保洁",
+       "note": "办公区专项清洁",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "环卫资质"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "重庆龙湖物业九龙坡分公司",
+       "type": "上市物业",
+       "note": "办公保洁、维保标准化，绑定备案消防年度维保检测",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "消防维保备案",
+        "特种作业持证",
+        "EHS适配",
+        "年度消电检"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆金科物业西永分部",
+       "type": "本土龙头",
+       "note": "产业园办公运维+绿化养护",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "特种作业持证",
+        "消防协作"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆融创物业工业园分部",
+       "type": "工业物业",
+       "note": "办公运维+厂区配套保洁",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "EHS适配",
+        "消防协作"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆大正物业有限公司",
+       "type": "老牌物业",
+       "note": "办公区保洁、设施巡检维修",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "特种作业持证"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆洁万家保洁服务公司",
+       "type": "专项保洁",
+       "note": "办公日常保洁、专项清洁",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "环卫资质"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "it_hardware",
+   "en": "IT Hardware & Infrastructure",
+   "cn": "IT 硬件与基建",
+   "icon": "🖥️",
+   "accent": "#4f46e5",
+   "tagline": "机房 / 网络基建 / 硬件部署",
+   "model": "属地集成商 · 数据合规销毁闭环",
+   "redline": "废旧服务器/硬盘销毁须 NAID AAA 或 ISO 27001 认证机构执行，EHS+IT 双人旁站、出具《数据销毁证书》。",
+   "compliance": [
+    "ISO 27001 信息安全",
+    "NAID AAA 数据销毁",
+    "GDPR / 数据安全法",
+    "等保合规"
+   ],
+   "tips": [
+    "涉核心工艺/员工个人信息系统须 ISO 27001",
+    "资产报废走合规销毁流程，留存不可篡改录像"
+   ],
+   "weights": {
+    "qual": 40,
+    "sector": 16,
+    "local": 16,
+    "scale": 16,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海华东电脑股份有限公司",
+       "type": "机房集成",
+       "note": "服务器/网络/机房基建一体，配套数据销毁",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "ISO27001",
+        "NAID销毁",
+        "等保合规",
+        "机房基建"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "神州数码上海浦东分公司",
+       "type": "全品类分销",
+       "note": "机房部署+硬件维保，配套合规销毁",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "NAID销毁",
+        "等保合规"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "戴尔科技上海浦东服务中心",
+       "type": "企业级原厂",
+       "note": "服务器、存储，原厂维保",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "原厂维保"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "新华三上海浦东办事处",
+       "type": "网络基建",
+       "note": "网络设备、云计算基础设施",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "网络基建"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海网联信息科技有限公司",
+       "type": "驻场运维",
+       "note": "浦东本地 IT 硬件驻场、故障抢修",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "驻场运维"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广州南天信息南沙分部",
+       "type": "本土龙头",
+       "note": "机房基建、网络设备部署，配套数据销毁",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "ISO27001",
+        "NAID销毁",
+        "等保合规",
+        "机房基建"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "神州数码广州分公司",
+       "type": "全品类分销",
+       "note": "企业级设备供应+维保，配套资产处置",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "NAID销毁",
+        "等保合规"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州佳都科技南沙项目部",
+       "type": "智能安防",
+       "note": "安防+IT 基建一体，适配化工园区",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "ISO27001",
+        "园区适配"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "新华三广州南沙办事处",
+       "type": "网络基建",
+       "note": "网络、服务器、云计算解决方案",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "网络基建"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州华南资讯科技有限公司",
+       "type": "机房部署",
+       "note": "工业园区 IT 硬件部署、机房建设",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "机房基建"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "厦门纵横集团漳州项目部",
+       "type": "基建运维",
+       "note": "漳厦联动，机房基建+网络部署，配套合规销毁",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "ISO27001",
+        "NAID销毁",
+        "机房基建"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "神州数码厦门分公司",
+       "type": "企业级供应",
+       "note": "服务器、网络设备全覆盖",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "等保合规"
+       ],
+       "local": [
+        "regional_hub",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门科华恒盛漳州分部",
+       "type": "机房供电",
+       "note": "UPS、机房供配电基础设施，工业级",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "机房基建",
+        "工业级"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "新华三漳州办事处",
+       "type": "工业网络",
+       "note": "工业级网络设备适配石化场景",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "ISO27001",
+        "网络基建"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州信华科技有限公司",
+       "type": "驻场运维",
+       "note": "本地 IT 硬件运维、上门抢修",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "驻场运维"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "重庆神州数码分公司",
+       "type": "全品类分销",
+       "note": "企业级设备供应+维保，配套数据销毁",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "NAID销毁",
+        "等保合规",
+        "机房基建"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆浪潮信息办事处",
+       "type": "服务器存储",
+       "note": "服务器、存储，工业级场景适配",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "原厂维保"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "新华三重庆办事处",
+       "type": "网络基建",
+       "note": "网络设备、服务器、云计算基础设施",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "网络基建"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆邮电大学科技产业公司",
+       "type": "技术背景",
+       "note": "机房基建、网络部署",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "机房基建"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆西南信息产业有限公司",
+       "type": "驻场运维",
+       "note": "工业园区 IT 硬件部署、驻场运维",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "驻场运维"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "consulting",
+   "en": "Consulting",
+   "cn": "行业咨询",
+   "icon": "🧭",
+   "accent": "#7c3aed",
+   "tagline": "EHS / 供应链 / 进出口 / 反贿赂体系",
+   "model": "国际四大/专项机构 · 合规体系搭建",
+   "redline": "咨询交付须满足 FCPA 反贿赂、GDPR 数据合规标准。",
+   "compliance": [
+    "FCPA 反海外腐败",
+    "GDPR 数据合规",
+    "EHS 体系",
+    "进出口合规"
+   ],
+   "tips": [
+    "体系搭建优先国际四大/专项合规机构",
+    "石化专项合规可选属地深耕机构"
+   ],
+   "weights": {
+    "qual": 26,
+    "sector": 26,
+    "local": 10,
+    "scale": 26,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "埃森哲上海浦东分公司",
+       "type": "国际综合",
+       "note": "供应链/数字化/EHS 合规全领域，外资首选",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "FCPA",
+        "GDPR",
+        "EHS体系",
+        "进出口合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "毕马威上海浦东分公司",
+       "type": "国际四大",
+       "note": "财务/进出口合规、反贿赂体系",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "FCPA",
+        "进出口合规",
+        "反贿赂"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "波士顿咨询上海浦东分部",
+       "type": "战略咨询",
+       "note": "战略、运营管理，全球化适配",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "FCPA",
+        "战略咨询"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海安元 EHS 咨询公司",
+       "type": "石化专项",
+       "note": "石化 EHS、安全合规、体系认证",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "EHS体系",
+        "石化专项"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海化工研究院咨询中心",
+       "type": "技术专项",
+       "note": "石化工艺、环保、技术咨询",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "技术专项",
+        "环保合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "普华永道广州南沙分部",
+       "type": "国际四大",
+       "note": "税务合规、供应链咨询，外资适配",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "FCPA",
+        "GDPR",
+        "进出口合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "毕马威广州南沙服务部",
+       "type": "国际四大",
+       "note": "自贸区合规、财务、进出口咨询",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "FCPA",
+        "进出口合规",
+        "反贿赂"
+       ],
+       "local": [
+        "local_branch",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州德勤咨询南沙项目部",
+       "type": "国际四大",
+       "note": "管理咨询、数字化转型、合规体系",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "FCPA",
+        "数字化"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州安环科技咨询有限公司",
+       "type": "石化专项",
+       "note": "石化 EHS、安全评价、环保合规",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "EHS体系",
+        "安全评价"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广东省石化研究院咨询中心",
+       "type": "技术专项",
+       "note": "石化工艺、技术、环保咨询",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "技术专项",
+        "环保合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "毕马威厦门分公司漳州服务部",
+       "type": "国际四大",
+       "note": "财务/税务/进出口合规",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "FCPA",
+        "进出口合规",
+        "反贿赂"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "厦门安环科技古雷项目部",
+       "type": "石化专项",
+       "note": "石化 EHS、安全评价、环保专项",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "EHS体系",
+        "安全评价",
+        "石化专项"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "福建省石化规划设计院咨询部",
+       "type": "炼化技术",
+       "note": "炼化项目工艺、规划、技术咨询",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "技术专项",
+        "炼化规划"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州 EHS 安全咨询中心",
+       "type": "属地服务",
+       "note": "安全生产、应急管理咨询",
+       "tier": "local",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "EHS体系",
+        "应急管理"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门合众咨询古雷分部",
+       "type": "管理咨询",
+       "note": "人力、管理体系、园区运营",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "管理体系"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "德勤重庆分公司",
+       "type": "国际四大",
+       "note": "管理咨询、财务合规、数字化转型",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "FCPA",
+        "GDPR",
+        "数字化"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "毕马威重庆分公司",
+       "type": "国际四大",
+       "note": "税务合规、供应链、内控体系",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "FCPA",
+        "进出口合规",
+        "反贿赂"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆赛西 EHS 安全咨询",
+       "type": "EHS专项",
+       "note": "西南石化 EHS、合规、体系认证",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "EHS体系",
+        "体系认证",
+        "石化专项"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆安评安全技术咨询",
+       "type": "安全评价",
+       "note": "安全评价、应急预案、标准化",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "安全评价",
+        "应急管理"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "四川省化工设计院重庆咨询部",
+       "type": "技术专项",
+       "note": "石化工艺、环保、工程技术",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "技术专项",
+        "环保合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "shuttle",
+   "en": "Vehicle / Shuttle bus",
+   "cn": "通勤车辆 / 班车",
+   "icon": "🚌",
+   "accent": "#ea580c",
+   "tagline": "厂区通勤班车 / 商务车辆租赁",
+   "model": "属地客运集团 · 营运资质合规",
+   "redline": "承运方须具备道路客运营运资质，车辆与驾驶员资质齐全、定期安检。",
+   "compliance": [
+    "道路客运营运资质",
+    "驾驶员从业资格",
+    "车辆安全检验",
+    "承运保险"
+   ],
+   "tips": [
+    "优先属地国企客运集团，安全与排班稳定",
+    "线路须做应急与安全预案"
+   ],
+   "weights": {
+    "qual": 30,
+    "sector": 14,
+    "local": 26,
+    "scale": 18,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海强生交通集团浦东分公司",
+       "type": "国企客运",
+       "note": "通勤大巴、商务车，线路成熟",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "从业资格",
+        "车辆安检",
+        "承运保险"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "上海久事公交客运浦东项目部",
+       "type": "公交背景",
+       "note": "大型厂区通勤班车运营",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "从业资格",
+        "车辆安检"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海大众交通浦东分公司",
+       "type": "本土龙头",
+       "note": "通勤班车、临时用车全覆盖",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "营运资质",
+        "车辆安检"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海锦江汽车租赁浦东分部",
+       "type": "商务车队",
+       "note": "大巴/商务车，外资服务经验",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "营运资质",
+        "承运保险"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海浦东巴士旅游客运",
+       "type": "属地车队",
+       "note": "化工园区通勤班车定制线路",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "线路定制"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广州交通集团南沙客运部",
+       "type": "本土龙头",
+       "note": "大巴、商务车全品类租赁",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "从业资格",
+        "车辆安检",
+        "承运保险"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州二汽南沙分公司",
+       "type": "公交背景",
+       "note": "通勤大巴、员工班车运营",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "从业资格",
+        "车辆安检"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州粤运客运南沙项目部",
+       "type": "省属客运",
+       "note": "跨区域通勤、商务用车",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "营运资质",
+        "承运保险"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州南沙交通发展有限公司",
+       "type": "区属国企",
+       "note": "园区通勤班车、定制线路",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "线路定制"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州广骏汽车租赁南沙分部",
+       "type": "本地车队",
+       "note": "通勤班车、临时用车响应快",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "营运资质"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "漳州长运集团古雷分公司",
+       "type": "市属客运",
+       "note": "通勤大巴、定制化线路",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "从业资格",
+        "车辆安检",
+        "承运保险"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "漳州闽运客运古雷分部",
+       "type": "省属客运",
+       "note": "厂区通勤、员工接送",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "从业资格",
+        "车辆安检"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门鹭运集团漳州项目部",
+       "type": "区域客运",
+       "note": "漳厦联动，商务车、通勤班车",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "营运资质",
+        "承运保险"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳浦县汽车运输公司",
+       "type": "属地国企",
+       "note": "漳浦县城-古雷厂区通勤班车",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "线路定制"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州捷顺汽车租赁有限公司",
+       "type": "本地服务",
+       "note": "商务车、临时用车灵活租赁",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "营运资质"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "重庆交运集团通勤客运分公司",
+       "type": "市属国企",
+       "note": "大型厂区通勤班车运营，适配山地",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "从业资格",
+        "车辆安检",
+        "承运保险"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆公交集团租赁分公司",
+       "type": "公交背景",
+       "note": "工业园区通勤定制线路",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "营运资质",
+        "从业资格",
+        "车辆安检"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆长途汽车运输集团",
+       "type": "本土龙头",
+       "note": "通勤大巴、跨区域班车",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "营运资质",
+        "承运保险"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆愉客行汽车租赁",
+       "type": "本地平台",
+       "note": "商务车、班车灵活租赁",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "营运资质"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆国泰汽车租赁有限公司",
+       "type": "本土服务",
+       "note": "通勤班车、临时用车",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "营运资质"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "security",
+   "en": "Security Service",
+   "cn": "厂区安保",
+   "icon": "🛡️",
+   "accent": "#dc2626",
+   "tagline": "封闭式安防 / 门禁值守 / 反恐巡查",
+   "model": "国企持证安保 · 反恐防暴标准",
+   "redline": "须持《保安服务许可证》，满足化工厂区反恐防暴标准；仅负责门禁值守、巡逻与日常消防点位巡查，不承担消防系统技术维保（已剥离至办公运维品类）。",
+   "compliance": [
+    "保安服务许可证",
+    "反恐防暴标准",
+    "日常消防巡查",
+    "危化品车辆管控"
+   ],
+   "tips": [
+    "消防系统技术维保已剥离至办公运维，安保只做日常巡查，权责匹配",
+    "门禁与巡查须与 EHS 应急联动，核心物资安保由属地国企主供"
+   ],
+   "weights": {
+    "qual": 34,
+    "sector": 18,
+    "local": 22,
+    "scale": 14,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "浦东新区保安服务总公司",
+       "type": "国企持证",
+       "note": "化工园区安保、门禁、反恐，负责日常消防巡查",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "保安许可",
+        "反恐防暴",
+        "日常消防巡查",
+        "危化品车管控"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "上海中保华安保安浦东分公司",
+       "type": "外资经验",
+       "note": "外资企业安保经验，标准化管理",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "保安许可",
+        "反恐防暴",
+        "标准化"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海赛夫保安服务有限公司",
+       "type": "工业安保",
+       "note": "门禁、巡逻、消防值守",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "保安许可",
+        "日常消防巡查"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海圣泰保安服务有限公司",
+       "type": "属地持证",
+       "note": "厂区安防+临时勤务",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "保安许可"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海宗保保安服务有限公司",
+       "type": "属地安保",
+       "note": "园区安保、秩序维护",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "保安许可"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "南沙保安服务有限公司",
+       "type": "国企持证",
+       "note": "化工园区封闭式安保、消防值守，日常巡查",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "保安许可",
+        "反恐防暴",
+        "日常消防巡查",
+        "危化品车管控"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州越秀保安南沙分公司",
+       "type": "市属国企",
+       "note": "厂区安防、门禁、反恐标准",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "保安许可",
+        "反恐防暴"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广东金盾保安服务南沙公司",
+       "type": "本土安保",
+       "note": "厂区巡逻、危化品车辆管控",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "保安许可",
+        "危化品车管控"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州中保国安南沙分部",
+       "type": "工业安保",
+       "note": "标准化管理、持证上岗",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "保安许可",
+        "标准化"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州粤盾保安服务有限公司",
+       "type": "属地安保",
+       "note": "园区安保、秩序维护",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "保安许可"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "古雷港安保服务有限公司",
+       "type": "园区官方",
+       "note": "炼化厂区持证安保、门禁值守，适配反恐标准",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "保安许可",
+        "反恐防暴",
+        "日常消防巡查",
+        "危化品车管控"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "漳州保安服务总公司古雷分公司",
+       "type": "市属国企",
+       "note": "大型炼化项目安保经验",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "保安许可",
+        "反恐防暴"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门银盾安保古雷项目部",
+       "type": "外资标准",
+       "note": "漳厦联动，外资化工安保标准化",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "保安许可",
+        "标准化"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳浦县保安服务公司",
+       "type": "属地国企",
+       "note": "厂区安保、巡逻、消防值守",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "保安许可",
+        "日常消防巡查"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "福建中安保安古雷分部",
+       "type": "本地服务",
+       "note": "园区安保、危化品车辆管控",
+       "tier": "local",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "保安许可",
+        "危化品车管控"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "重庆保安集团九龙坡分公司",
+       "type": "市属国企",
+       "note": "厂区安保、反恐防暴、门禁",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "保安许可",
+        "反恐防暴",
+        "日常消防巡查"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆中保华安保安分公司",
+       "type": "外资经验",
+       "note": "外资企业安保经验，标准化管理",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "保安许可",
+        "反恐防暴",
+        "标准化"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆渝盾保安服务有限公司",
+       "type": "本土龙头",
+       "note": "工业园区安保、消防值守",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "保安许可",
+        "日常消防巡查"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆赛夫保安服务有限公司",
+       "type": "工业安保",
+       "note": "门禁、巡逻一体",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "保安许可"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆金盾保安服务公司",
+       "type": "本地服务",
+       "note": "厂区巡逻、秩序维护",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "保安许可"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "it_software",
+   "en": "IT Software",
+   "cn": "IT 软件系统",
+   "icon": "💾",
+   "accent": "#0ea5e9",
+   "tagline": "ERP / 企业信息化 / 驻场运维",
+   "model": "头部信息化集成 + 驻场运维",
+   "redline": "对接核心工艺数据/员工个人信息的系统供应商，必须持 ISO 27001 信息安全认证。",
+   "compliance": [
+    "ISO 27001 信息安全",
+    "数据安全法",
+    "GDPR",
+    "等保合规"
+   ],
+   "tips": [
+    "ERP/MES 等核心系统优先头部集成商",
+    "驻场运维须签数据保密与安全责任协议"
+   ],
+   "weights": {
+    "qual": 34,
+    "sector": 18,
+    "local": 14,
+    "scale": 20,
+    "service": 14
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "SAP 中国上海浦东分公司",
+       "type": "ERP 原厂",
+       "note": "ERP 系统实施/运维，外资核心管理软件",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "ISO27001",
+        "数据安全法",
+        "ERP原厂"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "用友网络上海浦东分公司",
+       "type": "国产 ERP",
+       "note": "财务、供应链管理软件，本土化强",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "等保合规",
+        "ERP落地"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "金蝶软件上海浦东服务中心",
+       "type": "云 ERP",
+       "note": "企业管理软件、云 ERP，化工方案",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "ISO27001",
+        "等保合规"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海泛微网络科技",
+       "type": "协同 OA",
+       "note": "流程审批、数字化办公",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "流程数字化"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海启明软件股份有限公司",
+       "type": "定制开发",
+       "note": "定制软件、企业信息化系统",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "定制开发",
+        "驻场运维"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "金蝶软件广州南沙分公司",
+       "type": "云 ERP",
+       "note": "云 ERP、供应链管理，工业适配",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "ISO27001",
+        "等保合规",
+        "ERP落地"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "用友网络广州分部",
+       "type": "国产 ERP",
+       "note": "财务、生产管理软件，本土实施",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "等保合规"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州远光软件有限公司",
+       "type": "能源化工",
+       "note": "能源化工行业管理软件、财务系统",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "ISO27001",
+        "行业方案"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州赛意信息科技南沙分部",
+       "type": "数字化",
+       "note": "ERP 实施、数字化转型，制造业",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "数字化"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州广电运通软件南沙项目部",
+       "type": "信息化",
+       "note": "信息化系统、智能办公",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "信息化",
+        "驻场运维"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "厦门鼎捷软件古雷项目部",
+       "type": "制造 ERP",
+       "note": "制造业 ERP，石化生产管理适配",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "ISO27001",
+        "行业方案",
+        "ERP落地"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "金蝶软件厦门分公司漳州分部",
+       "type": "云 ERP",
+       "note": "云 ERP、供应链管理，工业方案",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "ISO27001",
+        "等保合规"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门用友软件漳州服务部",
+       "type": "国产 ERP",
+       "note": "ERP、财务软件，漳厦实施运维",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "等保合规"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "福建星网锐捷软件漳州分部",
+       "type": "工业软件",
+       "note": "工业软件、智能办公系统",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "信息化"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州正航软件有限公司",
+       "type": "本土服务",
+       "note": "生产管理、进销存系统",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "定制开发",
+        "驻场运维"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "金蝶软件重庆分公司",
+       "type": "云 ERP",
+       "note": "云 ERP、企业管理软件，西南服务",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "ISO27001",
+        "等保合规",
+        "ERP落地"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "用友网络重庆分公司",
+       "type": "国产 ERP",
+       "note": "财务、供应链、生产管理全系列",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "ISO27001",
+        "等保合规"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆金算盘软件有限公司",
+       "type": "本土龙头",
+       "note": "财务、ERP、化工行业方案",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "ISO27001",
+        "行业方案"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆中联信息产业",
+       "type": "协同办公",
+       "note": "信息化、协同办公系统定制",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "信息化",
+        "定制开发"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆南华中天软件",
+       "type": "工业软件",
+       "note": "工业软件、数字化办公实施运维",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "驻场运维"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "catering",
+   "en": "Catering Service",
+   "cn": "食堂团餐",
+   "icon": "🍱",
+   "accent": "#65a30d",
+   "tagline": "化工园区封闭式食堂托管",
+   "model": "属地团餐托管 + 第三方食安抽检",
+   "redline": "强制引入 SGS / 华测（CTI）每月食品安全突击抽检、全程留样溯源，杜绝群体性安全事故。",
+   "compliance": [
+    "食品经营许可证",
+    "SGS/华测第三方抽检",
+    "留样溯源台账",
+    "从业人员健康证"
+   ],
+   "tips": [
+    "封闭厂区食堂须建立食品安全合规台账",
+    "每月第三方突击抽检并留档"
+   ],
+   "weights": {
+    "qual": 38,
+    "sector": 16,
+    "local": 18,
+    "scale": 16,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "中快餐饮上海浦东分公司",
+       "type": "全国龙头",
+       "note": "工业园区食堂标准化运营，食安体系完善",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "食品经营许可",
+        "第三方抽检",
+        "留样溯源",
+        "健康证"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "上海麦金地餐饮张江分部",
+       "type": "高端团餐",
+       "note": "外资企业食堂、员工餐定制",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "食品经营许可",
+        "留样溯源",
+        "健康证"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海新尚餐饮管理有限公司",
+       "type": "园区托管",
+       "note": "浦东化工园区封闭式食堂托管",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "食品经营许可",
+        "留样溯源",
+        "健康证"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海一片天餐饮管理",
+       "type": "本土团餐",
+       "note": "工业园区食堂托管、食材溯源",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "食品经营许可",
+        "留样溯源"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海绿捷快餐有限公司",
+       "type": "本地团餐",
+       "note": "员工餐、商务接待餐一体",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "食品经营许可",
+        "健康证"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "中快餐饮广东南沙分公司",
+       "type": "全国龙头",
+       "note": "标准化食堂运营，配套 SGS/华测食安抽检",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "食品经营许可",
+        "第三方抽检",
+        "留样溯源",
+        "健康证"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州鸿骏膳食南沙分部",
+       "type": "珠三角龙头",
+       "note": "工业园区食堂托管",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "食品经营许可",
+        "留样溯源",
+        "健康证"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州千喜鹤餐饮南沙项目部",
+       "type": "全国品牌",
+       "note": "员工餐、接待餐服务",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "食品经营许可",
+        "第三方抽检",
+        "健康证"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "南沙绿源餐饮管理有限公司",
+       "type": "属地托管",
+       "note": "工业园食堂托管，化工园区经验",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "食品经营许可",
+        "留样溯源"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州和兴隆餐饮管理",
+       "type": "本土团餐",
+       "note": "食材溯源、食堂标准化运营",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "食品经营许可",
+        "健康证"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "中快餐饮福建古雷项目部",
+       "type": "全国龙头",
+       "note": "大型厂区食堂标准化运营，第三方食安抽检",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "食品经营许可",
+        "第三方抽检",
+        "留样溯源",
+        "健康证"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "漳州福海创配套团餐服务商",
+       "type": "炼化配套",
+       "note": "炼化项目厂区食堂运营经验丰富",
+       "tier": "local",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "食品经营许可",
+        "留样溯源",
+        "健康证"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门味友餐饮古雷分部",
+       "type": "区域团餐",
+       "note": "漳厦联动，团餐托管、接待餐",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "食品经营许可",
+        "留样溯源"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "古雷港园区食堂运营中心",
+       "type": "园区官方",
+       "note": "炼化项目职工食堂托管",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "食品经营许可",
+        "官方平台",
+        "健康证"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "漳州盛辉餐饮管理有限公司",
+       "type": "本地服务",
+       "note": "职工食堂、食材配送",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "食品经营许可",
+        "健康证"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "中快餐饮重庆工业园项目部",
+       "type": "全国龙头",
+       "note": "工业园区食堂标准化运营，第三方食安抽检",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "食品经营许可",
+        "第三方抽检",
+        "留样溯源",
+        "健康证"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆德庄团餐管理有限公司",
+       "type": "本土龙头",
+       "note": "职工食堂、团餐配送",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "食品经营许可",
+        "留样溯源",
+        "健康证"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆美心餐饮管理",
+       "type": "本地团餐",
+       "note": "工业园区食堂托管、食安管控",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "食品经营许可",
+        "留样溯源"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆愉筷餐饮团餐分部",
+       "type": "本土服务",
+       "note": "员工餐、食堂承包",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "食品经营许可",
+        "健康证"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆奇爽团餐服务有限公司",
+       "type": "本地团餐",
+       "note": "厂区食堂、食材一体",
+       "tier": "local",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "食品经营许可",
+        "健康证"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "insurance",
+   "en": "Employee Insurance (Employee Benefits)",
+   "cn": "员工保险福利",
+   "icon": "🩺",
+   "accent": "#0d9488",
+   "tagline": "团体险 / 补充医疗 / 厂区财产险",
+   "model": "头部险企 · 团险与财产险一体",
+   "redline": "保险经营资质合规，员工福利方案符合属地劳动法规。",
+   "compliance": [
+    "保险经营资质",
+    "团体险/补充医疗合规",
+    "厂区财产险",
+    "员工福利合规"
+   ],
+   "tips": [
+    "团险与厂区财产险可打包议价",
+    "高危岗位补充意外险覆盖"
+   ],
+   "weights": {
+    "qual": 24,
+    "sector": 14,
+    "local": 16,
+    "scale": 34,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "中国人保财险浦东支公司",
+       "type": "头部险企",
+       "note": "补充医疗、团体意外、厂区财产险",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "保险资质",
+        "团险合规",
+        "财产险"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "中国平安养老险上海浦东分公司",
+       "type": "头部险企",
+       "note": "企业年金、团体寿险、员工福利",
+       "tier": "national_top",
+       "nature": "joint",
+       "sector": "industrial",
+       "quals": [
+        "保险资质",
+        "团险合规",
+        "年金"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "太平洋人寿浦东分部",
+       "type": "头部险企",
+       "note": "团体健康险、意外险定制",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "保险资质",
+        "团险合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "友邦保险上海浦东团险部",
+       "type": "外资团险",
+       "note": "外资企业全球医疗福利适配",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "general",
+       "quals": [
+        "保险资质",
+        "团险合规",
+        "全球福利"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "中智上海员工福利中心",
+       "type": "福利一体",
+       "note": "团体险、补充医疗、福利一体方案",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "团险合规",
+        "福利一体"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "中国平安财险南沙营业部",
+       "type": "头部险企",
+       "note": "团体意外、补充医疗、企业财产险",
+       "tier": "national_top",
+       "nature": "joint",
+       "sector": "industrial",
+       "quals": [
+        "保险资质",
+        "团险合规",
+        "财产险"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "中国人保财险南沙支公司",
+       "type": "头部险企",
+       "note": "团险、财产险一体化",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "保险资质",
+        "团险合规",
+        "财产险"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "太平洋人寿南沙分公司",
+       "type": "头部险企",
+       "note": "团体健康险、福利计划定制",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "保险资质",
+        "团险合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "泰康养老险南沙项目部",
+       "type": "头部险企",
+       "note": "企业年金、团体寿险、健康福利",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "保险资质",
+        "年金"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州中智员工福利分部",
+       "type": "福利一体",
+       "note": "团险+补充医疗一体",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "团险合规",
+        "福利一体"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "中国人保财险漳浦支公司",
+       "type": "头部险企",
+       "note": "属地国企，团险、厂区财产险一体",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "保险资质",
+        "团险合规",
+        "财产险"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "中国平安财险漳州古雷营业部",
+       "type": "头部险企",
+       "note": "团体意外、补充医疗，响应快",
+       "tier": "national_top",
+       "nature": "joint",
+       "sector": "industrial",
+       "quals": [
+        "保险资质",
+        "团险合规"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "太平洋人寿漳州分公司",
+       "type": "头部险企",
+       "note": "团体健康险、福利定制",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "保险资质",
+        "团险合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "泰康养老漳州分部",
+       "type": "头部险企",
+       "note": "企业年金、团体寿险、健康管理",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "保险资质",
+        "年金"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门中智员工福利漳州服务部",
+       "type": "福利一体",
+       "note": "漳厦联动，外资企业福利方案",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "团险合规",
+        "福利一体"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "太平洋财险重庆分公司",
+       "type": "头部险企",
+       "note": "团险、财产险、安全生产责任险",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "保险资质",
+        "团险合规",
+        "财产险",
+        "安责险"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "中国人保财险重庆九龙坡支公司",
+       "type": "头部险企",
+       "note": "团体意外、补充医疗",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "保险资质",
+        "团险合规",
+        "财产险"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "中国平安养老险重庆分公司",
+       "type": "头部险企",
+       "note": "企业年金、团体寿险、福利计划",
+       "tier": "national_top",
+       "nature": "joint",
+       "sector": "general",
+       "quals": [
+        "保险资质",
+        "年金"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "泰康养老重庆分公司",
+       "type": "头部险企",
+       "note": "团体健康险、福利定制",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "general",
+       "quals": [
+        "保险资质",
+        "团险合规"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆中智员工福利中心",
+       "type": "福利一体",
+       "note": "团险+健康管理一体",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "general",
+       "quals": [
+        "团险合规",
+        "福利一体"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "mro_service",
+   "en": "MRO Service",
+   "cn": "MRO 运维与 VMI 寄售",
+   "icon": "🔧",
+   "accent": "#b45309",
+   "tagline": "驻场 VMI 智能仓 · 扫码领料自动对账",
+   "model": "头部平台驻场 VMI · 业财一体可审计",
+   "redline": "核心 MRO 供应商必须落地厂区 VMI 智能仓储柜+驻场服务，全链路数据实时同步 SABIC SAP 系统。",
+   "compliance": [
+    "SAP API 对接",
+    "区块链防伪溯源",
+    "墨卡托标准物料编码",
+    "业财一体审计可追溯"
+   ],
+   "tips": [
+    "四大基地统一墨卡托物料编码",
+    "扫码领料、消耗触发补货、旧件回收闭环"
+   ],
+   "weights": {
+    "qual": 26,
+    "sector": 24,
+    "local": 26,
+    "scale": 12,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海宝信设备运维公司",
+       "type": "石化驻场",
+       "note": "设备驻场维保、电气仪表检修，石化经验",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "SAP对接",
+        "驻场维保"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "上海石化设备检修公司浦东分部",
+       "type": "石化检修",
+       "note": "石化专用设备维保、计划检修抢修",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "石化专用"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海电气运维服务浦东分公司",
+       "type": "动静设备",
+       "note": "动/静设备维保，持证作业团队",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "持证作业",
+        "驻场维保"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "震坤行工业设备运维中心",
+       "type": "MRO一体",
+       "note": "通用设备维保+抢修，属地快速响应",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "MRO一体",
+        "快速响应"
+       ],
+       "local": [
+        "onsite",
+        "warehouse"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "西域智慧供应链运维服务部",
+       "type": "物料运维",
+       "note": "MRO 物料+运维一体，驻场检修",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "MRO一体",
+        "驻场维保"
+       ],
+       "local": [
+        "onsite",
+        "warehouse"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "广州广石化设备检修公司南沙分部",
+       "type": "石化检修",
+       "note": "石化设备维保、计划检修，本土技术",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "石化专用",
+        "驻场维保"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州华南重工运维服务公司",
+       "type": "重型维保",
+       "note": "重型设备、机泵维保，石化适配",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "石化专用"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州工控设备运维南沙项目部",
+       "type": "工业集团",
+       "note": "市属工业集团，设备维保、故障抢修",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "持证作业",
+        "驻场维保"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "震坤行广州设备运维部",
+       "type": "MRO一体",
+       "note": "驻场服务、快速抢修",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "MRO一体",
+        "快速响应"
+       ],
+       "local": [
+        "onsite",
+        "warehouse"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州机电设备运维有限公司",
+       "type": "通用维保",
+       "note": "通用工业设备维保、电气仪表",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "持证作业"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "古雷石化设备运维中心",
+       "type": "园区配套",
+       "note": "炼化设备驻场维保、计划检修",
+       "tier": "local",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "石化专用",
+        "驻场维保"
+       ],
+       "local": [
+        "park_official",
+        "onsite"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "漳州福海创设备检修公司",
+       "type": "炼化配套",
+       "note": "机泵、塔器、管道维保",
+       "tier": "local",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "石化专用"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "中密控股运维服务古雷分部",
+       "type": "密封专项",
+       "note": "机械密封、泵阀专项维保，石化专用",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "机械密封"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "福建石化设备检修公司古雷站",
+       "type": "省属技术",
+       "note": "炼化设备大修、抢修",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "石化专用"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "厦门机电设备运维古雷项目部",
+       "type": "通用维保",
+       "note": "漳厦联动，电气仪表、通用设备维保",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "持证作业",
+        "驻场维保"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "重庆川维设备检修公司",
+       "type": "石化配套",
+       "note": "化工设备维保、计划检修",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "石化专用",
+        "驻场维保"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆化工设备检修中心",
+       "type": "化工大修",
+       "note": "西南化工设备维保、大修专项",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "petrochem",
+       "quals": [
+        "持证作业",
+        "石化专用"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "震坤行重庆设备运维部",
+       "type": "MRO一体",
+       "note": "驻场服务、故障抢修",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "MRO一体",
+        "快速响应"
+       ],
+       "local": [
+        "onsite",
+        "warehouse"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆机电设备运维有限公司",
+       "type": "通用维保",
+       "note": "通用工业设备维保抢修，本土团队",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "持证作业"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆重钢设备运维分公司",
+       "type": "重型维保",
+       "note": "重型设备、机泵维保",
+       "tier": "regional",
+       "nature": "soe",
+       "sector": "industrial",
+       "quals": [
+        "持证作业",
+        "驻场维保"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "mro",
+   "en": "MRO",
+   "cn": "MRO 物料（全品类）",
+   "icon": "⚙️",
+   "accent": "#0E8C3A",
+   "tagline": "全国数字化平台 + 属地兜底双轨",
+   "model": "头部平台标品全覆盖 + 属地专家非标补短板",
+   "redline": "核心物资强制『1 主 1 备』双轨制，杜绝单一供应商断供风险。",
+   "compliance": [
+    "A 类年度集采锁价（90 天账期）",
+    "B 类应急绿色通道（15 天账期）",
+    "价格双轨阳光采购",
+    "平台比价可审计"
+   ],
+   "tips": [
+    "南沙临海备件须符合 ISO 12944 C5-M 海洋高腐蚀标准",
+    "古雷设防台应急物资库，重庆配液力缓速器山地物流"
+   ],
+   "weights": {
+    "qual": 24,
+    "sector": 22,
+    "local": 28,
+    "scale": 14,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "京东工业上海浦东仓",
+       "type": "数字化平台",
+       "note": "全品类 MRO，SAP 对接，2 小时应急配送",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "SAP直连",
+        "区块链溯源",
+        "双轨集采",
+        "危废双供"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "震坤行工业超市浦东店",
+       "type": "智能仓储",
+       "note": "石化 MRO 全品类，智能柜 24h 领料",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "智能仓",
+        "双轨集采"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "西域智慧供应链浦东备货中心",
+       "type": "华东大仓",
+       "note": "全品类工业品，外资服务经验，区域兜底",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "华东大仓",
+        "区域兜底"
+       ],
+       "local": [
+        "warehouse",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海超润供应链",
+       "type": "特种化工",
+       "note": "润滑、密封耗材专项，本地仓配",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "特种耗材"
+       ],
+       "local": [
+        "warehouse",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "上海工品汇浦东分公司",
+       "type": "通用 MRO",
+       "note": "通用耗材，性价比高，属地配送",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "通用耗材"
+       ],
+       "local": [
+        "warehouse",
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "京东工业华南广州仓",
+       "type": "数字化平台",
+       "note": "盐雾防腐备件专项备货，1 小时直达南沙，危废双供",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "C5-M防腐",
+        "SAP直连",
+        "双轨集采",
+        "危废双供"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州广镒机电南沙仓",
+       "type": "本地现货",
+       "note": "石化阀门、泵件、电工仪表，C5-M 防腐",
+       "tier": "local",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "C5-M防腐",
+        "本地现货"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "震坤行南沙服务中心",
+       "type": "智能仓储",
+       "note": "珠三角化工客户覆盖，防腐备件达标",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "智能仓",
+        "C5-M防腐"
+       ],
+       "local": [
+        "warehouse",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州颐达工业设备",
+       "type": "当日配送",
+       "note": "五金、密封、劳保 MRO 当日配送",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "当日配送",
+        "盐雾检测"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "西域华南佛山仓",
+       "type": "区域大仓",
+       "note": "全品类工业品，1 小时直达南沙兜底",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "区域兜底"
+       ],
+       "local": [
+        "warehouse",
+        "regional_hub"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "漳州腾雷工贸古雷仓",
+       "type": "本地兜底",
+       "note": "石化 MRO 全品类，5km 防台应急实体库，危废双供",
+       "tier": "local",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "防台应急库",
+        "危废双供",
+        "本地现货"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "中密控股古雷项目部",
+       "type": "密封专用",
+       "note": "机械密封、泵阀专用备件，炼化核心配套",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "机械密封",
+        "炼化配套"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "京东工业厦门仓",
+       "type": "数字化平台",
+       "note": "全国调拨兜底，非极端天气 1.5h 直达",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "SAP直连",
+        "全国调拨"
+       ],
+       "local": [
+        "regional_hub",
+        "warehouse"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "震坤行厦门服务中心",
+       "type": "智能仓储",
+       "note": "非台风季区域应急补货",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "智能仓",
+        "区域兜底"
+       ],
+       "local": [
+        "warehouse",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "西域厦门仓",
+       "type": "区域大仓",
+       "note": "漳厦联动，常规物料当日达",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "区域兜底",
+        "当日配送"
+       ],
+       "local": [
+        "warehouse",
+        "regional_hub"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "京东工业西南重庆仓",
+       "type": "数字化平台",
+       "note": "山城物流适配，配送车标配防滑，危废双供",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "山地物流",
+        "SAP直连",
+        "双轨集采",
+        "危废双供"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "华之杰（重庆）工业技术",
+       "type": "本地大仓",
+       "note": "5000㎡自有仓，石化全品类现货，山区绕行预案",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "本地现货",
+        "山地物流"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "震坤行重庆仓",
+       "type": "智能仓储",
+       "note": "西南全品类 MRO，智能仓+自动对账",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "智能仓",
+        "山地物流"
+       ],
+       "local": [
+        "warehouse",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆科沃德机电",
+       "type": "本地现货",
+       "note": "五金、仪表、劳保维修物料现货",
+       "tier": "local",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "本地现货",
+        "山地物流"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "西域西南总仓",
+       "type": "区域大仓",
+       "note": "全品类工业品，西南区域兜底",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "industrial",
+       "quals": [
+        "区域兜底"
+       ],
+       "local": [
+        "warehouse",
+        "regional_hub"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "key": "lab",
+   "en": "Laboratory Material and Equipment",
+   "cn": "实验室仪器耗材",
+   "icon": "🧪",
+   "accent": "#9333ea",
+   "tagline": "化验室试剂 / 精密玻璃仪器就近配送",
+   "model": "属地定点供应 + 危化试剂持证物流",
+   "redline": "易制爆/易制毒试剂全程持证危化品专用车辆配送，资质可溯源。",
+   "compliance": [
+    "危化品道路运输许可证",
+    "易制爆/易制毒试剂管控",
+    "资质可溯源",
+    "跨基地化工专线"
+   ],
+   "tips": [
+    "常规耗材就近属地定点极速发货",
+    "跨基地样品/试剂走 DHL/顺丰化工专线"
+   ],
+   "weights": {
+    "qual": 34,
+    "sector": 20,
+    "local": 22,
+    "scale": 12,
+    "service": 12
+   },
+   "bases": {
+    "SH": {
+     "suppliers": [
+      {
+       "name": "上海沪试实验室器材",
+       "type": "属地主供",
+       "note": "华东主流供应商，浦东就近发货，危货车配送",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "危化运输许可",
+        "易制毒管控",
+        "就近发货"
+       ],
+       "local": [
+        "warehouse",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "国药集团化学试剂上海分公司",
+       "type": "国企龙头",
+       "note": "试剂/耗材/仪器全覆盖，溯源合规",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "危化运输许可",
+        "溯源合规",
+        "全品类"
+       ],
+       "local": [
+        "warehouse",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "泰坦科技浦东分公司",
+       "type": "研发适配",
+       "note": "实验室耗材+仪器一体，合规配送",
+       "tier": "national_top",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "危化运输许可",
+        "合规配送"
+       ],
+       "local": [
+        "warehouse",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "赛默飞世尔上海浦东服务中心",
+       "type": "进口仪器",
+       "note": "分析仪器，原厂维保+耗材",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "原厂维保",
+        "进口仪器"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "安捷伦科技上海浦东办事处",
+       "type": "色谱质谱",
+       "note": "石化化验室适配",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "petrochem",
+       "quals": [
+        "原厂维保",
+        "石化适配"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "NS": {
+     "suppliers": [
+      {
+       "name": "国药集团化学试剂广州分公司",
+       "type": "国企龙头",
+       "note": "试剂耗材合规溯源，品类齐全，配送资质完备",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "危化运输许可",
+        "溯源合规",
+        "全品类"
+       ],
+       "local": [
+        "warehouse",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "广州科仪仪器有限公司",
+       "type": "属地主供",
+       "note": "本地配送，化验室试剂、玻璃仪器全覆盖",
+       "tier": "local",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "危化运输许可",
+        "就近配送"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "赛默飞世尔广州南沙服务部",
+       "type": "进口仪器",
+       "note": "分析仪器+耗材，石化化验室方案",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "petrochem",
+       "quals": [
+        "原厂维保",
+        "石化适配"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "安捷伦科技广州分部",
+       "type": "实验室仪器",
+       "note": "仪器、耗材，原厂技术支持",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "chemical",
+       "quals": [
+        "原厂维保",
+        "进口仪器"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "广州化学试剂厂",
+       "type": "本土生产",
+       "note": "常规化验试剂快速供应",
+       "tier": "local",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "试剂生产"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "GL": {
+     "suppliers": [
+      {
+       "name": "国药集团化学试剂厦门分公司",
+       "type": "国企龙头",
+       "note": "试剂耗材漳厦就近配送，合规溯源",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "危化运输许可",
+        "溯源合规",
+        "全品类"
+       ],
+       "local": [
+        "warehouse",
+        "regional_hub"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "厦门翔昀实验室设备古雷分部",
+       "type": "炼化定点",
+       "note": "古雷炼化定点，仪器+耗材一体，持证专车",
+       "tier": "local",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "危化运输许可",
+        "炼化定点"
+       ],
+       "local": [
+        "onsite",
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "福建省喜玛拉雅科技",
+       "type": "长期供货",
+       "note": "化验试剂、分析仪器配件，配送资质齐全",
+       "tier": "regional",
+       "nature": "private",
+       "sector": "petrochem",
+       "quals": [
+        "危化运输许可",
+        "炼化定点"
+       ],
+       "local": [
+        "onsite",
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "赛默飞世尔厦门服务中心",
+       "type": "进口仪器",
+       "note": "实验室仪器、耗材，石化化验室适配",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "petrochem",
+       "quals": [
+        "原厂维保",
+        "石化适配"
+       ],
+       "local": [
+        "regional_hub"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "福建化玻仪器古雷项目部",
+       "type": "本地响应",
+       "note": "玻璃仪器、常规耗材，属地快速",
+       "tier": "local",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "就近配送"
+       ],
+       "local": [
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    },
+    "CQ": {
+     "suppliers": [
+      {
+       "name": "国药集团化学试剂重庆分公司",
+       "type": "国企龙头",
+       "note": "试剂、耗材合规溯源",
+       "tier": "national_top",
+       "nature": "soe",
+       "sector": "chemical",
+       "quals": [
+        "危化运输许可",
+        "溯源合规",
+        "全品类"
+       ],
+       "local": [
+        "warehouse",
+        "local_branch"
+       ],
+       "role": "primary"
+      },
+      {
+       "name": "重庆科瑞仪器有限公司",
+       "type": "属地主供",
+       "note": "本地配送，化验设备、耗材一体，持证专车",
+       "tier": "local",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "危化运输许可",
+        "就近配送"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "赛默飞世尔重庆服务中心",
+       "type": "进口仪器",
+       "note": "进口分析仪器，原厂维保+耗材",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "petrochem",
+       "quals": [
+        "原厂维保",
+        "石化适配"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "安捷伦科技重庆办事处",
+       "type": "色谱质谱",
+       "note": "西南石化化验室适配",
+       "tier": "national_top",
+       "nature": "foreign",
+       "sector": "petrochem",
+       "quals": [
+        "原厂维保",
+        "石化适配"
+       ],
+       "local": [
+        "local_branch"
+       ],
+       "role": "backup"
+      },
+      {
+       "name": "重庆化学试剂总厂",
+       "type": "本土生产",
+       "note": "常规化验试剂现货充足",
+       "tier": "local",
+       "nature": "private",
+       "sector": "chemical",
+       "quals": [
+        "试剂生产"
+       ],
+       "local": [
+        "warehouse",
+        "onsite"
+       ],
+       "role": "backup"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

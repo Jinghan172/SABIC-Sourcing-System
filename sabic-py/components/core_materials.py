@@ -20,6 +20,7 @@ import plotly.graph_objects as go
 import pandas as pd
 
 from utils.scorer import reputation_for
+from components.comparison import render_comparison
 
 _BASE = Path(__file__).resolve().parent.parent / "data"
 _DATA_PATH = _BASE / "core_materials.json"
@@ -58,6 +59,21 @@ _BASE_COLOR = {
     "SH": "#0E8C3A", "NS": "#2563eb", "GL": "#f59e0b", "CQ": "#a855f7",
     "ALL": "#7c3aed",
 }
+
+# 6 维英文名（与 JSON dim_cn 一一对应），用于双语展示
+_DIM_EN = {
+    "tech": "Product / tech fit",
+    "location": "Proximity & delivery",
+    "cost": "Total cost",
+    "ehss": "EHSS & compliance",
+    "scale": "Capacity & resilience",
+    "service": "Service & partnership",
+}
+
+
+def _dim_bi(k: str, dim_cn: dict, sep: str = " · ") -> str:
+    """维度双语标签：英文在前、中文在后。"""
+    return f"{_DIM_EN.get(k, k)}{sep}{dim_cn.get(k, k)}"
 
 
 def _haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
@@ -125,12 +141,12 @@ def _base_color(c: dict) -> str:
 def _base_label(c: dict) -> str:
     """就近基地短标签，如 '近南沙 ~45km'；进口企业显示覆盖说明。"""
     if c.get("is_import"):
-        return c.get("base_cn", "进口·覆盖四基地")
+        return c.get("base_cn", "Import · 进口·覆盖四基地")
     km = c.get("base_km")
     cn = c.get("base_cn", "")
     if km is None:
-        return f"近{cn}" if cn else ""
-    return f"近{cn} ~{km}km"
+        return f"near · 近{cn}" if cn else ""
+    return f"near · 近{cn} ~{km}km"
 
 
 def _near_base(c: dict, thresh: int = 120) -> bool:
@@ -223,8 +239,8 @@ def render_core_cards() -> None:
 <div class="core-band">
   <div class="core-band-bar"></div>
   <div>
-    <div class="core-band-title">⭐ 最核心物料 · 专家级供应商评审</div>
-    <div class="core-band-sub">三类外销沙特的战略物料 —— 已脱离纯企查查工商评分，采用 6 维差异化加权专家评分，点击进入详尽对比报告</div>
+    <div class="core-band-title">⭐ Most Critical Materials · Expert Supplier Review · 最核心物料 · 专家级供应商评审</div>
+    <div class="core-band-sub">Three strategic materials exported to Saudi Arabia — beyond pure QCC business scoring, graded by a 6-dimension weighted expert model. Click to open the full comparison report.<br>三类外销沙特的战略物料 —— 已脱离纯企查查工商评分，采用 6 维差异化加权专家评分，点击进入详尽对比报告</div>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -238,24 +254,25 @@ def render_core_cards() -> None:
 <div class="core-card" style="--accent:{m['accent']}">
   <div class="core-card-top">
     <span class="core-ico">{m['icon']}</span>
-    <span class="core-tag">{len(m['companies'])} 家候选</span>
+    <span class="core-tag">{len(m['companies'])} candidates · 家候选</span>
   </div>
-  <div class="core-name">{m['cn']}</div>
+  <div class="core-name">{m.get('en', m['cn'])}</div>
+  <div class="core-name" style="font-size:15px;margin-top:0;color:#5a6780">{m['cn']}</div>
   <div class="core-tagline">{m['tagline']}</div>
   <div class="core-champ">
     <span class="core-champ-medal">🥇</span>
     <div>
       <div class="core-champ-name">{champ['name']}</div>
-      <div class="core-champ-lbl">战略首选 · {champ['score']} 分</div>
+      <div class="core-champ-lbl">Strategic pick · 战略首选 · {champ['score']}</div>
     </div>
   </div>
   <div class="core-mini">
-    <span>📍 紧邻基地 <b>{local_n}</b> 家</span>
-    <span>🎯 首选领先 <b>{round(champ['score'] - m['companies'][1]['score'], 1)}</b> 分</span>
+    <span>📍 Near base · 紧邻基地 <b>{local_n}</b></span>
+    <span>🎯 Lead · 首选领先 <b>{round(champ['score'] - m['companies'][1]['score'], 1)}</b></span>
   </div>
 </div>
 """, unsafe_allow_html=True)
-            if st.button(f"查看 {m['short']} 详尽评审报告 →", key=f"core_enter_{m['key']}",
+            if st.button(f"View {m['short']} full review report · 查看详尽评审报告 →", key=f"core_enter_{m['key']}",
                          width="stretch", type="primary"):
                 st.session_state.core_material = m["key"]
                 st.session_state.query = ""
@@ -318,7 +335,7 @@ def _supplier_map(m: dict):
         colorscale=[[0, "#eef3f8"], [1, m["accent"]]],
         zmin=0, zmax=max(df["count"].max() if not df.empty else 1, 1),
         showscale=False, marker_line_color="white", marker_line_width=0.6,
-        hovertemplate="%{location}：%{z} 家候选<extra></extra>",
+        hovertemplate="%{location}: %{z} candidates · 家候选<extra></extra>",
     ))
 
     import random
@@ -335,8 +352,8 @@ def _supplier_map(m: dict):
         lon = co["lng"] + rnd.uniform(-0.20, 0.20)
         sc = c["score"]
         hover = (f"<b>{c['name']}</b><br>{c['type']} · {c['location']}<br>"
-                 f"🎯 就近基地：<b>{_base_label(c)}</b><br>"
-                 f"综合 {sc:.1f} 分 · 技术 {c['dims']['tech']:.0f} · 区位 {c['dims']['location']:.0f}")
+                 f"🎯 Nearest base · 就近基地：<b>{_base_label(c)}</b><br>"
+                 f"Overall · 综合 {sc:.1f} · Tech · 技术 {c['dims']['tech']:.0f} · Loc · 区位 {c['dims']['location']:.0f}")
         if c["name"] == m["champion"]:
             c_lat, c_lon, c_txt, c_size = lat, lon, hover, max(26, sc * 0.34)
         else:
@@ -350,7 +367,7 @@ def _supplier_map(m: dict):
             marker=dict(size=n_size, color=n_color,
                         colorscale=[[0, "#f59e0b"], [0.5, "#3b82f6"], [1, _SABIC_GREEN]],
                         cmin=55, cmax=95, line=dict(color=n_line, width=2.2), opacity=.92),
-            hovertemplate="%{text}<extra></extra>", name="候选供应商",
+            hovertemplate="%{text}<extra></extra>", name="Candidates · 候选供应商",
         ))
     if c_lat is not None:
         fig.add_trace(go.Scattergeo(
@@ -358,7 +375,7 @@ def _supplier_map(m: dict):
             marker=dict(size=c_size, color="#facc15", symbol="star",
                         line=dict(color="#b45309", width=1.6)),
             textfont=dict(size=12, color=_SABIC_DARK),
-            hovertemplate="🥇 战略首选<br>%{text}<extra></extra>", name="🥇 战略首选",
+            hovertemplate="🥇 Strategic pick · 战略首选<br>%{text}<extra></extra>", name="🥇 Strategic pick · 战略首选",
         ))
     # SABIC 四大基地（上海 / 广州南沙 / 福建漳州古雷 / 重庆）
     for bs in _bases():
@@ -369,8 +386,8 @@ def _supplier_map(m: dict):
                         line=dict(color="white", width=2)),
             text=[f"◆ SABIC {bs['short']}"], textposition="top center",
             textfont=dict(size=12.5, color=_SABIC_DARK, family="PingFang SC"),
-            hovertemplate=f"SABIC {bs['cn']}基地<br>就近出口口岸：{bs['port']}<extra></extra>",
-            name=f"◆ {bs['short']}基地", showlegend=True,
+            hovertemplate=f"SABIC {bs['cn']} base · 基地<br>Nearest export port · 就近出口口岸：{bs['port']}<extra></extra>",
+            name=f"◆ {bs['short']}", showlegend=True,
         ))
 
     fig.update_geos(
@@ -393,7 +410,7 @@ def _supplier_map(m: dict):
 def _radar_top(m: dict, top_n: int = 5) -> go.Figure:
     dim_keys = load_core_materials()["dim_keys"]
     dim_cn = load_core_materials()["dim_cn"]
-    cats = [dim_cn[k] for k in dim_keys]
+    cats = [f"{_DIM_EN.get(k,k)}<br>{dim_cn[k]}" for k in dim_keys]
     cats_closed = cats + [cats[0]]
     palette = ["#0E8C3A", "#3b82f6", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"]
     fig = go.Figure()
@@ -435,15 +452,15 @@ def _scatter_tech_loc(m: dict) -> go.Figure:
             text=[c["name"][:6]] if c["score"] >= 78 else [""],
             textposition="top center", textfont=dict(size=11),
             name=c["type"], legendgroup=c["type"], showlegend=show_legend,
-            hovertemplate=f"{c['name']}<br>{dim_cn['tech']} %{{x:.1f}}<br>"
-                          f"{dim_cn['location']} %{{y:.1f}}<br>综合 {c['score']:.1f}<extra></extra>",
+            hovertemplate=f"{c['name']}<br>{_dim_bi('tech', dim_cn)} %{{x:.1f}}<br>"
+                          f"{_dim_bi('location', dim_cn)} %{{y:.1f}}<br>Overall · 综合 {c['score']:.1f}<extra></extra>",
         ))
     fig.update_layout(
         height=470, margin=dict(l=10, r=10, t=10, b=10),
         paper_bgcolor=_BG, plot_bgcolor=_BG, font=_FONT,
-        xaxis=dict(title=dim_cn["tech"], gridcolor="#e2e8f0", range=[40, 100],
+        xaxis=dict(title=_dim_bi("tech", dim_cn), gridcolor="#e2e8f0", range=[40, 100],
                    tickfont=dict(size=12)),
-        yaxis=dict(title=dim_cn["location"], gridcolor="#e2e8f0", range=[40, 100],
+        yaxis=dict(title=_dim_bi("location", dim_cn), gridcolor="#e2e8f0", range=[40, 100],
                    tickfont=dict(size=12)),
         legend=dict(font=dict(size=12)),
     )
@@ -462,7 +479,7 @@ def _dim_weight_bars(m: dict) -> str:
         pct = w[k]
         rows += (
             f"<div class='cm-wrow'>"
-            f"<span class='cm-wlbl'>{dim_cn[k]}</span>"
+            f"<span class='cm-wlbl'>{_dim_bi(k, dim_cn)}</span>"
             f"<div class='cm-wbar'><div class='cm-wfill' style='width:{pct*2}%;background:{m['accent']}'></div></div>"
             f"<span class='cm-wval'>{pct}%</span>"
             f"</div>"
@@ -488,7 +505,7 @@ def _podium_html(m: dict) -> str:
             f"<div class='cm-pod-medal'>{medal}</div>"
             f"<div class='cm-pod-name'>{c['name']}</div>"
             f"<div class='cm-pod-type' style='color:{type_col}'>● {c['type']}{local}</div>"
-            f"<div class='cm-pod-score'>{c['score']}<span>分</span></div>"
+            f"<div class='cm-pod-score'>{c['score']}<span>pts·分</span></div>"
             f"<div class='cm-pod-bar'></div>"
             f"</div>"
         )
@@ -507,17 +524,17 @@ def _render_company_body(m: dict, c: dict, dim_keys, dim_cn) -> None:
                   f"border-color:{_bcol};'>📍 {_base_label(c)}</span>")
     _vf = c.get("_verify", 0)
     _vchip = (
-        "<span class='cm-vf cm-vf2'>🏢 企查查工商已核验</span>" if _vf == 2 else
-        "<span class='cm-vf cm-vf1'>🌐 互联网公开信息核验</span>" if _vf == 1 else
-        "<span class='cm-vf cm-vf0'>⚪ 工商待人工核验</span>"
+        "<span class='cm-vf cm-vf2'>🏢 QCC-verified · 企查查工商已核验</span>" if _vf == 2 else
+        "<span class='cm-vf cm-vf1'>🌐 Web-info verified · 互联网公开信息核验</span>" if _vf == 1 else
+        "<span class='cm-vf cm-vf0'>⚪ Manual check pending · 工商待人工核验</span>"
     )
     st.markdown(
         f"<div class='cm-row-head'>"
         f"<span class='cm-type-chip' style='background:{type_col}'>{c['type']}</span>"
-        f"{'<span class=\"cm-champ-pill\">⭐ 战略首选</span>' if is_champ else ''}"
+        f"{'<span class=\"cm-champ-pill\">⭐ Strategic pick · 战略首选</span>' if is_champ else ''}"
         f"{local_chip}{_vchip}"
         f"<span class='cm-row-loc'>📍 {c['location']}</span>"
-        f"<span class='cm-row-score' style='color:{sc_col}'>{sc} 分</span>"
+        f"<span class='cm-row-score' style='color:{sc_col}'>{sc} pts·分</span>"
         f"</div>",
         unsafe_allow_html=True,
     )
@@ -529,7 +546,7 @@ def _render_company_body(m: dict, c: dict, dim_keys, dim_cn) -> None:
         st.markdown(
             f"<div style='margin:2px 0 6px;padding:6px 10px;border-radius:8px;"
             f"background:rgba(2,6,23,.03);border-left:3px solid {_gscol};"
-            f"font-size:13px;color:#334155'>🏢 <b>工商交叉核验</b>：{_gs}</div>",
+            f"font-size:13px;color:#334155'>🏢 <b>Business cross-check · 工商交叉核验</b>：{_gs}</div>",
             unsafe_allow_html=True,
         )
     # 6 维迷你条
@@ -539,7 +556,7 @@ def _render_company_body(m: dict, c: dict, dim_keys, dim_cn) -> None:
         bcol = "#0E8C3A" if v >= 75 else ("#f59e0b" if v >= 55 else "#ef4444")
         bars += (
             f"<div class='cm-dim'>"
-            f"<div class='cm-dim-lbl'>{dim_cn[k]}<b style='color:{bcol}'> {v:.0f}</b></div>"
+            f"<div class='cm-dim-lbl'>{_dim_bi(k, dim_cn)}<b style='color:{bcol}'> {v:.0f}</b></div>"
             f"<div class='cm-dim-bar'><div style='width:{v:.0f}%;background:{bcol}'></div></div>"
             f"</div>"
         )
@@ -547,15 +564,15 @@ def _render_company_body(m: dict, c: dict, dim_keys, dim_cn) -> None:
     pcol, ccol = st.columns(2)
     with pcol:
         if c.get("pros"):
-            st.markdown("**✅ 优势**")
+            st.markdown("**✅ Strengths · 优势**")
             st.markdown("".join(f"<div class='cm-pro'>＋ {p}</div>" for p in c["pros"]),
                         unsafe_allow_html=True)
         else:
-            st.markdown(f"**✅ 适配定位**\n\n<div class='cm-pro'>＋ {c['note']}</div>",
+            st.markdown(f"**✅ Positioning · 适配定位**\n\n<div class='cm-pro'>＋ {c['note']}</div>",
                         unsafe_allow_html=True)
     with ccol:
         if c.get("cons"):
-            st.markdown("**⚠️ 短板**")
+            st.markdown("**⚠️ Weaknesses · 短板**")
             st.markdown("".join(f"<div class='cm-con'>－ {p}</div>" for p in c["cons"]),
                         unsafe_allow_html=True)
 
@@ -566,29 +583,29 @@ def _render_company_body(m: dict, c: dict, dim_keys, dim_cn) -> None:
         rows = ""
         if q:
             fields = [
-                ("企业全称", q.get("legal_name", "") or q.get("qcc_name", "")),
-                ("统一信用代码", q.get("credit_code", "")),
-                ("法定代表人", q.get("legal_person", "")),
-                ("注册资本", q.get("reg_capital", "")),
-                ("成立日期", q.get("established", "")),
-                ("经营状态", q.get("status", "")),
-                ("参保人数(养老保险)", q.get("insured", "")),
-                ("所属行业", q.get("industry", "")),
-                ("注册地址", q.get("address", "")),
+                ("Full name · 企业全称", q.get("legal_name", "") or q.get("qcc_name", "")),
+                ("Credit code · 统一信用代码", q.get("credit_code", "")),
+                ("Legal rep. · 法定代表人", q.get("legal_person", "")),
+                ("Reg. capital · 注册资本", q.get("reg_capital", "")),
+                ("Founded · 成立日期", q.get("established", "")),
+                ("Status · 经营状态", q.get("status", "")),
+                ("Insured (pension) · 参保人数(养老保险)", q.get("insured", "")),
+                ("Industry · 所属行业", q.get("industry", "")),
+                ("Address · 注册地址", q.get("address", "")),
             ]
             rows = "".join(
                 f"<div class='cm-qcc-row'><span>{k}</span><b>{v or '—'}</b></div>"
                 for k, v in fields
             )
-        src = ("🏢 企查查工商数据（已与专家名录对齐）" if q
-               else "🌐 互联网公开信息（企查查缓存未直接收录，供人工核验参考）")
+        src = ("🏢 QCC business data (aligned to the expert list) · 企查查工商数据（已与专家名录对齐）" if q
+               else "🌐 Public web info (not in QCC cache; for manual reference) · 互联网公开信息（企查查缓存未直接收录，供人工核验参考）")
         web_html = ""
         if web:
             tk = web.get("tag", "")
-            tic = f"｜股票代码 {web['ticker']}" if web.get("ticker") else ""
-            aka = f"｜亦称 {web['aka']}" if web.get("aka") else ""
+            tic = f"｜Ticker · 股票代码 {web['ticker']}" if web.get("ticker") else ""
+            aka = f"｜aka · 亦称 {web['aka']}" if web.get("aka") else ""
             web_html = (
-                f"<div class='cm-web'>🌐 <b>互联网公开信息</b> "
+                f"<div class='cm-web'>🌐 <b>Public web info · 互联网公开信息</b> "
                 f"<span class='cm-web-tag'>{tk}</span>{tic}{aka}<br>"
                 f"<span style='color:#334155'>{web.get('note','')}</span></div>"
             )
@@ -600,9 +617,9 @@ def _render_company_body(m: dict, c: dict, dim_keys, dim_cn) -> None:
 
 
 _PRICE_TAG = {
-    "verified": ("公开行情", "tag-verified"),
-    "estimate": ("测算参考", "tag-estimate"),
-    "rfq":      ("需询价", "tag-rfq"),
+    "verified": ("Public quote · 公开行情", "tag-verified"),
+    "estimate": ("Estimate · 测算参考", "tag-estimate"),
+    "rfq":      ("RFQ · 需询价", "tag-rfq"),
 }
 
 
@@ -632,10 +649,10 @@ def _render_pricing(m: dict) -> None:
     p = m.get("pricing")
     if not p:
         return
-    st.markdown("#### 💰 市场报价与厂商对标 · 给采购的参考价")
+    st.markdown("#### 💰 Market Pricing & Vendor Benchmark · 市场报价与厂商对标 · 给采购的参考价")
     st.markdown(
         f"<div class='cm-price-hero' style='--accent:{m['accent']}'>"
-        f"<div class='cm-price-h'>📈 行情速览 · 数据更新 {p.get('updated','')}</div>"
+        f"<div class='cm-price-h'>📈 Market snapshot · 行情速览 · updated · 数据更新 {p.get('updated','')}</div>"
         f"<div class='cm-price-sub'>{p.get('headline','')}</div></div>",
         unsafe_allow_html=True,
     )
@@ -643,7 +660,7 @@ def _render_pricing(m: dict) -> None:
     off = p.get("official", {})
     items = off.get("items", [])
     if items:
-        st.markdown(f"**{off.get('title','市场官方行情价')}**")
+        st.markdown(f"**{off.get('title','Official market price · 市场官方行情价')}**")
         cards = ""
         for it in items:
             body, unit = _price_text(it)
@@ -666,13 +683,13 @@ def _render_pricing(m: dict) -> None:
         if srcs:
             st.markdown(
                 f"<div class='cm-price-srcs'>"
-                f"<b style='font-size:12px;color:#334155'>数据来源：</b>{srcs}</div>",
+                f"<b style='font-size:12px;color:#334155'>Sources · 数据来源：</b>{srcs}</div>",
                 unsafe_allow_html=True,
             )
 
     vendors = p.get("vendors", [])
     if vendors:
-        st.markdown("**🏭 主要厂商报价对标**")
+        st.markdown("**🏭 Major Vendor Quote Benchmark · 主要厂商报价对标**")
         vcards = ""
         for v in vendors:
             body, unit = _price_text(v)
@@ -700,7 +717,7 @@ def _render_pricing(m: dict) -> None:
 def render_core_report(material_key: str) -> None:
     m = get_material(material_key)
     if not m:
-        st.error("未找到该核心物料数据。")
+        st.error("Core-material data not found. · 未找到该核心物料数据。")
         return
     dim_keys = load_core_materials()["dim_keys"]
     dim_cn = load_core_materials()["dim_cn"]
@@ -711,7 +728,7 @@ def render_core_report(material_key: str) -> None:
     avg = round(sum(c["score"] for c in comps) / len(comps), 1)
 
     # 返回
-    if st.button("← 返回核心物料 / 全部品类", key="cm_back"):
+    if st.button("← Back to core materials / all categories · 返回核心物料 / 全部品类", key="cm_back"):
         st.session_state.core_material = None
         st.rerun()
 
@@ -721,8 +738,9 @@ def render_core_report(material_key: str) -> None:
   <div class="cm-hero-l">
     <div class="cm-hero-ico">{m['icon']}</div>
     <div>
-      <div class="cm-hero-kicker">⭐ SABIC 最核心物料 · 专家级供应商评审报告</div>
-      <div class="cm-hero-title">{m['cn']}</div>
+      <div class="cm-hero-kicker">⭐ SABIC Most Critical Material · Expert Supplier Review · 最核心物料 · 专家级供应商评审报告</div>
+      <div class="cm-hero-title">{m.get('en', m['cn'])}</div>
+      <div class="cm-hero-title" style="font-size:20px;color:#c0cfe0;font-weight:700;margin-top:0">{m['cn']}</div>
       <div class="cm-hero-tagline">{m['tagline']}</div>
     </div>
   </div>
@@ -734,20 +752,21 @@ def render_core_report(material_key: str) -> None:
     qcc_n = sum(1 for c in comps if c.get("_verify") == 2)
     web_n = sum(1 for c in comps if c.get("_verify") == 1)
     k1, k2, k3, k4 = st.columns(4)
-    _imp_suffix = f" +{len(imports)} 进口" if imports else ""
-    k1.metric("候选供应商", f"{len(comps)} 家{_imp_suffix}")
-    k2.metric("紧邻基地(≤120km)", f"{local_n} 家")
-    k3.metric("战略首选分", f"{champ['score']}")
-    k4.metric("梯队平均分", f"{avg}")
+    _imp_suffix = f" +{len(imports)} import·进口" if imports else ""
+    k1.metric("Candidates · 候选供应商", f"{len(comps)}{_imp_suffix}")
+    k2.metric("Near base (≤120km) · 紧邻基地", f"{local_n}")
+    k3.metric("Top pick score · 战略首选分", f"{champ['score']}")
+    k4.metric("Tier avg · 梯队平均分", f"{avg}")
 
     # 数据来源/核验覆盖条 —— 专家评分 ＋ 企查查工商 ＋ 互联网公开信息三源
     st.markdown(
         f"<div class='cm-srcbar'>"
-        f"<span class='cm-src-lbl'>🔁 三源交叉核验</span>"
-        f"<span class='cm-src-chip exp'>👤 专家差异化评分 {len(comps)} 家</span>"
-        f"<span class='cm-src-chip qcc'>🏢 企查查工商核验 {qcc_n} 家</span>"
-        f"<span class='cm-src-chip web'>🌐 互联网公开信息 {web_n} 家</span>"
-        f"<span class='cm-src-note'>综合分由 6 维专家评分得出；工商/互联网信息用于交叉印证与修正企查查单一来源的低估。</span>"
+        f"<span class='cm-src-lbl'>🔁 Three-source cross-check · 三源交叉核验</span>"
+        f"<span class='cm-src-chip exp'>👤 Expert scoring · 专家差异化评分 {len(comps)}</span>"
+        f"<span class='cm-src-chip qcc'>🏢 QCC-verified · 企查查工商核验 {qcc_n}</span>"
+        f"<span class='cm-src-chip web'>🌐 Public web info · 互联网公开信息 {web_n}</span>"
+        f"<span class='cm-src-note'>Overall score comes from the 6-dimension expert model; business/web info cross-checks and corrects QCC single-source underestimation. · "
+        f"综合分由 6 维专家评分得出；工商/互联网信息用于交叉印证与修正企查查单一来源的低估。</span>"
         f"</div>",
         unsafe_allow_html=True,
     )
@@ -760,9 +779,9 @@ def render_core_report(material_key: str) -> None:
     <span class="cm-champ-medal">🥇</span>
     <div style="flex:1">
       <div class="cm-champ-name">{champ['name']}</div>
-      <div class="cm-champ-verdict">{champ.get('verdict','战略首选')} · {champ['location']}</div>
+      <div class="cm-champ-verdict">{champ.get('verdict','Strategic pick · 战略首选')} · {champ['location']}</div>
     </div>
-    <div class="cm-champ-score"><b>{champ['score']}</b><span>综合评分</span></div>
+    <div class="cm-champ-score"><b>{champ['score']}</b><span>Overall · 综合评分</span></div>
   </div>
   <ul class="cm-champ-pros">{pros_html}</ul>
 </div>
@@ -771,7 +790,7 @@ def render_core_report(material_key: str) -> None:
     # ── 为什么企查查评分选不出它 ─────────────────────────────────
     st.markdown(f"""
 <div class="cm-why">
-  <div class="cm-why-title">🧭 为什么纯企查查评分选不出它？</div>
+  <div class="cm-why-title">🧭 Why pure QCC scoring can't pick it · 为什么纯企查查评分选不出它？</div>
   <div class="cm-why-body">{m['why_qcc_misses']}</div>
 </div>
 """, unsafe_allow_html=True)
@@ -780,39 +799,45 @@ def render_core_report(material_key: str) -> None:
     _render_pricing(m)
 
     # ── 评分框架 ────────────────────────────────────────────────────
-    with st.expander("📐 评分框架：6 维差异化加权 + 专项加分规则", expanded=False):
+    with st.expander("📐 Scoring framework: 6-dim weighting + bonus rules · 评分框架：6 维差异化加权 + 专项加分规则", expanded=False):
         cfl, cfr = st.columns([1, 1])
         with cfl:
-            st.markdown("**一级维度权重（本物料专属）**")
+            st.markdown("**Primary dimension weights (material-specific) · 一级维度权重（本物料专属）**")
             st.markdown(f"<div class='cm-wbox'>{_dim_weight_bars(m)}</div>", unsafe_allow_html=True)
         with cfr:
-            st.markdown("**专项加分规则（识别真正好企业的关键）**")
+            st.markdown("**Bonus rules (key to spotting truly good firms) · 专项加分规则（识别真正好企业的关键）**")
             st.markdown(
                 "<div class='cm-bonus'>"
                 + "".join(f"<div class='cm-bonus-item'>✚ {r}</div>" for r in m["bonus_rules"])
                 + "</div>", unsafe_allow_html=True)
 
     # ── 可视化（交互式 · 地图优先）──────────────────────────────────
-    st.markdown("#### 🗺️ 供应商区位地图 · 四大基地就近交付，谁离哪个厂近、谁分更高，一图看清")
+    st.markdown("#### 🗺️ Supplier Location Map · 供应商区位地图 · 四大基地就近交付，谁离哪个厂近、谁分更高，一图看清")
     _map = _supplier_map(m)
     if _map is not None:
         st.plotly_chart(_map, width="stretch",
                         config={"displayModeBar": False, "scrollZoom": True},
                         key=f"cm_map_{m['key']}")
-        st.caption("◆ SABIC 四大基地：上海(绿) · 广州南沙(蓝) · 福建漳州古雷(橙) · 重庆(紫) —— "
+        st.caption("◆ SABIC four bases: Shanghai (green) · Guangzhou Nansha (blue) · Fujian Gulei (orange) · "
+                   "Chongqing (purple). Bubble border = nearest base · ⭐ gold star = strategic pick · "
+                   "bigger bubble = higher score · hover for 'nearest base + distance' · scroll to zoom/drag.  \n"
+                   "◆ SABIC 四大基地：上海(绿) · 广州南沙(蓝) · 福建漳州古雷(橙) · 重庆(紫) —— "
                    "气泡描边颜色＝该企业就近基地 · ⭐金色大星为战略首选 · 气泡越大综合分越高 · "
                    "鼠标悬停看『就近基地 + 距离』 · 可滚轮缩放拖拽。")
     else:
-        st.info("china.json 地图底图缺失，跳过区位地图。")
+        st.info("china.json base map missing — skipping location map. · china.json 地图底图缺失，跳过区位地图。")
 
     # ── 进口供应商区（按物料专属文案；标题/说明来自 import_meta，数量动态）────
     if imports:
         _n_imp = len(imports)
         _imeta = m.get("import_meta", {})
         _imp_title = _imeta.get(
-            "title", f"🌐 {m['cn']} · 进口 / 国际供应商区")
+            "title", f"🌐 {m.get('en', m['cn'])} · Import / International Suppliers · 进口 / 国际供应商区")
         _imp_caption = _imeta.get(
             "caption",
+            f"The {_n_imp} international suppliers below serve as import benchmarks and backups, "
+            "covering the four bases via 'import + nearest port': Shanghai→Shanghai/Yangshan, "
+            "Nansha→Nansha, Gulei→Gulei/Xiamen, Chongqing→Guoyuan transshipment. · "
             f"下列 {_n_imp} 家国际供应商作为进口对标基准与备选，"
             "按『进口 + 就近港口』模式覆盖四大基地：上海→上海港/洋山、"
             "南沙→南沙港、古雷→古雷/厦门港、重庆→果园港转水。")
@@ -826,39 +851,53 @@ def render_core_report(material_key: str) -> None:
                     f"<div class='cm-imp'>"
                     f"<div class='cm-imp-h'>{c['name']}</div>"
                     f"<div class='cm-imp-type' style='color:{tcol}'>● {c['type']}</div>"
-                    f"<div class='cm-imp-score'>{c['score']}<span>分</span>"
-                    f"<span class='cm-imp-origin'>产地 {c.get('import_origin','—')}</span></div>"
+                    f"<div class='cm-imp-score'>{c['score']}<span>pts·分</span>"
+                    f"<span class='cm-imp-origin'>Origin · 产地 {c.get('import_origin','—')}</span></div>"
                     f"<div class='cm-imp-note'>{c['note']}</div>"
                     f"</div>",
                     unsafe_allow_html=True,
                 )
-        with st.expander(f"展开进口 {_n_imp} 家详细优劣势对比", expanded=False):
+        with st.expander(f"Expand {_n_imp} imports — detailed pros/cons · 展开进口详细优劣势对比", expanded=False):
             for c in imports:
-                with st.expander(f"🌐 {c['name']} — {c['score']} 分（{c.get('import_origin','')}）",
+                with st.expander(f"🌐 {c['name']} — {c['score']} pts·分（{c.get('import_origin','')}）",
                                  expanded=False):
                     _render_company_body(m, c, dim_keys, dim_cn)
 
-    with st.expander("📡 多维雷达 / 🎯 技术 × 区位象限（点击展开两张交互图）", expanded=False):
-        vt1, vt2 = st.tabs(["📡 头部雷达对比", "🎯 技术 × 区位象限"])
+    with st.expander("📡 Radar / 🎯 Tech × Location quadrant (two interactive charts) · 多维雷达 / 技术 × 区位象限", expanded=False):
+        vt1, vt2 = st.tabs(["📡 Top radar · 头部雷达对比", "🎯 Tech × Location · 技术 × 区位象限"])
         with vt1:
             st.plotly_chart(_radar_top(m), width="stretch",
                             config={"displayModeBar": False}, key=f"cm_radar_{m['key']}")
-            st.caption("加粗主色为战略首选 —— 其『技术匹配 / 区位交付 / 合规』围出的多边形最饱满。")
+            st.caption("Bold accent line = strategic pick — its tech/location/compliance polygon is the fullest.  \n"
+                       "加粗主色为战略首选 —— 其『技术匹配 / 区位交付 / 合规』围出的多边形最饱满。")
         with vt2:
             st.plotly_chart(_scatter_tech_loc(m), width="stretch",
                             config={"displayModeBar": False}, key=f"cm_scatter_{m['key']}")
-            st.caption("右上象限 = 技术匹配高 + 就近基地区位优（四基地中最近一个），是出口沙特的理想供应商区。气泡大小=综合分。")
+            st.caption("Top-right quadrant = high tech fit + best proximity (nearest of the four bases) — the ideal "
+                       "Saudi-export supplier zone. Bubble size = overall score.  \n"
+                       "右上象限 = 技术匹配高 + 就近基地区位优（四基地中最近一个），是出口沙特的理想供应商区。气泡大小=综合分。")
 
     # ── 前三名领奖台 ────────────────────────────────────────────────
-    st.markdown("#### 🏆 前三名战略梯队")
+    st.markdown("#### 🏆 Top-3 Strategic Tier · 前三名战略梯队")
     st.markdown(_podium_html(m), unsafe_allow_html=True)
 
+    # ── 厂家逐一对比（图示之外的文字版结论）────────────────────────
+    render_comparison(
+        comps, dim_keys, {k: _dim_bi(k, dim_cn) for k in dim_keys},
+        m["weights"], accent=m["accent"], key=m["key"],
+        intro=("Below, each supplier's scoring rationale in words: where the strategic pick is strong and by how "
+               "much it leads; each other firm's key weak dimension and weighted drag, and the scenarios where it "
+               "is actually the better choice. · "
+               "下面用文字逐家说清评分依据：战略首选强在哪几维、领先多少；其余各家"
+               "的核心短板是哪一维、加权拖累多少分，以及它们在什么场景下反而更值得选。"),
+    )
+
     # ── 交互聚焦：选一家看穿到底（替代一长串列表）────────────────────
-    st.markdown("#### 🔍 聚焦单家 · 选择企业看 6 维强弱 + 企查查工商信息")
-    _opts = [f"{c['rank']}. {c['name']}（{c['score']}分）"
-             + ("　⭐首选" if c["name"] == m["champion"] else "")
+    st.markdown("#### 🔍 Focus on One · 6-dim strengths + QCC info · 聚焦单家 · 选择企业看 6 维强弱 + 企查查工商信息")
+    _opts = [f"{c['rank']}. {c['name']}（{c['score']}）"
+             + ("　⭐ pick·首选" if c["name"] == m["champion"] else "")
              for c in comps]
-    _sel = st.selectbox("选择要深入查看的企业", _opts, index=0,
+    _sel = st.selectbox("Select a company to inspect · 选择要深入查看的企业", _opts, index=0,
                         key=f"cm_focus_{m['key']}", label_visibility="collapsed")
     _idx = _opts.index(_sel)
     st.markdown(f"<div class='cm-focus' style='--accent:{m['accent']}'>", unsafe_allow_html=True)
@@ -866,24 +905,24 @@ def render_core_report(material_key: str) -> None:
     st.markdown("</div>", unsafe_allow_html=True)
 
     # ── 完整榜单（默认折叠，给想逐家核对的人）────────────────────────
-    with st.expander(f"📋 展开完整 {len(comps)} 家榜单 · 逐家优劣对比", expanded=False):
+    with st.expander(f"📋 Expand full ranking of {len(comps)} · 展开完整榜单 · 逐家优劣对比", expanded=False):
         for c in comps:
             rank = c["rank"]
             medal = ["🥇", "🥈", "🥉"][rank - 1] if rank <= 3 else f"{rank}"
             is_champ = c["name"] == m["champion"]
-            title = (f"{medal}　{c['name']}　— {c['score']} 分"
-                     f"{'　⭐战略首选' if is_champ else ''}")
+            title = (f"{medal}　{c['name']}　— {c['score']} pts·分"
+                     f"{'　⭐ 战略首选' if is_champ else ''}")
             with st.expander(title, expanded=False):
                 _render_company_body(m, c, dim_keys, dim_cn)
 
     # ── 评审结论 ────────────────────────────────────────────────────
-    st.markdown("#### 🧾 评审结论与采购建议")
+    st.markdown("#### 🧾 Review Conclusion & Procurement Advice · 评审结论与采购建议")
     cc = m["conclusion"]
     st.markdown(f"""
 <div class="cm-concl">
-  <div class="cm-concl-card strat"><div class="cm-concl-h">🥇 战略主供</div><div>{cc['strategic']}</div></div>
-  <div class="cm-concl-card back"><div class="cm-concl-h">🔁 备选梯队</div><div>{cc['backup']}</div></div>
-  <div class="cm-concl-card risk"><div class="cm-concl-h">⛔ 风险提示</div><div>{cc['risk']}</div></div>
+  <div class="cm-concl-card strat"><div class="cm-concl-h">🥇 Strategic supply · 战略主供</div><div>{cc['strategic']}</div></div>
+  <div class="cm-concl-card back"><div class="cm-concl-h">🔁 Backup tier · 备选梯队</div><div>{cc['backup']}</div></div>
+  <div class="cm-concl-card risk"><div class="cm-concl-h">⛔ Risk note · 风险提示</div><div>{cc['risk']}</div></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -952,7 +991,7 @@ CORE_CSS = """
 /* 权重条 */
 .cm-wbox{background:#f8fafc;border:1px solid #e6ebf2;border-radius:10px;padding:10px 12px;}
 .cm-wrow{display:flex;align-items:center;gap:8px;margin:5px 0;}
-.cm-wlbl{width:160px;font-size:12.5px;color:#2b3a4f;}
+.cm-wlbl{width:230px;font-size:12px;color:#2b3a4f;line-height:1.35;}
 .cm-wbar{flex:1;height:9px;background:#e8edf3;border-radius:5px;overflow:hidden;}
 .cm-wfill{height:100%;border-radius:5px;}
 .cm-wval{width:38px;text-align:right;font-size:12px;font-weight:700;color:#0a1628;}
