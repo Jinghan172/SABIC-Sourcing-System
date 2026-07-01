@@ -49,6 +49,30 @@ _CITY_PROV = {
 
 _MUNICIPALITIES = {"上海", "北京", "天津", "重庆"}
 
+# 省级行政区简称（长名优先，供地址前缀剥离与省份识别复用）
+_PROVINCES = ["内蒙古", "黑龙江", "上海", "江苏", "浙江", "安徽", "山东", "广东",
+              "福建", "湖北", "河南", "河北", "四川", "辽宁", "吉林", "湖南",
+              "江西", "重庆", "北京", "天津", "陕西", "甘肃", "云南", "贵州",
+              "广西", "新疆", "山西", "海南", "宁夏", "青海", "西藏"]
+# 省级全称后缀，用于从地址开头剥离省前缀（"安徽省"/"内蒙古自治区"/"上海市"）
+_PROV_TAIL = "省|市|自治区|特别行政区|维吾尔自治区|回族自治区|壮族自治区"
+
+
+def _strip_province_prefix(text: str, province: str = "") -> str:
+    """去掉地址里的省级名称，避免正则从省名中间误切城市
+    （如'安徽省宣城市'旧逻辑会切成'徽省宣城'；省名亦可能出现在括号内）。"""
+    if not text:
+        return text
+    # 全局去掉"<省名>省/自治区/市"，省名未必在开头（如"…园区（河南省平顶山市…"）
+    if province:
+        text = re.sub(rf"{re.escape(province)}(?:{_PROV_TAIL})", "", text)
+    # 再剥离开头残留的其它省级前缀
+    for p in _PROVINCES:
+        m = re.match(rf"\s*{re.escape(p)}(?:{_PROV_TAIL})?", text)
+        if m:
+            return text[m.end():]
+    return text
+
 
 def _classify_role(scope: str) -> str:
     if not scope: return "unknown"
@@ -67,12 +91,8 @@ def _classify_role(scope: str) -> str:
 
 
 def _province_from_address(address: str, name: str = "") -> str:
-    provinces = ["上海","江苏","浙江","安徽","山东","广东","福建","湖北","河南",
-                 "河北","四川","辽宁","吉林","黑龙江","湖南","江西","重庆",
-                 "北京","天津","陕西","甘肃","云南","贵州","广西","新疆","内蒙古",
-                 "山西","海南","宁夏","青海","西藏"]
     text = (address or "") + (name or "")
-    for p in provinces:
+    for p in _PROVINCES:
         if p in text:
             return p
     for city, prov in _CITY_PROV.items():
@@ -85,22 +105,16 @@ def _city_from_address(address: str, province: str = "") -> str:
     """从地址推导城市（仅展示用，不写回 JSON）。直辖市直接返回市名。"""
     if province in _MUNICIPALITIES:
         return province
-    text = address or ""
+    # 先剥离开头的省级前缀，再匹配城市，避免把"…省X"误当城市
+    text = _strip_province_prefix(address or "", province)
     # 已知城市名直接命中（含县级市如张家港、寿光）
     for city in _CITY_PROV:
         if city in text:
             return city
-    # 通用 "XX市" 模式（去掉省份前缀后取第一个市）
-    m = re.search(r"(?:省|区)?([一-龥]{2,4})市", text)
+    # 通用 "XX市" 模式：此时已无省前缀，取第一个市名
+    m = re.search(r"([一-龥]{2,4})市", text)
     if m:
-        c = m.group(1)
-        # 去掉可能粘连的省名（如"山东省淄博" → 淄博）
-        for p in ("黑龙江","内蒙古","山东","江苏","浙江","安徽","广东","河南",
-                  "湖北","湖南","河北","福建","江西","四川","陕西","山西",
-                  "辽宁","吉林","云南","贵州","广西","甘肃","新疆","海南"):
-            if c.startswith(p):
-                c = c[len(p):]
-        return c
+        return m.group(1)
     return ""
 
 

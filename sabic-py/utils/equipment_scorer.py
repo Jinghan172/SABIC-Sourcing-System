@@ -45,8 +45,12 @@ _QUAL_PTS = {
     "A1": 96.0, "A2": 84.0,
     "API Q1": 94.0, "ISO 9001": 82.0, "CE": 86.0,
     "特种设备制造许可证（A级）": 95.0,
+    "OEM 原厂认证": 96.0,
 }
-_TIER_SCALE = {"national_top": 94.0, "regional": 80.0, "local": 66.0}
+# tier 含挤出备件五层架构：原厂/国际一线 oem_intl · 德资高端替代 premium_alt
+# · 国产高端龙头 national_top · 国产通用 regional · 属地应急 local
+_TIER_SCALE = {"oem_intl": 98.0, "premium_alt": 95.0,
+               "national_top": 94.0, "regional": 80.0, "local": 66.0}
 
 
 def _clamp(x: float) -> float:

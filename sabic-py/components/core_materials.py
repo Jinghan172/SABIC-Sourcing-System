@@ -21,6 +21,9 @@ import pandas as pd
 
 from utils.scorer import reputation_for
 from components.comparison import render_comparison
+from components.pricing import (
+    reliability_badge, render_tender_evidence, render_triangulation, price_tag_html,
+)
 
 _BASE = Path(__file__).resolve().parent.parent / "data"
 _DATA_PATH = _BASE / "core_materials.json"
@@ -650,6 +653,12 @@ def _render_pricing(m: dict) -> None:
     if not p:
         return
     st.markdown("#### 💰 Market Pricing & Vendor Benchmark · 市场报价与厂商对标 · 给采购的参考价")
+
+    # ① 可信度自评：先把"这个价能不能直接用"说清楚 ──────────────────────
+    rel = p.get("reliability") or {}
+    if rel.get("level"):
+        st.markdown(reliability_badge(rel["level"], rel.get("note", "")), unsafe_allow_html=True)
+
     st.markdown(
         f"<div class='cm-price-hero' style='--accent:{m['accent']}'>"
         f"<div class='cm-price-h'>📈 Market snapshot · 行情速览 · updated · 数据更新 {p.get('updated','')}</div>"
@@ -664,12 +673,11 @@ def _render_pricing(m: dict) -> None:
         cards = ""
         for it in items:
             body, unit = _price_text(it)
-            tcn, tcls = _PRICE_TAG.get(it.get("tag", "estimate"), _PRICE_TAG["estimate"])
             cards += (
                 f"<div class='cm-price-card' style='--accent:{m['accent']}'>"
                 f"<div class='cm-price-name'>{it['name']}</div>"
                 f"<div class='cm-price-val'>{body}<span class='u'>{unit}</span></div>"
-                f"<span class='cm-price-tag {tcls}'>{tcn}</span></div>"
+                f"{price_tag_html(it.get('tag', 'estimate'))}</div>"
             )
         st.markdown(f"<div class='cm-price-grid'>{cards}</div>", unsafe_allow_html=True)
         srcs = ""
@@ -687,13 +695,17 @@ def _render_pricing(m: dict) -> None:
                 unsafe_allow_html=True,
             )
 
+    # ② 真实招标/行情溯源 + ③ 多方交叉测算（共享透明价格工具箱）──────────
+    render_tender_evidence(p.get("tenders", []), accent=m["accent"])
+    render_triangulation(p.get("methods", []), anchor=p.get("anchor"),
+                         level=(rel.get("level") or "medium"), accent=m["accent"])
+
     vendors = p.get("vendors", [])
     if vendors:
         st.markdown("**🏭 Major Vendor Quote Benchmark · 主要厂商报价对标**")
         vcards = ""
         for v in vendors:
             body, unit = _price_text(v)
-            tcn, tcls = _PRICE_TAG.get(v.get("conf", "estimate"), _PRICE_TAG["estimate"])
             vcards += (
                 f"<div class='cm-vendor' style='--accent:{m['accent']}'>"
                 f"<div class='cm-vendor-top'>"
@@ -702,7 +714,7 @@ def _render_pricing(m: dict) -> None:
                 f"<div class='cm-vendor-price'>{body}<span class='u'> {unit}</span></div>"
                 f"</div>"
                 f"<div class='cm-vendor-basis'>{v.get('basis','')} "
-                f"<span class='cm-price-tag {tcls}'>{tcn}</span></div>"
+                f"{price_tag_html(v.get('conf', 'estimate'))}</div>"
                 f"</div>"
             )
         st.markdown(f"<div class='cm-vendor-grid'>{vcards}</div>", unsafe_allow_html=True)

@@ -38,19 +38,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 12775,
-          "note": "16 public award rates · 16 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 16 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 16 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 13978,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 13350,
-          "note": "6 historical contract settlements · 6 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 6 modeled scenario samples · 同类历史合同结算口径 · 6 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -118,19 +118,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 12715,
-          "note": "16 public award rates · 16 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 16 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 16 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 13416,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 12522,
-          "note": "11 historical contract settlements · 11 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 11 modeled scenario samples · 同类历史合同结算口径 · 11 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -198,19 +198,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 11787,
-          "note": "11 public award rates · 11 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 11 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 11 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 11877,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 12090,
-          "note": "9 historical contract settlements · 9 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 9 modeled scenario samples · 同类历史合同结算口径 · 9 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -278,19 +278,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 11561,
-          "note": "9 public award rates · 9 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 9 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 9 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 11492,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 11188,
-          "note": "10 historical contract settlements · 10 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 10 modeled scenario samples · 同类历史合同结算口径 · 10 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -319,6 +319,24 @@
       "dispersion": 1.4,
       "total_samples": 29,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网",
+          "title": "劳务派遣 / 外包服务 中标公告（汇总）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "人月费率",
+          "unit_price": "含管理费·按城市/岗位",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "Labor outsourcing is routinely gov-procured; per-person-month rate varies by city & role · 劳务外包政采常态化，人月单价随城市与岗位浮动"
+        }
+      ]
     }
   },
   "event": {
@@ -360,19 +378,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 90880,
-          "note": "16 public award rates · 16 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 16 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 16 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 95519,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 95176,
-          "note": "8 historical contract settlements · 8 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 8 modeled scenario samples · 同类历史合同结算口径 · 8 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -440,19 +458,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 86094,
-          "note": "10 public award rates · 10 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 10 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 10 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 91497,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 87465,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -520,19 +538,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 82297,
-          "note": "15 public award rates · 15 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 15 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 15 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 86589,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 84460,
-          "note": "7 historical contract settlements · 7 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 7 modeled scenario samples · 同类历史合同结算口径 · 7 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -600,19 +618,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 78941,
-          "note": "14 public award rates · 14 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 14 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 14 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 85406,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 82672,
-          "note": "9 historical contract settlements · 9 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 9 modeled scenario samples · 同类历史合同结算口径 · 9 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -641,6 +659,24 @@
       "dispersion": 3.2,
       "total_samples": 32,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "中型企业会务单场总包（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "advertising": {
@@ -682,19 +718,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 180.9,
-          "note": "10 public award rates · 10 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 10 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 10 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 188.3,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 172.6,
-          "note": "8 historical contract settlements · 8 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 8 modeled scenario samples · 同类历史合同结算口径 · 8 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -762,19 +798,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 167.0,
-          "note": "11 public award rates · 11 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 11 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 11 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 178.8,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 164.0,
-          "note": "6 historical contract settlements · 6 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 6 modeled scenario samples · 同类历史合同结算口径 · 6 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -842,19 +878,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 160.9,
-          "note": "13 public award rates · 13 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 13 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 13 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 162.1,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 159.9,
-          "note": "8 historical contract settlements · 8 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 8 modeled scenario samples · 同类历史合同结算口径 · 8 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -922,19 +958,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 148.3,
-          "note": "9 public award rates · 9 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 9 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 9 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 159.2,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 149.9,
-          "note": "5 historical contract settlements · 5 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 5 modeled scenario samples · 同类历史合同结算口径 · 5 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -963,6 +999,24 @@
       "dispersion": 3.2,
       "total_samples": 19,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "low",
+        "note": "This category uses composite-index / framework rates; publicly verifiable awards are scarce → low reliability, for order-of-magnitude reference only, defer to written quotes · 该类为综合指数/框架费率，公开可核验中标稀缺 → 低可靠，仅作量级参考、以书面报价为准"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "年度广告与品牌服务框架（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "office_leasing": {
@@ -1004,19 +1058,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1372,
-          "note": "9 public award rates · 9 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 9 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 9 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 1427,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 1343,
-          "note": "8 historical contract settlements · 8 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 8 modeled scenario samples · 同类历史合同结算口径 · 8 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1084,19 +1138,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1350,
-          "note": "16 public award rates · 16 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 16 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 16 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 1397,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 1286,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1164,19 +1218,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1184,
-          "note": "14 public award rates · 14 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 14 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 14 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 1320,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 1223,
-          "note": "7 historical contract settlements · 7 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 7 modeled scenario samples · 同类历史合同结算口径 · 7 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1244,19 +1298,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1162,
-          "note": "12 public award rates · 12 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 12 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 12 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 1254,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 1165,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1285,6 +1339,24 @@
       "dispersion": 3.6,
       "total_samples": 31,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "园区办公工位月租（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "office_maint": {
@@ -1326,19 +1398,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 29.68,
-          "note": "6 public award rates · 6 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 6 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 6 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 31.19,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 30.02,
-          "note": "7 historical contract settlements · 7 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 7 modeled scenario samples · 同类历史合同结算口径 · 7 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1406,19 +1478,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 29.45,
-          "note": "15 public award rates · 15 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 15 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 15 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 30.73,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 29.01,
-          "note": "10 historical contract settlements · 10 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 10 modeled scenario samples · 同类历史合同结算口径 · 10 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1486,19 +1558,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 26.36,
-          "note": "7 public award rates · 7 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 7 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 7 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 27.6,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 28.31,
-          "note": "10 historical contract settlements · 10 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 10 modeled scenario samples · 同类历史合同结算口径 · 10 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1566,19 +1638,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 27.37,
-          "note": "15 public award rates · 15 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 15 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 15 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 28.34,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 26.29,
-          "note": "7 historical contract settlements · 7 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 7 modeled scenario samples · 同类历史合同结算口径 · 7 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1607,6 +1679,34 @@
       "dispersion": 3.1,
       "total_samples": 31,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网",
+          "title": "物业管理服务 公开招标（地方公告）",
+          "buyer": "各级政府采购单位",
+          "date": "2025-06",
+          "qty": "物业+设施维保",
+          "unit_price": "未公开（详见招标文件）",
+          "url": "https://www.ccgp.gov.cn/cggg/dfgg/gkzb/202506/t20250630_24871510.htm",
+          "note": "Property-management service public tender, genuinely verifiable · 物业服务公开招标，真实可查"
+        },
+        {
+          "platform": "海口市公共资源交易",
+          "title": "2025–2026 年物业管理服务项目 结果公告",
+          "buyer": "海口市疾控中心 等",
+          "date": "2025",
+          "qty": "年度物业",
+          "unit_price": "未公开（单价见合同）",
+          "url": "https://ggzy.haikou.gov.cn/gonggao/86812",
+          "note": "Includes the award-result announcement · 含中标结果公告"
+        }
+      ]
     }
   },
   "it_hardware": {
@@ -1648,19 +1748,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 7287,
-          "note": "11 public award rates · 11 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 11 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 11 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 7630,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 7690,
-          "note": "11 historical contract settlements · 11 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 11 modeled scenario samples · 同类历史合同结算口径 · 11 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1728,19 +1828,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 7130,
-          "note": "13 public award rates · 13 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 13 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 13 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 7680,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 7343,
-          "note": "5 historical contract settlements · 5 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 5 modeled scenario samples · 同类历史合同结算口径 · 5 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1808,19 +1908,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 6817,
-          "note": "6 public award rates · 6 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 6 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 6 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 6853,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 6896,
-          "note": "7 historical contract settlements · 7 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 7 modeled scenario samples · 同类历史合同结算口径 · 7 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1888,19 +1988,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 6535,
-          "note": "8 public award rates · 8 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 8 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 8 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 6806,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 6622,
-          "note": "7 historical contract settlements · 7 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 7 modeled scenario samples · 同类历史合同结算口径 · 7 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -1929,6 +2029,24 @@
       "dispersion": 1.7,
       "total_samples": 25,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "标准办公终端采购单价（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "consulting": {
@@ -1970,19 +2088,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 5631,
-          "note": "13 public award rates · 13 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 13 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 13 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 5731,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 5936,
-          "note": "6 historical contract settlements · 6 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 6 modeled scenario samples · 同类历史合同结算口径 · 6 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2050,19 +2168,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 5286,
-          "note": "6 public award rates · 6 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 6 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 6 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 5477,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 5463,
-          "note": "10 historical contract settlements · 10 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 10 modeled scenario samples · 同类历史合同结算口径 · 10 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2130,19 +2248,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 4893,
-          "note": "12 public award rates · 12 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 12 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 12 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 5479,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 4968,
-          "note": "11 historical contract settlements · 11 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 11 modeled scenario samples · 同类历史合同结算口径 · 11 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2210,19 +2328,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 4918,
-          "note": "10 public award rates · 10 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 10 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 10 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 5057,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 5026,
-          "note": "11 historical contract settlements · 11 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 11 modeled scenario samples · 同类历史合同结算口径 · 11 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2251,6 +2369,24 @@
       "dispersion": 1.2,
       "total_samples": 30,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "管理/技术咨询人天费率（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "shuttle": {
@@ -2292,19 +2428,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1984,
-          "note": "10 public award rates · 10 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 10 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 10 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 2111,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 2087,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2372,19 +2508,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1910,
-          "note": "15 public award rates · 15 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 15 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 15 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 1991,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 1918,
-          "note": "5 historical contract settlements · 5 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 5 modeled scenario samples · 同类历史合同结算口径 · 5 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2452,19 +2588,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1832,
-          "note": "9 public award rates · 9 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 9 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 9 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 1908,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 1857,
-          "note": "6 historical contract settlements · 6 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 6 modeled scenario samples · 同类历史合同结算口径 · 6 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2532,19 +2668,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1743,
-          "note": "7 public award rates · 7 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 7 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 7 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 1841,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 1807,
-          "note": "11 historical contract settlements · 11 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 11 modeled scenario samples · 同类历史合同结算口径 · 11 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2573,6 +2709,24 @@
       "dispersion": 2.3,
       "total_samples": 26,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "通勤班车整车日租（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "security": {
@@ -2614,19 +2768,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 9189,
-          "note": "9 public award rates · 9 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 9 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 9 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 9472,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 8897,
-          "note": "9 historical contract settlements · 9 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 9 modeled scenario samples · 同类历史合同结算口径 · 9 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2694,19 +2848,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 8691,
-          "note": "8 public award rates · 8 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 8 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 8 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 8931,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 8897,
-          "note": "11 historical contract settlements · 11 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 11 modeled scenario samples · 同类历史合同结算口径 · 11 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2774,19 +2928,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 8245,
-          "note": "6 public award rates · 6 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 6 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 6 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 8305,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 8070,
-          "note": "8 historical contract settlements · 8 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 8 modeled scenario samples · 同类历史合同结算口径 · 8 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2854,19 +3008,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 7937,
-          "note": "8 public award rates · 8 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 8 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 8 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 7807,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 7602,
-          "note": "5 historical contract settlements · 5 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 5 modeled scenario samples · 同类历史合同结算口径 · 5 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -2895,6 +3049,34 @@
       "dispersion": 1.8,
       "total_samples": 21,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "陕西公共资源交易",
+          "title": "产业孵化项目 保安服务公开招标",
+          "buyer": "西咸新区",
+          "date": "2025-03",
+          "qty": "驻场保安",
+          "unit_price": "最高 4,500 元/人月",
+          "url": "https://ggzyjy.xixianxinqu.gov.cn/jydt/001001/001001017/001001017001/20250317/0de2ca78-f9e9-44a1-bca0-b01dae7b6371.html",
+          "note": "Public tender sets a real unit-price ceiling, verifiable item by item · 公开招标设定真实单价上限，可逐条核验"
+        },
+        {
+          "platform": "中共中央直属机关采购中心",
+          "title": "人民日报社 2025 年保安服务采购",
+          "buyer": "人民日报社",
+          "date": "2025",
+          "qty": "保安外包",
+          "unit_price": "未公开（评审 95.5 分中标）",
+          "url": "https://www.zzcg.gov.cn/jggg/17467.jhtml",
+          "note": "Central-government agency security-service award announcement · 央级机关保安服务中标公告"
+        }
+      ]
     }
   },
   "it_software": {
@@ -2936,19 +3118,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 4973,
-          "note": "13 public award rates · 13 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 13 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 13 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 5445,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 4915,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3016,19 +3198,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 4650,
-          "note": "16 public award rates · 16 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 16 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 16 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 4838,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 4876,
-          "note": "6 historical contract settlements · 6 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 6 modeled scenario samples · 同类历史合同结算口径 · 6 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3096,19 +3278,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 4573,
-          "note": "7 public award rates · 7 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 7 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 7 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 4517,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 4498,
-          "note": "11 historical contract settlements · 11 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 11 modeled scenario samples · 同类历史合同结算口径 · 11 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3176,19 +3358,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 4455,
-          "note": "10 public award rates · 10 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 10 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 10 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 4644,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 4260,
-          "note": "10 historical contract settlements · 10 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 10 modeled scenario samples · 同类历史合同结算口径 · 10 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3217,6 +3399,24 @@
       "dispersion": 3.5,
       "total_samples": 28,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "软件实施/运维人天费率（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "catering": {
@@ -3258,19 +3458,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 25.41,
-          "note": "11 public award rates · 11 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 11 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 11 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 25.66,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 25.36,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3338,19 +3538,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 24.67,
-          "note": "10 public award rates · 10 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 10 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 10 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 25.44,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 23.73,
-          "note": "10 historical contract settlements · 10 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 10 modeled scenario samples · 同类历史合同结算口径 · 10 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3418,19 +3618,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 22.52,
-          "note": "10 public award rates · 10 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 10 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 10 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 23.84,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 22.88,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3498,19 +3698,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 21.99,
-          "note": "10 public award rates · 10 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 10 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 10 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 22.59,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 21.61,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3539,6 +3739,24 @@
       "dispersion": 1.8,
       "total_samples": 28,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "食堂工作餐单餐标准（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "insurance": {
@@ -3580,19 +3798,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 2249,
-          "note": "8 public award rates · 8 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 8 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 8 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 2490,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 2375,
-          "note": "6 historical contract settlements · 6 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 6 modeled scenario samples · 同类历史合同结算口径 · 6 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3660,19 +3878,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 2267,
-          "note": "6 public award rates · 6 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 6 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 6 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 2318,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 2227,
-          "note": "5 historical contract settlements · 5 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 5 modeled scenario samples · 同类历史合同结算口径 · 5 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3740,19 +3958,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1992,
-          "note": "13 public award rates · 13 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 13 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 13 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 2162,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 2009,
-          "note": "9 historical contract settlements · 9 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 9 modeled scenario samples · 同类历史合同结算口径 · 9 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3820,19 +4038,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 1968,
-          "note": "14 public award rates · 14 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 14 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 14 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 2153,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 2067,
-          "note": "6 historical contract settlements · 6 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 6 modeled scenario samples · 同类历史合同结算口径 · 6 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3861,6 +4079,24 @@
       "dispersion": 3.7,
       "total_samples": 28,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "low",
+        "note": "This category uses composite-index / framework rates; publicly verifiable awards are scarce → low reliability, for order-of-magnitude reference only, defer to written quotes · 该类为综合指数/框架费率，公开可核验中标稀缺 → 低可靠，仅作量级参考、以书面报价为准"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "团体意外+补充医疗人年保费（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "mro_service": {
@@ -3902,19 +4138,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 13.35,
-          "note": "7 public award rates · 7 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 7 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 7 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 14.07,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 13.41,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -3982,19 +4218,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 12.99,
-          "note": "9 public award rates · 9 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 9 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 9 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 13.99,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 13.28,
-          "note": "9 historical contract settlements · 9 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 9 modeled scenario samples · 同类历史合同结算口径 · 9 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4062,19 +4298,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 12.57,
-          "note": "12 public award rates · 12 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 12 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 12 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 12.84,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 11.9,
-          "note": "9 historical contract settlements · 9 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 9 modeled scenario samples · 同类历史合同结算口径 · 9 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4142,19 +4378,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 12.08,
-          "note": "16 public award rates · 16 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 16 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 16 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 12.32,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 12.35,
-          "note": "7 historical contract settlements · 7 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 7 modeled scenario samples · 同类历史合同结算口径 · 7 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4183,6 +4419,24 @@
       "dispersion": 1.0,
       "total_samples": 28,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "low",
+        "note": "This category uses composite-index / framework rates; publicly verifiable awards are scarce → low reliability, for order-of-magnitude reference only, defer to written quotes · 该类为综合指数/框架费率，公开可核验中标稀缺 → 低可靠，仅作量级参考、以书面报价为准"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "MRO 集成服务综合服务费率（占采购额）（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "mro": {
@@ -4224,19 +4478,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 119.6,
-          "note": "11 public award rates · 11 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 11 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 11 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 123.5,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 119.0,
-          "note": "5 historical contract settlements · 5 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 5 modeled scenario samples · 同类历史合同结算口径 · 5 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4304,19 +4558,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 114.1,
-          "note": "6 public award rates · 6 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 6 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 6 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 118.1,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 116.0,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4384,19 +4638,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 101.8,
-          "note": "7 public award rates · 7 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 7 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 7 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 107.2,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 104.3,
-          "note": "6 historical contract settlements · 6 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 6 modeled scenario samples · 同类历史合同结算口径 · 6 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4464,19 +4718,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 102.2,
-          "note": "10 public award rates · 10 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 10 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 10 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 104.6,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 105.7,
-          "note": "7 historical contract settlements · 7 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 7 modeled scenario samples · 同类历史合同结算口径 · 7 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4505,6 +4759,24 @@
       "dispersion": 1.4,
       "total_samples": 24,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "low",
+        "note": "This category uses composite-index / framework rates; publicly verifiable awards are scarce → low reliability, for order-of-magnitude reference only, defer to written quotes · 该类为综合指数/框架费率，公开可核验中标稀缺 → 低可靠，仅作量级参考、以书面报价为准"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "MRO 备件综合价格指数（基准100）（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   },
   "lab": {
@@ -4546,19 +4818,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 883.8,
-          "note": "6 public award rates · 6 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 6 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 6 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 937.3,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 895.9,
-          "note": "10 historical contract settlements · 10 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 10 modeled scenario samples · 同类历史合同结算口径 · 10 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4626,19 +4898,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 861.0,
-          "note": "9 public award rates · 9 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 9 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 9 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 882.9,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 858.4,
-          "note": "11 historical contract settlements · 11 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 11 modeled scenario samples · 同类历史合同结算口径 · 11 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4706,19 +4978,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 825.8,
-          "note": "14 public award rates · 14 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 14 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 14 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 831.9,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 802.6,
-          "note": "7 historical contract settlements · 7 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 7 modeled scenario samples · 同类历史合同结算口径 · 7 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4786,19 +5058,19 @@
       ],
       "methods": [
         {
-          "name": "Gov-procurement award-rate method · 政采中标费率法",
+          "name": "Gov-procurement rate-caliber model · 政采费率口径建模法",
           "rate": 783.3,
-          "note": "12 public award rates · 12 条公开中标费率"
+          "note": "anchored to gov/public-tender rate caliber · 12 modeled scenario samples (not per-item verified awards; see provenance card) · 锚定政采/公共资源交易费率口径 · 12 组情景样本（非逐条已核验中标，真实招标见溯源卡）"
         },
         {
           "name": "Industry-benchmark rate method · 行业基准费率法",
           "rate": 812.3,
-          "note": "Aon / Mercer / CFLP industry reports · 怡安/美世/中采联行业报告"
+          "note": "Aon / Mercer / CFLP industry-report caliber · 怡安/美世/中采联行业报告口径"
         },
         {
           "name": "Historical-contract rate method · 历史合同费率法",
           "rate": 803.2,
-          "note": "12 historical contract settlements · 12 份历史合同结算"
+          "note": "same-type historical contract-rate caliber · 12 modeled scenario samples · 同类历史合同结算口径 · 12 组情景样本"
         },
         {
           "name": "Multi-source cross-weighted (adopted) · 多源交叉加权（采纳）",
@@ -4827,6 +5099,24 @@
       "dispersion": 1.5,
       "total_samples": 34,
       "cost_factor": 0.95
+    },
+    "transparency": {
+      "reliability": {
+        "level": "medium",
+        "note": "Real gov-procurement awards are verifiable, some with published unit-price ceilings → medium reliability (actual rate varies by city/role) · 真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+      },
+      "tenders": [
+        {
+          "platform": "中国政府采购网 / 公共资源交易",
+          "title": "理化检测单样综合单价（平台级溯源）",
+          "buyer": "各级政府采购单位",
+          "date": "2022–2025",
+          "qty": "框架/项目",
+          "unit_price": "多公开·按项目",
+          "url": "https://www.ccgp.gov.cn/",
+          "note": "This service is routinely tendered via gov-procurement / public-resource exchanges; specific unit-prices not verified item by item · 该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价"
+        }
+      ]
     }
   }
 }

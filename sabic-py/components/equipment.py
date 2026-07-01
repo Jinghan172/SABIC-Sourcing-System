@@ -28,6 +28,9 @@ from utils.equipment_scorer import (
     rank_suppliers, DIM_KEYS, DIM_CN, DIM_EN, DEFAULT_WEIGHTS, verdict_for,
 )
 from components.comparison import render_comparison, deviation_tornado_figure
+from components.pricing import (
+    reliability_badge, render_tender_evidence, render_triangulation, render_referenced_tenders,
+)
 
 # 5 维双语标签（英文在前、中文在后）
 DIM_BI = {k: f"{DIM_EN.get(k, k)} · {DIM_CN.get(k, k)}" for k in DIM_KEYS}
@@ -40,6 +43,9 @@ _DARK = "#0a1628"
 
 # 四大工厂配色（与综合服务模块四大基地一致）
 _PLANT_COLOR = {"SH": "#0E8C3A", "NS": "#2563eb", "GL": "#f59e0b", "CQ": "#a855f7"}
+# 四大工厂英文名（基地名双语化，与 utils/sites.py 口径一致）
+_PLANT_EN = {"SH": "Shanghai Pudong", "NS": "Guangzhou Nansha",
+             "GL": "Fujian Gulei", "CQ": "Chongqing"}
 _MEDALS = ["🥇", "🥈", "🥉", "④"]
 
 
@@ -127,7 +133,8 @@ def render_equipment_cards() -> None:
         band = (f"{_fmt(min(lows))}–{_fmt(max(highs))} 万元"
                 if lows else "—")
         best = max(champs) if champs else None
-        kind_lbl = {"static": "Static · 静设备", "dynamic": "Rotating · 动设备", "crane": "Special · 特种设备"}.get(c["kind"], "")
+        kind_lbl = {"static": "Static · 静设备", "dynamic": "Rotating · 动设备",
+                    "crane": "Special · 特种设备", "extruder": "Compounding · 挤出备件"}.get(c["kind"], "")
         with cols[i % 3]:
             st.markdown(f"""
 <div class="eq-card" style="--accent:{c['accent']}">
@@ -155,7 +162,7 @@ def render_equipment_cards() -> None:
   </div>
 </div>
 """, unsafe_allow_html=True)
-            if st.button(f"Enter · 进入 {c['cn']} · 工厂选择 + 价格分析 →",
+            if st.button(f"Enter · 进入 {c['cn']} · plant choice + price analysis · 工厂选择 + 价格分析 →",
                          key=f"eq_enter_{c['key']}", width="stretch"):
                 st.session_state.equipment_cat = c["key"]
                 st.session_state.query = ""
@@ -447,6 +454,28 @@ def _render_price_report(c: dict, p: dict) -> None:
         unsafe_allow_html=True,
     )
 
+    # ── 「这个价怎么来的」三步说明 —— 让下方的建模数字不再突兀 ────────
+    _tenders = (c.get("transparency") or {}).get("tenders", [])
+    st.markdown(
+        f"<div class='eq-plogic'>"
+        f"<div class='eq-plogic-h'>🧭 How this price is derived · 这个建议采购价是怎么来的</div>"
+        f"<div class='eq-plogic-steps'>"
+        f"<div class='eq-plogic-step'><span class='eq-plogic-no'>①</span>"
+        f"<div><b>Industry benchmark · 行业均价基准</b> {_fmt(pa['ref_price'])} 万<br>"
+        f"<span class='eq-plogic-sub'>source · 来源：{c.get('source','')}</span></div></div>"
+        f"<div class='eq-plogic-step'><span class='eq-plogic-no'>②</span>"
+        f"<div><b>Referenced real tenders · 参考真实公开标书</b> {len(_tenders)} 条<br>"
+        f"<span class='eq-plogic-sub'>framework awards — unit price usually undisclosed · 多为框架招标，中标单价多未公开</span></div></div>"
+        f"<div class='eq-plogic-step'><span class='eq-plogic-no'>③</span>"
+        f"<div><b>Cross-model to an anchor · 交叉建模锚定</b> {_fmt(pa['rec_low'])}–{_fmt(pa['rec_high'])} 万<br>"
+        f"<span class='eq-plogic-sub'>platform pricing + supplier quotes + trend · 平台框架价＋供应商报价＋历史走势</span></div></div>"
+        f"</div></div>",
+        unsafe_allow_html=True,
+    )
+
+    # ── 明确列出「参考了哪些标书」（不带链接）──────────────────────
+    render_referenced_tenders(_tenders, accent=col)
+
     # ── 五路口径方法卡 ──────────────────────────────────────────────
     st.markdown("##### 🧮 Five price methods · cross-weighted anchor · 五路价格口径 · 交叉加权锚定")
     mcols = st.columns(len(pa["methods"]))
@@ -481,8 +510,8 @@ def _render_price_report(c: dict, p: dict) -> None:
     st.plotly_chart(_convergence_fig(pa), width="stretch",
                     config={"displayModeBar": False}, key=f"eq_conv_{c['key']}_{p['key']}")
 
-    # ── 招投标平台溯源卡 ────────────────────────────────────────────
-    st.markdown("##### 🔎 Tender-platform data provenance · three-source, traceable · 招投标平台数据溯源 · 三源交叉，可逐条回溯")
+    # ── 平台口径情景建模卡（真实平台、数字为建模，非逐条已核验中标）──
+    st.markdown("##### 📊 Platform-calibrated scenario model · real platforms, modeled figures (not verified award counts) · 平台口径情景建模 · 平台真实、数字为建模（非逐条已核验中标，真实招标见上方溯源卡）")
     scols = st.columns(len(pa["sources"]))
     for i, s in enumerate(pa["sources"]):
         with scols[i]:
@@ -492,8 +521,8 @@ def _render_price_report(c: dict, p: dict) -> None:
                 f"<div class='eq-src-url'>🔗 {s['url']}</div>"
                 f"<div class='eq-src-avg'>{_fmt(s['avg'])}<span> 万</span></div>"
                 f"<div class='eq-src-meta'>Range · 区间 {_fmt(s['low'])}–{_fmt(s['high'])} 万 · "
-                f"<b>{s['samples']}</b> awards · 条中标</div>"
-                f"<div class='eq-src-period'>📅 {s['period']} framework/award notices · 框架协议/中标公告</div>"
+                f"<b>{s['samples']}</b> modeled samples · 条建模样本</div>"
+                f"<div class='eq-src-period'>📅 {s['period']} modeled on platform framework pricing · 基于平台框架价口径建模</div>"
                 f"</div>",
                 unsafe_allow_html=True,
             )
@@ -506,15 +535,15 @@ def _render_price_report(c: dict, p: dict) -> None:
                         key=f"eq_trend_{c['key']}_{p['key']}")
 
     st.caption(
-        f"Methodology: {sum(s['samples'] for s in pa['sources'])} award prices across 3 platforms weighted by "
-        f"sample size, plus the median estimated quote of {pa['supplier_quote']['n']} shortlisted suppliers and a "
-        f"2021–2024 historical regression, cross-weighted 'platform 45% · supplier 30% · historical 25%'; "
-        f"three-method dispersion {pa['dispersion']}% (lower = more consistent, higher confidence). All prices are "
-        f"tax- & freight-inclusive delivered estimates, for budgeting & negotiation reference only.  \n"
-        f"方法论：3 平台共 {sum(s['samples'] for s in pa['sources'])} 条招投标中标价按样本量加权，"
-        f"叠加 {pa['supplier_quote']['n']} 家入围供应商预估报价中位数与 2021–2024 历史回归，"
-        f"按『平台 45% · 供应商 30% · 历史 25%』交叉加权锚定；三口径离散度 {pa['dispersion']}%，"
-        f"越低越一致、置信越高。所有价格为含税含运到厂估算，仅供采购预算与议价参考。")
+        f"Methodology (scenario model): {sum(s['samples'] for s in pa['sources'])} modeled samples calibrated to the "
+        f"three real platforms' framework pricing, plus the median estimated quote of {pa['supplier_quote']['n']} "
+        f"shortlisted suppliers and a 2021–2024 trend, cross-weighted 'platform 45% · supplier 30% · historical 25%'; "
+        f"three-method dispersion {pa['dispersion']}%. Real public tenders are in the provenance cards at the top of "
+        f"this page; figures here are tax- & freight-inclusive delivered estimates for budgeting & negotiation only.  \n"
+        f"方法论（情景建模）：{sum(s['samples'] for s in pa['sources'])} 条按中石化/中石油/中招网三平台框架价口径建模的样本，"
+        f"叠加 {pa['supplier_quote']['n']} 家入围供应商预估报价中位数与 2021–2024 走势，"
+        f"按『平台 45% · 供应商 30% · 历史 25%』交叉加权；三口径离散度 {pa['dispersion']}%。"
+        f"真实公开招标见本页顶部『真实招标溯源』卡；此处数字为含税含运到厂估算，仅供采购预算与议价参考。")
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -546,6 +575,24 @@ def render_equipment_report(cat_key: str) -> None:
 </div>
 """, unsafe_allow_html=True)
 
+    # ── 真实招标溯源 + 价格可信度（共享透明价格工具箱）──────────────
+    t = c.get("transparency") or {}
+    if t:
+        st.markdown("#### 🔎 Real Tender Provenance & Price Reliability · 真实招标溯源与价格可信度 · 这个价能不能直接用，先说清楚")
+        rel = t.get("reliability") or {}
+        if rel.get("level"):
+            st.markdown(reliability_badge(rel["level"], rel.get("note", "")), unsafe_allow_html=True)
+        render_tender_evidence(t.get("tenders", []), accent=c["accent"])
+        render_triangulation(t.get("methods", []), anchor=t.get("anchor"),
+                             level=(rel.get("level") or "medium"), accent=c["accent"])
+        st.caption("These are real public tenders located online. A tender showing “award unit-price undisclosed” is "
+                   "normal for framework contracts — it does NOT mean no data. Precisely because unit prices aren’t "
+                   "published, each plant’s suggested price further below is triangulated from these tenders + platform "
+                   "framework pricing + supplier quotes (see “How this price is derived” in the price-analysis section). · "
+                   "上方为联网检索到的真实公开招标。卡片显示『中标单价未公开』是框架招标的常态，并不代表没有数据；"
+                   "正因为单价不公开，下方各厂『建议采购价』才据这些标书 + 平台框架价 + 供应商报价交叉测算得出"
+                   "（详见下方价格分析里的『这个价怎么来的』）。")
+
     # ── 四大工厂总览地图 ────────────────────────────────────────────
     st.markdown("#### 🗺️ Four-Plant Sourcing Overview · top pick & suggested price per plant · 四大工厂寻源总览 · 各厂首选供应商与建议采购价，一图直达")
     _map = _plant_map(c)
@@ -565,7 +612,8 @@ def render_equipment_report(cat_key: str) -> None:
     keys = [p["key"] for p in plants]
     if st.session_state.get("equip_plant") not in keys:
         st.session_state.equip_plant = keys[0]
-    labels = {p["key"]: f"{p['cn']}　·　{p['feature']}" for p in plants}
+    labels = {p["key"]: f"{_PLANT_EN.get(p['key'], '')} · {p['cn']}　·　{p['feature']}"
+              for p in plants}
     sel = st.radio(
         "Delivery plant · 交付工厂", keys,
         index=keys.index(st.session_state.equip_plant),
@@ -581,7 +629,7 @@ def render_equipment_report(cat_key: str) -> None:
     st.markdown(
         f"<div class='eq-plant-head' style='--bcol:{col}'>"
         f"<span class='eq-plant-dot'></span>"
-        f"<span class='eq-plant-name'>SABIC {p['cn']} plant · 工厂</span>"
+        f"<span class='eq-plant-name'>SABIC {_PLANT_EN.get(sel, '')} · {p['cn']} plant · 工厂</span>"
         f"<span class='eq-plant-feat'>{p['feature']}</span>"
         f"<span class='eq-plant-port'>🚢 {p['port']}</span>"
         f"</div>",
@@ -699,6 +747,16 @@ EQUIPMENT_CSS = """
 .eq-ph-conf span{font-size:20px;}
 .eq-ph-conf-lbl{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.05em;}
 .eq-ph-samp{font-size:11px;color:#9fb3c8;margin-top:6px;}
+/* 价格推导三步说明 */
+.eq-plogic{margin:2px 0 12px;padding:13px 16px;border-radius:12px;
+  background:linear-gradient(135deg,#f7faf8,#eef6f1);border:1px solid #dcebe2;}
+.eq-plogic-h{font-size:13.5px;font-weight:800;color:#0a1628;margin-bottom:9px;}
+.eq-plogic-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;}
+.eq-plogic-step{display:flex;gap:9px;align-items:flex-start;background:#fff;border:1px solid #e6ebf2;
+  border-radius:10px;padding:9px 11px;font-size:12.5px;color:#1e293b;line-height:1.45;}
+.eq-plogic-step b{font-size:12.5px;color:#0a1628;}
+.eq-plogic-no{font-size:18px;font-weight:800;color:#0E8C3A;line-height:1.2;flex-shrink:0;}
+.eq-plogic-sub{font-size:11px;color:#64748b;}
 /* 方法卡 */
 .eq-method{background:#fff;border:1px solid #e6ebf2;border-radius:12px;padding:12px 13px;height:100%;
   box-shadow:0 8px 22px -18px rgba(10,22,40,.4);}

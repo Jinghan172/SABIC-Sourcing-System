@@ -37,9 +37,17 @@ def _en_for(v: str):
     # T2 公开中标费率条数
     m = re.match(r'^(\d+) 条公开中标费率$', v)
     if m: return f"{m.group(1)} public award rates"
+    # T2b 政采费率口径情景样本（明确为建模、非已核验中标）
+    m = re.match(r'^锚定政采/公共资源交易费率口径 · (\d+) 组情景样本（非逐条已核验中标，真实招标见溯源卡）$', v)
+    if m:
+        return (f"anchored to gov/public-tender rate caliber · {m.group(1)} modeled scenario "
+                f"samples (not per-item verified awards; see provenance card)")
     # T3 历史合同结算份数
     m = re.match(r'^(\d+) 份历史合同结算$', v)
     if m: return f"{m.group(1)} historical contract settlements"
+    # T3b 历史合同费率口径情景样本
+    m = re.match(r'^同类历史合同结算口径 · (\d+) 组情景样本$', v)
+    if m: return f"same-type historical contract-rate caliber · {m.group(1)} modeled scenario samples"
     # T4 三平台中标公告按样本量加权
     m = re.match(r'^3 平台 (\d+) 条中标公告按样本量加权$', v)
     if m: return f"3 platforms, {m.group(1)} award notices weighted by sample size"

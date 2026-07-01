@@ -31,7 +31,7 @@ from components.services import load_services
 from components.equipment import load_equipment
 
 _BASE = Path(__file__).resolve().parent.parent / "data"
-_CORE_HIDE_FILES = {"TiO2.json", "Pallet.json"}   # 已升级为专家评审，从原料品类移除
+_CORE_HIDE_FILES = {"TiO2.json", "Pallet.json", "FlexPack.json"}   # 已升级为专家评审，从原料品类移除
 _FONT = dict(family="PingFang SC, Microsoft YaHei, sans-serif", size=14)
 
 LANES = [
@@ -106,6 +106,32 @@ def _equipment_items() -> list[dict]:
 
 def _all_items() -> list[dict]:
     return _core_items() + _material_items() + _mro_items() + _equipment_items()
+
+
+def _equipment_supplier_total() -> int:
+    """化工设备：各品类跨厂区去重后的供应商数合计。"""
+    tot = 0
+    for c in load_equipment().get("categories", []):
+        names = set()
+        for pv in c.get("plants", {}).values():
+            for s in pv.get("suppliers", []):
+                names.add(s.get("name") or id(s))
+        tot += len(names)
+    return tot
+
+
+def global_stats() -> dict:
+    """首页概览用的全站规模指标（未选品类时替代无意义的匹配数）。"""
+    core, mat = _core_items(), _material_items()
+    mro, eq = _mro_items(), _equipment_items()
+    suppliers = (sum(c["count"] for c in core) + sum(c["count"] for c in mat)
+                 + sum(c["count"] for c in mro) + _equipment_supplier_total())
+    return {
+        "lanes":      len(LANES),
+        "categories": len(core) + len(mat) + len(mro) + len(eq),
+        "suppliers":  suppliers,
+        "plants":     len(sites.SITE_ORDER),
+    }
 
 
 # ── 统一路由：点击任意品类项后进入其报告 ────────────────────────────────
@@ -300,8 +326,8 @@ def render_material_overview(query: str) -> None:
 
     # 厂区选择（与全局 site 绑定）
     st.radio(
-        "采购厂区", sites.SITE_ORDER,
-        format_func=lambda k: f"{sites.get_site(k)['cn']} · {sites.get_site(k)['cluster']}",
+        "Procurement plant · 采购厂区", sites.SITE_ORDER,
+        format_func=lambda k: f"{sites.get_site(k)['en']} · {sites.get_site(k)['cn']}",
         horizontal=True, label_visibility="collapsed", key="site",
     )
 

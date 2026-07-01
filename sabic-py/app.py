@@ -20,9 +20,6 @@ import pandas as pd
 
 from utils.matcher import match_suppliers, LAST_SEARCH_META
 from utils import sites
-from utils.cross_validator import batch_validate, confidence_label
-from utils.chemnet_client import search_chem_suppliers, is_configured as chemnet_ok
-from utils.ibuychem_client import search_by_keyword as ibc_search, is_loaded as ibc_loaded
 from utils.sabic_search import SABIC_SEARCH_STRATEGIES, get_category_priority
 from utils.local_search import list_cache_categories, cache_status
 from utils.scorer import DEFAULT_WEIGHTS, has_hazmat_license, _IND_CHEM, _IND_MFG
@@ -45,6 +42,7 @@ from components.equipment import (
 from components import home as home_nav
 from components.home import HOME_CSS
 from components.comparison import COMPARISON_CSS
+from components.pricing import PRICING_CSS
 
 APP_DIR = Path(__file__).resolve().parent
 
@@ -54,8 +52,8 @@ _CORE_KEYWORDS = {
     "FFS":    ["ffs", "ffs膜", "ffs重载塑料膜", "重载塑料膜", "重载膜"],
     "Pallet": ["pallet", "木托盘", "出口级木托盘", "托盘"],
 }
-# 这两个品类已升级为"最核心物料"，从普通缓存品类列表/联想中移除（改走专家报告）
-_CORE_HIDE_FILES = {"TiO2.json", "Pallet.json"}
+# 这些品类已升级为"最核心物料"，从普通缓存品类列表/联想中移除（改走专家报告）
+_CORE_HIDE_FILES = {"TiO2.json", "Pallet.json", "FlexPack.json"}
 
 
 def _core_key_for(text: str) -> str | None:
@@ -505,6 +503,7 @@ st.markdown(SERVICES_CSS, unsafe_allow_html=True)
 st.markdown(EQUIPMENT_CSS, unsafe_allow_html=True)
 st.markdown(HOME_CSS, unsafe_allow_html=True)
 st.markdown(COMPARISON_CSS, unsafe_allow_html=True)
+st.markdown(PRICING_CSS, unsafe_allow_html=True)
 
 # ── 厂区 / 缓存状态：侧栏与报告拦截都要用，需在拦截前算好 ──
 _site_key = st.session_state.get("site", "SH")
@@ -574,7 +573,7 @@ def _render_lane_sidebar(lane: str | None) -> None:
         _side_head("🔎", "Equipment Filters · 设备筛选")
         _lo = st.checkbox("Local suppliers only · 仅看属地供应商", key="eqf_local")
         _qs = st.multiselect("Qualifications · 资质要求",
-                             ["A1", "A2", "API Q1", "ISO 9001", "CE", "特种设备制造许可证（A级）"],
+                             ["A1", "A2", "API Q1", "ISO 9001", "CE", "特种设备制造许可证（A级）", "OEM 原厂认证"],
                              key="eqf_quals", placeholder="Any · 不限")
         _ml = st.slider("Max acceptable lead time (days) · 最长可接受交期（天）", 30, 200, 200, 10, key="eqf_lead")
         st.session_state.eq_filters = {
@@ -930,22 +929,6 @@ _, results = match_suppliers(
     site_key=_site_key,
 )
 
-# ── 交叉验证（仅在真实配置了化工网/买化塑时运行）──────────────────
-_query     = st.session_state.query or ""
-_cn_items  = []
-_ibc_items = []
-_xval_on   = False
-
-if chemnet_ok() and _query:
-    _cn_items = search_chem_suppliers(_query)
-    _xval_on = True
-if ibc_loaded() and _query:
-    _ibc_items = ibc_search(_query)
-    _xval_on = True
-
-if _xval_on and results:
-    results = batch_validate(results, _cn_items, _ibc_items, _query)
-
 sel_ids = st.session_state.selected_ids
 compare_suppliers = (
     [s for s in results if s["id"] in sel_ids] if sel_ids
@@ -967,30 +950,34 @@ avg_score = (
 # ═══════════════════════════════════════════════════════════════════════
 # Hero 顶部
 # ═══════════════════════════════════════════════════════════════════════
+# 未选品类（首页/大类浏览）显示全站规模；已进入某原料查询则显示该查询的匹配统计
+if st.session_state.query:
+    _hero_stats = (
+        ("g", len(results),   "Matches<br>当前匹配"),
+        ("b", tier1_count,    f"{_site['cluster']} Tier-1<br>{_site['cluster']}一级"),
+        ("t", _cs['count'],   "Cached items<br>缓存品类"),
+        ("",  avg_score,      "Avg score<br>平均评分"),
+    )
+else:
+    _gs = home_nav.global_stats()
+    _hero_stats = (
+        ("g", _gs["categories"], "Categories<br>全站品类"),
+        ("b", _gs["suppliers"],  "Vetted suppliers<br>优选供应商"),
+        ("t", _cs['count'],      "Cached items<br>缓存品类"),
+        ("",  _gs["plants"],     "Plants<br>大工厂"),
+    )
+_hero_stat_html = "".join(
+    f'<div class="hero-stat"><div class="hero-stat-val {_c}">{_v}</div>'
+    f'<div class="hero-stat-lbl">{_l}</div></div>'
+    for _c, _v, _l in _hero_stats
+)
 st.markdown(f"""
 <div class="sabic-hero">
  <div class="hero-inner">
   <div class="hero-badge"><span class="pulse"></span>SABIC {_site['cn']} · Smart Sourcing Decisions · 智能寻源决策</div>
   <div class="hero-title"><span class="lead">Enter a raw material —</span> we'll tell you <span class="key">which supplier to pick</span></div>
   <div class="hero-title" style="font-size:22px;margin-top:-2px"><span class="lead">请输入一种原材料，</span>告诉你<span class="key">选哪家供应商</span></div>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-val g">{len(results)}</div>
-      <div class="hero-stat-lbl">Matches<br>当前匹配</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val b">{tier1_count}</div>
-      <div class="hero-stat-lbl">{_site['cluster']} Tier-1<br>{_site['cluster']}一级</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val t">{_cs['count']}</div>
-      <div class="hero-stat-lbl">Cached items<br>缓存品类</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val">{avg_score}</div>
-      <div class="hero-stat-lbl">Avg score<br>平均评分</div>
-    </div>
-  </div>
+  <div class="hero-stats">{_hero_stat_html}</div>
  </div>
 </div>
 """, unsafe_allow_html=True)
@@ -1050,7 +1037,8 @@ if search_text and _sugs:
         _suffix = "" if _it["kind"] == "equipment" else (
             f"（{_it['count']}）" if _it.get("count") != "" else "")
         with _scols[_i % 4]:
-            if st.button(f"{_ico} {_it['cn']} · {_lane_cn}{_suffix}",
+            _sug_name = f"{_it['en']} · {_it['cn']}" if _it.get("en") else _it["cn"]
+            if st.button(f"{_ico} {_sug_name} · {_lane_cn}{_suffix}",
                          key=f"sug_{_it['kind']}_{_it.get('key', _it['cn'])}_{_i}",
                          width='stretch'):
                 home_nav.enter_item(_it)
@@ -1101,21 +1089,7 @@ if st.session_state.query:
         if get_category_priority(st.session_state.query) == 2:
             st.caption("⚪ Extended category · not on the SABIC core procurement list  \n"
                        "扩展品类 · 不在 SABIC 核心采购清单内")
-        _fail = _lm.get("detail_fail", 0)
-        _ok   = _lm.get("detail_ok", 0)
-        if _fail > 0 and _fail >= _ok:
-            st.warning(
-                f"⚠️ Business details for {_fail} companies could not be fetched (the 410 "
-                f"business-info API quota may be exhausted). Scale/compliance scores fall back "
-                f"to defaults and lose discrimination. Top up the 'company business info' API "
-                f"in the QCC console and retry.  \n"
-                f"有 {_fail} 家企业的工商详情未能获取（企业工商信息接口 410 额度可能已用完）。"
-                f"规模/合规评分会回退到默认值，失去区分度。"
-                f"请到企查查控制台为「企业工商信息」接口充值后重试。"
-            )
-        elif _fail > 0:
-            st.caption(f"Note: details for {_fail} companies not fetched, affecting score accuracy  \n"
-                       f"注：{_fail} 家企业详情未获取，其评分准确度受影响")
+        # 企查查字段抓取失败不再在页面提示，直接沿用已有（缓存）数据
     with _q_col2:
         if st.button("✕ Clear · 清除", width='stretch'):
             st.session_state.query = ""
@@ -1176,10 +1150,10 @@ if not st.session_state.query:
                 "<span style='font-size:15px;font-weight:700;color:#0a1628'>📊 All-Category Supplier Master Table · 全品类供应商总表</span>"
                 "<span style='font-size:12.5px;color:#5a6780;margin-left:8px'>"
                 "One Excel workbook covering the whole site: ① expert-reviewed strategic materials · "
-                "② core procurement categories · ③ extended categories · ④ 15 service categories "
-                "(each expanded by its own scoring model, multiple sheets).<br>"
+                "② core procurement categories · ③ extended categories · ④ 15 service categories · "
+                "⑤ process-equipment sourcing (each expanded by its own scoring model, multiple sheets).<br>"
                 "一份 Excel 汇总全站：① 专家评审核心物料 · ② 核心采购品类 · "
-                "③ 补充扩展品类 · ④ 综合服务 15 品类（各按其评分模型展开，多 Sheet）。</span>"
+                "③ 补充扩展品类 · ④ 综合服务 15 品类 · ⑤ 化工设备寻源（各按其评分模型展开，多 Sheet）。</span>"
                 "</div>",
                 unsafe_allow_html=True,
             )
@@ -1190,9 +1164,9 @@ if not st.session_state.query:
                 file_name=f"SABIC_供应商总表_全品类_{__import__('datetime').date.today():%Y%m%d}.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 width="stretch", type="primary",
-                help="Covers every category's suppliers on the site: 6-dim expert, 3-dim business, "
-                     "5-dim services, with a summary cover.  \n"
-                     "覆盖网页上全部品类的供应商：专家评审 6 维、工商 3 维、综合服务 5 维，含汇总封面",
+                help="Covers every category's suppliers on the site: 6-dim expert materials, 3-dim business, "
+                     "5-dim services, 5-dim equipment, with a summary cover.  \n"
+                     "覆盖网页上全部品类的供应商：专家评审 6 维、工商 3 维、综合服务 5 维、化工设备 5 维，含汇总封面",
             )
         st.stop()
 
@@ -1319,27 +1293,6 @@ with left_col:
         unsafe_allow_html=True,
     )
 
-    # ── 交叉验证汇总条（仅在化工网/买化塑真实开启时显示）──────────
-    if results and _xval_on:
-        _cn_hit   = sum(1 for s in results if s.get("_validation",{}).get("chemnet_matched"))
-        _ibc_hit  = sum(1 for s in results if s.get("_validation",{}).get("ibc_matched"))
-        _hi_conf  = sum(1 for s in results if s.get("_validation",{}).get("confidence",0) >= 75)
-        _parts = ['<b style="color:#0a1628">🔁 Cross-validation · 交叉验证</b>']
-        if _cn_items:
-            _parts.append(f'<span style="background:#f0faf4;padding:1px 7px;'
-                          f'border-radius:10px;color:#059669">ChemNet · 化工网 {_cn_hit} matched · 家命中</span>')
-        if _ibc_items:
-            _parts.append(f'<span style="background:#fffbeb;padding:1px 7px;'
-                          f'border-radius:10px;color:#d97706">iBuyChem · 买化塑 {_ibc_hit} matched · 家命中</span>')
-        _parts.append(f'<span style="background:#eff6ff;padding:1px 7px;'
-                      f'border-radius:10px;color:#3b82f6">Confidence≥75% · 置信≥75%: {_hi_conf}</span>')
-        st.markdown(
-            f'<div style="display:flex;flex-wrap:wrap;gap:8px;padding:7px 10px;margin-bottom:6px;'
-            f'background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:11px;'
-            f'color:#5a6780">{"".join(_parts)}</div>',
-            unsafe_allow_html=True,
-        )
-
     if not results:
         st.info("No matching suppliers found. Adjust your search or filters.  \n未找到匹配供应商，请调整搜索条件或筛选器。")
     else:
@@ -1391,23 +1344,10 @@ with left_col:
                 )
 
             with card_cols[2]:
-                _val_s = s.get("_validation", {})
-                _conf  = _val_s.get("confidence", 0) if _val_s else 0
-                _srcs  = _val_s.get("sources", [])   if _val_s else []
-                _src_dots = "".join(
-                    f'<span title="{src["name"]}" style="color:{src["color"]};'
-                    f'font-size:13px;margin-left:1px">{"●" if src["matched"] else "○"}</span>'
-                    for src in _srcs
-                ) if _srcs else ""
-                _conf_color = ("#15803d" if _conf>=90 else "#059669" if _conf>=75
-                               else "#d97706" if _conf>=60 else "#dc2626")
-                _conf_str   = f"{_conf:.0f}%" if _conf else ""
                 st.markdown(
                     f"<div style='text-align:right;padding:6px 0'>"
                     f"  <span class='{score_cls}' style='font-size:23px'>{score:.1f}</span>"
-                    f"  <span style='font-size:11.5px;color:#9ba8bb'> pts</span><br>"
-                    f"  <span style='font-size:11px;color:{_conf_color}'>{_conf_str}</span>"
-                    f"  {_src_dots}"
+                    f"  <span style='font-size:11.5px;color:#9ba8bb'> pts</span>"
                     f"</div>",
                     unsafe_allow_html=True,
                 )
@@ -1836,23 +1776,3 @@ with right_col:
             )
             if active.get("_fetched_at"):
                 st.caption(f"Data fetched · 数据拉取时间：{active.get('_fetched_at', '')[:10]}")
-
-        # ── 交叉验证详情 ───────────────────────────────────────────
-        val = active.get("_validation")
-        if val:
-            st.markdown("---")
-            st.markdown("**🔁 Three-Source Cross-Validation · 三源交叉验证详情**")
-            conf = val.get("confidence", 60)
-            cl, cc = confidence_label(conf)
-            v1, v2, v3 = st.columns(3)
-            v1.metric("Confidence · 置信度", f"{conf:.0f}%", delta=f"{cl}")
-            v2.metric("ChemNet · 化工网匹配",
-                      "✓ Matched · 命中" if val.get("chemnet_matched") else "✗ No match · 未命中",
-                      delta=f"Similarity · 相似度 {val.get('chemnet_score',0):.0f}" if val.get("chemnet_matched") else None)
-            v3.metric("iBuyChem · 买化塑匹配",
-                      "✓ Matched · 命中" if val.get("ibc_matched") else "✗ No match · 未命中",
-                      delta=f"Similarity · 相似度 {val.get('ibc_score',0):.0f}" if val.get("ibc_matched") else None)
-            if val.get("chemnet_price"):
-                st.caption(f"ChemNet price ref. · 化工网报价参考：{val['chemnet_price']}")
-            if val.get("ibc_specs"):
-                st.caption(f"iBuyChem specs · 买化塑产品规格：{val['ibc_specs']}")

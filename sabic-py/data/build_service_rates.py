@@ -86,12 +86,12 @@ def _analysis(cat_key, base_key):
     for yr, f in zip((2022, 2023, 2024), (0.96, 1.0, 1.05)):
         trend.append({"year": yr, "rate": _round(anchor_base * f * random.uniform(0.99, 1.01))})
     methods = [
-        {"name": "政采中标费率法", "rate": sources[0]["avg"],
-         "note": f"{sources[0]['samples']} 条公开中标费率"},
+        {"name": "政采费率口径建模法", "rate": sources[0]["avg"],
+         "note": f"锚定政采/公共资源交易费率口径 · {sources[0]['samples']} 组情景样本（非逐条已核验中标，真实招标见溯源卡）"},
         {"name": "行业基准费率法", "rate": sources[1]["avg"],
-         "note": "怡安/美世/中采联行业报告"},
+         "note": "怡安/美世/中采联行业报告口径"},
         {"name": "历史合同费率法", "rate": sources[2]["avg"],
-         "note": f"{sources[2]['samples']} 份历史合同结算"},
+         "note": f"同类历史合同结算口径 · {sources[2]['samples']} 组情景样本"},
         {"name": "多源交叉加权（采纳）", "rate": _round(anchor),
          "note": "政采 40% · 行业 35% · 历史 25%"},
     ]
@@ -106,10 +106,68 @@ def _analysis(cat_key, base_key):
     }
 
 
+# ════════════════════════════════════════════════════════════════════
+# 真实政府采购/公共资源交易招标溯源 + 可信度（品类级，喂给共享透明价格工具箱）
+# 招标案例均为联网检索到的真实公开信息；政采费率多公开，部分含真实单价上限。
+# ════════════════════════════════════════════════════════════════════
+def _tc(platform, title, buyer, date, qty, unit_price, url, note):
+    return {"platform": platform, "title": title, "buyer": buyer, "date": date,
+            "qty": qty, "unit_price": unit_price, "url": url, "note": note}
+
+_CCGP = "https://www.ccgp.gov.cn/"
+_T_SVC = {
+    "security": [
+        _tc("陕西公共资源交易", "产业孵化项目 保安服务公开招标", "西咸新区",
+            "2025-03", "驻场保安", "最高 4,500 元/人月",
+            "https://ggzyjy.xixianxinqu.gov.cn/jydt/001001/001001017/001001017001/20250317/0de2ca78-f9e9-44a1-bca0-b01dae7b6371.html",
+            "公开招标设定真实单价上限，可逐条核验"),
+        _tc("中共中央直属机关采购中心", "人民日报社 2025 年保安服务采购", "人民日报社",
+            "2025", "保安外包", "未公开（评审 95.5 分中标）", "https://www.zzcg.gov.cn/jggg/17467.jhtml",
+            "央级机关保安服务中标公告"),
+    ],
+    "office_maint": [
+        _tc("中国政府采购网", "物业管理服务 公开招标（地方公告）", "各级政府采购单位",
+            "2025-06", "物业+设施维保", "未公开（详见招标文件）",
+            "https://www.ccgp.gov.cn/cggg/dfgg/gkzb/202506/t20250630_24871510.htm",
+            "物业服务公开招标，真实可查"),
+        _tc("海口市公共资源交易", "2025–2026 年物业管理服务项目 结果公告", "海口市疾控中心 等",
+            "2025", "年度物业", "未公开（单价见合同）", "https://ggzy.haikou.gov.cn/gonggao/86812",
+            "含中标结果公告"),
+    ],
+    "manpower": [
+        _tc("中国政府采购网", "劳务派遣 / 外包服务 中标公告（汇总）", "各级政府采购单位",
+            "2022–2025", "人月费率", "含管理费·按城市/岗位", _CCGP,
+            "劳务外包政采常态化，人月单价随城市与岗位浮动"),
+    ],
+}
+# 政采/公共资源交易真实可查度：高的归 medium，抽象指数/框架归 low
+_SVC_LEVEL = {
+    "manpower": "medium", "security": "medium", "office_maint": "medium",
+    "office_leasing": "medium", "catering": "medium", "shuttle": "medium",
+    "consulting": "medium", "it_software": "medium", "it_hardware": "medium",
+    "event": "medium", "lab": "medium",
+    "advertising": "low", "insurance": "low", "mro_service": "low", "mro": "low",
+}
+
+
+def _svc_transparency(cat_key):
+    cn = RATES[cat_key][2]
+    level = _SVC_LEVEL.get(cat_key, "low")
+    tenders = _T_SVC.get(cat_key) or [
+        _tc("中国政府采购网 / 公共资源交易", f"{cn}（平台级溯源）", "各级政府采购单位",
+            "2022–2025", "框架/项目", "多公开·按项目", _CCGP,
+            "该类服务在政采/公共资源交易常态化招标，未逐条核验具体单价")]
+    note = ("真实政府采购中标可查，部分含公开单价上限 → 中等可靠（具体费率随城市/岗位浮动）"
+            if level == "medium" else
+            "该类为综合指数/框架费率，公开可核验中标稀缺 → 低可靠，仅作量级参考、以书面报价为准")
+    return {"reliability": {"level": level, "note": note}, "tenders": tenders}
+
+
 def build():
     data = {}
     for cat_key in RATES:
         data[cat_key] = {bk: _analysis(cat_key, bk) for bk in BASES}
+        data[cat_key]["transparency"] = _svc_transparency(cat_key)
     (BASE / "service_rates.json").write_text(
         json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"已生成 service_rates.json：{len(data)} 类服务 × {len(BASES)} 基地 = "

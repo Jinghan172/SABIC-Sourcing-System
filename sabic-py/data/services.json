@@ -174,6 +174,24 @@
                 "local_branch"
               ],
               "role": "backup"
+            },
+            {
+              "name": "北京外企 FESCO 集团上海分公司",
+              "type": "National SOE HR leader · 国企人力龙头",
+              "note": "One of China's largest SOE HR groups (Beijing FESCO), central-level dispatch & social-security compliance; distinct from the JV FESCO Adecco · 中国最大人力资源国企之一（北京外企 FESCO），央企级派遣与社保合规体系，区别于合资的外企德科",
+              "tier": "national_top",
+              "nature": "soe",
+              "sector": "chemical",
+              "quals": [
+                "国资背书",
+                "社保合规",
+                "劳务派遣资质",
+                "反贿赂"
+              ],
+              "local": [
+                "local_branch"
+              ],
+              "role": "backup"
             }
           ]
         },
@@ -255,6 +273,24 @@
               "quals": [
                 "RBA二级",
                 "批量外包"
+              ],
+              "local": [
+                "local_branch"
+              ],
+              "role": "backup"
+            },
+            {
+              "name": "北京外企 FESCO 集团广州分公司南沙服务部",
+              "type": "National SOE HR leader · 国企人力龙头",
+              "note": "One of China's largest SOE HR groups (Beijing FESCO), central-level dispatch & social-security compliance; distinct from the JV FESCO Adecco · 中国最大人力资源国企之一（北京外企 FESCO），央企级派遣与社保合规体系，区别于合资的外企德科",
+              "tier": "national_top",
+              "nature": "soe",
+              "sector": "chemical",
+              "quals": [
+                "国资背书",
+                "社保合规",
+                "劳务派遣资质",
+                "反贿赂"
               ],
               "local": [
                 "local_branch"
@@ -348,6 +384,24 @@
                 "onsite"
               ],
               "role": "backup"
+            },
+            {
+              "name": "北京外企 FESCO 集团厦门分公司古雷服务点",
+              "type": "National SOE HR leader · 国企人力龙头",
+              "note": "One of China's largest SOE HR groups (Beijing FESCO), central-level dispatch & social-security compliance; distinct from the JV FESCO Adecco · 中国最大人力资源国企之一（北京外企 FESCO），央企级派遣与社保合规体系，区别于合资的外企德科",
+              "tier": "national_top",
+              "nature": "soe",
+              "sector": "chemical",
+              "quals": [
+                "国资背书",
+                "社保合规",
+                "劳务派遣资质",
+                "反贿赂"
+              ],
+              "local": [
+                "local_branch"
+              ],
+              "role": "backup"
             }
           ]
         },
@@ -427,6 +481,24 @@
               "quals": [
                 "RBA二级",
                 "灵活用工"
+              ],
+              "local": [
+                "local_branch"
+              ],
+              "role": "backup"
+            },
+            {
+              "name": "北京外企 FESCO 集团重庆分公司",
+              "type": "National SOE HR leader · 国企人力龙头",
+              "note": "One of China's largest SOE HR groups (Beijing FESCO), central-level dispatch & social-security compliance; distinct from the JV FESCO Adecco · 中国最大人力资源国企之一（北京外企 FESCO），央企级派遣与社保合规体系，区别于合资的外企德科",
+              "tier": "national_top",
+              "nature": "soe",
+              "sector": "chemical",
+              "quals": [
+                "国资背书",
+                "社保合规",
+                "劳务派遣资质",
+                "反贿赂"
               ],
               "local": [
                 "local_branch"
@@ -2404,6 +2476,24 @@
                 "local_branch"
               ],
               "role": "backup"
+            },
+            {
+              "name": "安永 EY 上海分所",
+              "type": "International integrated · 国际综合",
+              "note": "One of the Big Four; audit / EHS / tax & compliance advisory on par with the other three (Deloitte/PwC/KPMG) · 四大之一，审计/EHS/税务与合规咨询与其余三家（德勤/普华永道/毕马威）并列",
+              "tier": "national_top",
+              "nature": "foreign",
+              "sector": "chemical",
+              "quals": [
+                "FCPA",
+                "GDPR",
+                "EHS体系",
+                "进出口合规"
+              ],
+              "local": [
+                "local_branch"
+              ],
+              "role": "backup"
             }
           ]
         },
@@ -2487,6 +2577,24 @@
               "quals": [
                 "技术专项",
                 "环保合规"
+              ],
+              "local": [
+                "local_branch"
+              ],
+              "role": "backup"
+            },
+            {
+              "name": "安永 EY 广州分所南沙服务部",
+              "type": "International integrated · 国际综合",
+              "note": "One of the Big Four; audit / EHS / tax & compliance advisory on par with the other three (Deloitte/PwC/KPMG) · 四大之一，审计/EHS/税务与合规咨询与其余三家（德勤/普华永道/毕马威）并列",
+              "tier": "national_top",
+              "nature": "foreign",
+              "sector": "chemical",
+              "quals": [
+                "FCPA",
+                "GDPR",
+                "EHS体系",
+                "进出口合规"
               ],
               "local": [
                 "local_branch"
@@ -2581,6 +2689,24 @@
                 "regional_hub"
               ],
               "role": "backup"
+            },
+            {
+              "name": "安永 EY 厦门分所漳州服务部",
+              "type": "International integrated · 国际综合",
+              "note": "One of the Big Four; audit / EHS / tax & compliance advisory on par with the other three (Deloitte/PwC/KPMG) · 四大之一，审计/EHS/税务与合规咨询与其余三家（德勤/普华永道/毕马威）并列",
+              "tier": "national_top",
+              "nature": "foreign",
+              "sector": "chemical",
+              "quals": [
+                "FCPA",
+                "GDPR",
+                "EHS体系",
+                "进出口合规"
+              ],
+              "local": [
+                "local_branch"
+              ],
+              "role": "backup"
             }
           ]
         },
@@ -2663,6 +2789,24 @@
               "quals": [
                 "技术专项",
                 "环保合规"
+              ],
+              "local": [
+                "local_branch"
+              ],
+              "role": "backup"
+            },
+            {
+              "name": "安永 EY 重庆分所",
+              "type": "International integrated · 国际综合",
+              "note": "One of the Big Four; audit / EHS / tax & compliance advisory on par with the other three (Deloitte/PwC/KPMG) · 四大之一，审计/EHS/税务与合规咨询与其余三家（德勤/普华永道/毕马威）并列",
+              "tier": "national_top",
+              "nature": "foreign",
+              "sector": "chemical",
+              "quals": [
+                "FCPA",
+                "GDPR",
+                "EHS体系",
+                "进出口合规"
               ],
               "local": [
                 "local_branch"

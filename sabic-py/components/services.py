@@ -26,6 +26,7 @@ from utils.services_scorer import (
     explain_supplier, analyze_supplier,
 )
 from components.comparison import render_comparison, deviation_tornado_figure
+from components.pricing import reliability_badge, render_tender_evidence, render_referenced_tenders
 
 # 5 维双语标签（英文在前、中文在后）
 DIM_BI = {k: f"{DIM_EN.get(k, k)} · {DIM_CN.get(k, k)}" for k in DIM_KEYS}
@@ -38,6 +39,9 @@ _SABIC_DARK = "#0a1628"
 
 # 四大基地配色（与核心物料地图一致）
 _BASE_COLOR = {"SH": "#0E8C3A", "NS": "#2563eb", "GL": "#f59e0b", "CQ": "#a855f7"}
+# 四大基地英文名（基地名双语化，与 utils/sites.py 口径一致）
+_BASE_EN = {"SH": "Shanghai Pudong", "NS": "Guangzhou Nansha",
+            "GL": "Fujian Gulei", "CQ": "Chongqing"}
 
 
 @st.cache_data(show_spinner=False)
@@ -149,7 +153,7 @@ def render_service_cards() -> None:
   </div>
 </div>
 """, unsafe_allow_html=True)
-            if st.button(f"Enter · 进入 {c['cn']} · 四大基地导航 →", key=f"sv_enter_{c['key']}",
+            if st.button(f"Enter · 进入 {c['cn']} · four-base navigation · 四大基地导航 →", key=f"sv_enter_{c['key']}",
                          width="stretch"):
                 st.session_state.service_cat = c["key"]
                 st.session_state.query = ""
@@ -211,6 +215,13 @@ def _base_map(c: dict):
 
 
 _MEDALS = ["🥇", "🥈", "🥉", "④", "⑤"]
+
+
+def _medal(rank: int) -> str:
+    """名次徽章：前 5 名用奖牌/圈号，超出则回退为『#N』，避免越界。"""
+    if 1 <= rank <= len(_MEDALS):
+        return _MEDALS[rank - 1]
+    return f"#{rank}"
 
 
 def _dim_bars_html(sup: dict) -> str:
@@ -458,7 +469,7 @@ def _diligence_compact_html(sup: dict, runner: dict | None) -> str:
     return (
         f"<div class='sv-dgc'>"
         f"<div class='sv-dgc-h'>"
-        f"<span class='sv-detail-rank'>{_MEDALS[sup['rank'] - 1]}</span>"
+        f"<span class='sv-detail-rank'>{_medal(sup.get('rank', 0))}</span>"
         f"<span class='sv-detail-name'>{sup['name']}</span>"
         f"<span class='sv-detail-score' style='color:{sccol}'>{sup['score']:.1f}</span>"
         f"</div>"
@@ -540,9 +551,20 @@ def _render_rate_report(c: dict, base_key: str) -> None:
         f"<div class='eq-ph-anchor'>◆ Cross-anchor · 交叉锚定 <b>{_fmt_rate(ra['anchor'])} {ra['unit']}</b> · {ra['desc']}</div></div>"
         f"<div class='eq-ph-r'><div class='eq-ph-conf' style='color:{conf_col}'>{conf}<span>%</span></div>"
         f"<div class='eq-ph-conf-lbl'>Confidence · 验证置信度</div>"
-        f"<div class='eq-ph-samp'>{ra['total_samples']} multi-source samples · 条多源样本 · dispersion · 离散度 {ra['dispersion']}%</div></div></div>",
+        f"<div class='eq-ph-samp'>{ra['total_samples']} modeled samples · 条建模情景样本 · dispersion · 离散度 {ra['dispersion']}%</div></div></div>",
         unsafe_allow_html=True,
     )
+
+    # ── 明确列出「本次费率估算参考了哪些真实政采招标」（不带链接）──────
+    _tr = load_service_rates().get(c["key"], {}).get("transparency") or {}
+    render_referenced_tenders(
+        _tr.get("tenders", []), accent="#7c3aed",
+        note=("Government-procurement award rates are often only partially published, so this suggested rate is "
+              "triangulated from these tenders + industry pay/service-rate reports + company historical contract "
+              "rates — a model, not a copy of any single award. · "
+              "政采中标费率多为部分公开，故本建议费率是把上述招标与『行业薪酬/费率报告 + 企业历史合同费率』"
+              "交叉建模测算得出，并非照搬某一条中标费率。"))
+
     st.markdown("##### 🧮 Three rate methods · cross-weighted anchor · 三路费率口径 · 交叉加权锚定")
     mcols = st.columns(len(ra["methods"]))
     for i, m in enumerate(ra["methods"]):
@@ -572,7 +594,7 @@ def _render_rate_report(c: dict, base_key: str) -> None:
     st.markdown("##### 📊 Rate-range convergence · purple band = suggested range, dashed = cross-anchor · 各口径费率区间收敛")
     st.plotly_chart(_rate_convergence_fig(ra), width="stretch",
                     config={"displayModeBar": False}, key=f"sv_rate_conv_{c['key']}_{base_key}")
-    st.markdown("##### 🔎 Rate data provenance · three-source cross-check · 费率数据溯源 · 三源交叉")
+    st.markdown("##### 📊 Platform-calibrated scenario model · real platforms, modeled figures · 平台口径情景建模 · 平台真实、数字为建模（真实政采招标见上方溯源卡）")
     scols = st.columns(len(ra["sources"]))
     for i, s in enumerate(ra["sources"]):
         with scols[i]:
@@ -581,7 +603,7 @@ def _render_rate_report(c: dict, base_key: str) -> None:
                 f"<div class='eq-src-name'>{s['name']}</div>"
                 f"<div class='eq-src-url' style='color:#7c3aed'>🔗 {s['url']}</div>"
                 f"<div class='eq-src-avg' style='color:#7c3aed'>{_fmt_rate(s['avg'])}<span> {ra['unit']}</span></div>"
-                f"<div class='eq-src-meta'>Range · 区间 {_fmt_rate(s['low'])}–{_fmt_rate(s['high'])} · <b>{s['samples']}</b> samples · 条</div>"
+                f"<div class='eq-src-meta'>Range · 区间 {_fmt_rate(s['low'])}–{_fmt_rate(s['high'])} · <b>{s['samples']}</b> modeled · 条建模样本</div>"
                 f"<div class='eq-src-period'>📅 {s['period']}</div></div>",
                 unsafe_allow_html=True,
             )
@@ -591,13 +613,13 @@ def _render_rate_report(c: dict, base_key: str) -> None:
         st.plotly_chart(tf, width="stretch", config={"displayModeBar": False},
                         key=f"sv_rate_trend_{c['key']}_{base_key}")
     st.caption(
-        f"Methodology: government/public-tender winning rates + industry pay & service-rate reports + company "
-        f"historical contract rates, cross-weighted 'gov 40% · industry 35% · historical 25%', adjusted by each "
-        f"base city's labor/service cost factor ({ra['cost_factor']}). Tax-inclusive composite — for budgeting & "
-        f"negotiation reference only.  \n"
-        f"方法论：政府采购/公共资源交易中标费率 + 行业薪酬与服务费率报告 + 企业历史合同费率，"
+        f"Methodology (scenario model): calibrated to government/public-tender rates + industry pay & service-rate "
+        f"reports + company historical contract rates, cross-weighted 'gov 40% · industry 35% · historical 25%', "
+        f"adjusted by each base city's labor/service cost factor ({ra['cost_factor']}). Real public tenders are in the "
+        f"provenance cards above; figures here are tax-inclusive estimates for budgeting & negotiation only.  \n"
+        f"方法论（情景建模）：按政府采购/公共资源交易中标费率 + 行业薪酬与服务费率报告 + 企业历史合同费率口径建模，"
         f"按『政采 40% · 行业 35% · 历史 25%』交叉加权；并随基地城市人力/服务成本系数"
-        f"（{ra['cost_factor']}）独立调整。费率为含税综合口径，仅供采购预算与议价参考。")
+        f"（{ra['cost_factor']}）独立调整。真实公开招标见上方『真实政采招标溯源』卡；此处数字为含税估算，仅供采购预算与议价参考。")
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -702,6 +724,18 @@ def render_service_report(cat_key: str) -> None:
             unsafe_allow_html=True,
         )
 
+    # ── 真实政采招标溯源 + 费率可信度（共享透明价格工具箱）──────────
+    _tr = load_service_rates().get(c["key"], {}).get("transparency") or {}
+    if _tr:
+        st.markdown("#### 🔎 Real Tender Provenance & Rate Reliability · 真实政采招标溯源与费率可信度 · 这个费率能不能直接用，先说清楚")
+        _rel = _tr.get("reliability") or {}
+        if _rel.get("level"):
+            st.markdown(reliability_badge(_rel["level"], _rel.get("note", "")), unsafe_allow_html=True)
+        render_tender_evidence(_tr.get("tenders", []), accent=c["accent"])
+        st.caption("Cases above are real government-procurement / public-resources tenders located online; the per-base "
+                   "figures below are a scenario model calibrated to these platforms, not verified award counts. · "
+                   "上方为联网检索到的真实政府采购/公共资源交易招标；下文各基地数字为锚定这些平台口径的情景建模测算，非逐条已核验中标。")
+
     # ── 🏭 选交付基地 → 该基地服务商领奖台 + 采购费率分析 ──────────
     st.markdown("#### 🏭 Pick a Delivery Base · supplier ranking & rate analysis · 选择交付基地 · 查看该基地服务商排名与采购费率分析报告")
     _bkeys = [b["key"] for b in _bases()]
@@ -709,7 +743,7 @@ def render_service_report(cat_key: str) -> None:
         st.session_state.svc_plant = _bkeys[0]
     st.radio(
         "Delivery base · 交付基地", _bkeys,
-        format_func=lambda k: next((f"{b['cn']} · {b.get('feature','')}"
+        format_func=lambda k: next((f"{_BASE_EN.get(k, '')} · {b['cn']} · {b.get('feature','')}"
                                     for b in _bases() if b["key"] == k), k),
         horizontal=True, label_visibility="collapsed", key="svc_plant",
     )

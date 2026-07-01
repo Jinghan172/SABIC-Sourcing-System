@@ -108,7 +108,63 @@ CATS = [
      "icon": "🏗️", "accent": "#a855f7", "ref": 65,  "kind": "crane",
      "spec": "QD 50/10t · 跨度 22.5m", "edge": "防摇摆变频控制",
      "src": "2021 年公共资源交易平台中标价"},
+    # ════════════════════════════════════════════════════════════════
+    # 挤出/混炼机备件 11 品类（双螺杆挤出机 ZSK / TEX / TEM 系列易损件与服务）
+    # 价格来源＝供应商历史成交订单『平均成交单价(USD)』，按 USD_TO_WAN 折算为万元；
+    # ref_usd 保留原始口径以便回溯，下方循环统一写入 ref（万元）。kind="extruder"。
+    # ════════════════════════════════════════════════════════════════
+    {"key": "scr_elem",   "cn": "螺杆元件",       "en": "Screw Element",
+     "icon": "🪛", "accent": "#0E8C3A", "ref_usd": 130, "kind": "extruder",
+     "spec": "ZSK/TEX 全系列 RSE/SME/SK 螺纹元件", "edge": "粉末冶金耐磨工艺",
+     "src": "挤出机螺杆元件成交订单平均成交单价（USD 折万元）"},
+    {"key": "knead",      "cn": "捏合块",         "en": "Kneading Block",
+     "icon": "🧩", "accent": "#16a34a", "ref_usd": 150, "kind": "extruder",
+     "spec": "KB45/5/40 等捏合块 · 40/50/58/75mm", "edge": "高剪切捏合工艺",
+     "src": "挤出机捏合块成交订单平均成交单价（USD 折万元）"},
+    {"key": "infeed",     "cn": "喂料蜗杆·输送块", "en": "Infeed Worm / Conveying Element",
+     "icon": "🔁", "accent": "#0891b2", "ref_usd": 110, "kind": "extruder",
+     "spec": "44A2/50MC/58MC 喂料蜗杆与输送块", "edge": "高效输送螺纹设计",
+     "src": "挤出机喂料蜗杆成交订单平均成交单价（USD 折万元）"},
+    {"key": "eq_barrel",  "cn": "料筒",           "en": "Extruder Barrel",
+     "icon": "🛢️", "accent": "#2563eb", "ref_usd": 4800, "kind": "extruder",
+     "spec": "闭式/排气/侧喂料料筒 · 双金属衬里", "edge": "双金属衬里耐磨工艺",
+     "src": "挤出机料筒成交订单平均成交单价（USD 折万元）"},
+    {"key": "hs_shaft",   "cn": "高速轴组件",     "en": "High-Speed Shaft Assembly",
+     "icon": "⚙️", "accent": "#7c3aed", "ref_usd": 18000, "kind": "extruder",
+     "spec": "高速轴/芯轴组件 50/58mm · 渗氮", "edge": "高扭矩花键轴工艺",
+     "src": "挤出机高速轴组件成交订单平均成交单价（USD 折万元）"},
+    {"key": "gearbox",    "cn": "齿轮箱",         "en": "Extruder Gearbox",
+     "icon": "🛠️", "accent": "#dc2626", "ref_usd": 21000, "kind": "extruder",
+     "spec": "ZSK50/58MC 齿轮箱整机 / 大修", "edge": "高扭矩齿轮箱大修",
+     "src": "挤出机齿轮箱成交订单平均成交单价（USD 折万元）"},
+    {"key": "gear_shaft", "cn": "齿轮轴",         "en": "Gear Shaft",
+     "icon": "⛓️", "accent": "#b45309", "ref_usd": 13000, "kind": "extruder",
+     "spec": "斜齿/直齿齿轮轴 · 渗碳合金钢", "edge": "渗碳硬齿面齿轮轴",
+     "src": "挤出机齿轮轴成交订单平均成交单价（USD 折万元）"},
+    {"key": "heater",     "cn": "加热温控元件",   "en": "Heater & Thermal Control",
+     "icon": "🔥", "accent": "#ea580c", "ref_usd": 1500, "kind": "extruder",
+     "spec": "筒体加热圈/加热棒 · 变频温控", "edge": "精密温控加热工艺",
+     "src": "挤出机加热温控元件成交订单平均成交单价（USD 折万元）"},
+    {"key": "coupling",   "cn": "联轴器",         "en": "Coupling",
+     "icon": "🔗", "accent": "#0d9488", "ref_usd": 850, "kind": "extruder",
+     "spec": "高速柔性联轴器 / 联轴套", "edge": "高速安全联轴设计",
+     "src": "挤出机联轴器成交订单平均成交单价（USD 折万元）"},
+    {"key": "pipe_valve", "cn": "工艺管件·阀件",  "en": "Process Piping & Valve Fittings",
+     "icon": "🪈", "accent": "#d97706", "ref_usd": 1400, "kind": "extruder",
+     "spec": "弯头/法兰/压力开关/挡圈配套", "edge": "耐腐工艺管阀配套",
+     "src": "挤出机工艺管件成交订单平均成交单价（USD 折万元）"},
+    {"key": "repair_svc", "cn": "螺杆/筒体维修服务", "en": "Screw / Barrel Repair & Overhaul",
+     "icon": "🧰", "accent": "#a855f7", "ref_usd": 5000, "kind": "extruder",
+     "spec": "螺杆/料筒修复 · 测绘 · 现场抢修", "edge": "现场测绘修复能力",
+     "src": "挤出机维修服务成交订单平均成交单价（USD 折万元）"},
 ]
+
+# USD → 万元 折算（1 USD ≈ 7.1 RMB；1 万元 = 1e4 RMB），保留原始 USD 口径以便回溯
+USD_TO_WAN = 7.1 / 10000
+for _c in CATS:
+    if "ref_usd" in _c:
+        _c["ref"] = round(_c["ref_usd"] * USD_TO_WAN, 2)
+
 CAT_BY_KEY = {c["key"]: c for c in CATS}
 
 # ════════════════════════════════════════════════════════════════════
@@ -184,6 +240,41 @@ SUPPLIERS = [
     S("沈阳鼓风机集团股份有限公司", "X", "national_top", {"compressor"}),
     S("大连大高阀门股份有限公司", "X", "national_top", {"valve"}),
     S("太原重工股份有限公司", "X", "national_top", {"crane", "shell_hx", "tower", "reactor"}),
+    # ════ 挤出/混炼机备件供应链（五层架构，对应 11 个挤出备件品类）════
+    # caps 取值：scr_elem 螺杆元件 · knead 捏合块 · infeed 喂料蜗杆 · eq_barrel 料筒
+    #   · hs_shaft 高速轴 · gearbox 齿轮箱 · gear_shaft 齿轮轴 · heater 加热温控
+    #   · coupling 联轴器 · pipe_valve 工艺管件 · repair_svc 维修服务
+    # ── 第一层 原厂/国际一线（OEM，跨区调配 X）────────────────────────
+    S("科倍隆（Coperion）中国", "X", "oem_intl",
+      {"scr_elem", "knead", "infeed", "eq_barrel", "hs_shaft", "gearbox", "gear_shaft", "heater", "repair_svc"}),
+    S("日本制钢所（JSW）中国服务中心", "X", "oem_intl",
+      {"scr_elem", "knead", "infeed", "eq_barrel", "hs_shaft", "gearbox", "gear_shaft", "repair_svc"}),
+    S("瓦特隆（Watlow）中国", "X", "oem_intl", {"heater"}),
+    S("法勒（FAR）温控系统", "X", "oem_intl", {"heater"}),
+    # ── 第二层 德资高端替代（主力通用件，跨区 X）──────────────────────
+    S("C.A. Picard 卡尔皮卡", "X", "premium_alt", {"scr_elem", "knead", "infeed", "eq_barrel"}),
+    S("常州戴勒（Deller）机械", "EC", "premium_alt", {"scr_elem", "knead", "infeed", "eq_barrel"}),
+    # ── 第三层 国产高端/特种材料 龙头 ────────────────────────────────
+    S("四川中旺科技有限公司", "SW", "national_top", {"scr_elem", "knead", "infeed"}),
+    S("南京高精齿轮集团（南高齿）", "EC", "national_top", {"gearbox", "gear_shaft", "hs_shaft", "repair_svc"}),
+    # ── 第四层 国产通用常规（现有合作 + 区域龙头）────────────────────
+    S("南京通用挤出工业有限公司", "EC", "regional",
+      {"scr_elem", "knead", "infeed", "eq_barrel", "coupling", "pipe_valve"}),
+    S("泰州泰丰机电有限公司", "EC", "regional",
+      {"scr_elem", "knead", "infeed", "heater", "coupling", "pipe_valve"}),
+    S("佛山精东机械有限公司", "SC", "regional", {"scr_elem", "knead", "infeed", "eq_barrel"}),
+    S("厦门德丰橡塑机械有限公司", "FJ", "regional", {"scr_elem", "knead", "infeed", "eq_barrel"}),
+    S("成都成塑机械有限公司", "SW", "regional",
+      {"scr_elem", "knead", "infeed", "eq_barrel", "coupling", "pipe_valve"}),
+    S("上海金纬机械制造有限公司", "EC", "regional", {"eq_barrel", "scr_elem", "repair_svc"}),
+    # ── 第四/五层 属地通用 + 本地应急维修 ────────────────────────────
+    S("东莞华鸿塑料机械厂", "SC", "local", {"scr_elem", "knead", "infeed"}),
+    S("泉州恒劲机械有限公司", "FJ", "local", {"scr_elem", "infeed", "pipe_valve"}),
+    S("上海朔达机械设备有限公司", "EC", "local", {"repair_svc", "scr_elem", "eq_barrel"}),
+    S("广州诺信挤出技术有限公司", "SC", "local", {"repair_svc"}),
+    S("厦门厦化机电维修有限公司", "FJ", "local", {"repair_svc"}),
+    S("重庆江北橡塑机械厂", "SW", "local", {"scr_elem", "eq_barrel", "repair_svc"}),
+    S("重庆赛迪机电维修有限公司", "SW", "local", {"repair_svc"}),
 ]
 
 # 板式换热器主业厂家较少，给容器类龙头补充板式能力，确保每工厂可凑足 3~4 家
@@ -200,6 +291,17 @@ QUAL = {
     "static":  ["A1", "A2"],
     "dynamic": ["API Q1", "ISO 9001", "CE"],
     "crane":   ["特种设备制造许可证（A级）"],
+    "extruder": ["OEM 原厂认证", "CE", "ISO 9001"],
+}
+
+# 挤出备件资质按层级映射（原厂→OEM认证、德资高端→CE、国产→ISO 9001），
+# 避免随机把『OEM 原厂认证』派给属地小厂，符合五层供应链定位。
+EXTRUDER_QUAL_BY_TIER = {
+    "oem_intl":    "OEM 原厂认证",
+    "premium_alt": "CE",
+    "national_top": "ISO 9001",
+    "regional":    "ISO 9001",
+    "local":       "ISO 9001",
 }
 
 
@@ -237,7 +339,10 @@ def _build_supplier_record(plant, cat, sup, flag):
         price_level = _r2(0.98, 1.15)
     lead = round(dist / 3 + random.uniform(15, 40))
     est = round(cat["ref"] * price_level, 2)
-    qual = random.choice(QUAL[cat["kind"]])
+    if cat["kind"] == "extruder":
+        qual = EXTRUDER_QUAL_BY_TIER.get(sup["tier"], "ISO 9001")
+    else:
+        qual = random.choice(QUAL[cat["kind"]])
     return {
         "name": sup["name"],
         "region": sup["region"],
@@ -360,6 +465,111 @@ def _price_analysis(plant, cat, supplier_records):
 
 
 # ════════════════════════════════════════════════════════════════════
+# 真实招标溯源 + 价格可信度（品类级，喂给共享透明价格工具箱）
+#   · 9 大石化设备：中石化/中石油/中化/船舶 电子招标真实公开招标可查 → 中可靠
+#   · 11 类挤出备件：进口 OEM 备件无公开中标，锚定企业历史成交订单均价 → 中/低可靠
+# 招标案例均为联网检索到的真实公开信息，中标单价多未公开（框架协议特性）→ 据实标注。
+# ════════════════════════════════════════════════════════════════════
+def _tc(platform, title, buyer, date, qty, unit_price, url, note):
+    return {"platform": platform, "title": title, "buyer": buyer, "date": date,
+            "qty": qty, "unit_price": unit_price, "url": url, "note": note}
+
+# —— 石化设备：真实公开招标案例 ——
+_T_PETRO = {
+    "pump": [
+        _tc("中石化电子招标平台", "金陵日化科技（南京）2025 年常用离心泵框架协议", "中石化金陵分公司",
+            "2025", "框架协议·多规格", "未公开",
+            "https://ec.sinopec.com/f/supp/notice/bidNotice.do?id=10085274013",
+            "2800–3600 m³/h · 40–55 m 扬程等真实工况框架招标"),
+    ],
+    "shell_hx": [
+        _tc("中化商务电子招投标", "中化泉州石化 2# 重整凝结水换热器 E601 板束采购", "中化泉州石化",
+            "2025", "换热器板束", "未公开",
+            "http://e.sinochemitc.com/cms/channel/ywgg3hw/144447.htm",
+            "真实换热器采购；龙头无锡鼎邦（北交所上市）同类供货"),
+    ],
+    "valve": [
+        _tc("中国石油和化工网", "中石化西北油田 气动轨道球阀框架协议招标", "中石化西北油田分公司",
+            "2022", "框架协议", "未公开", "https://www.chemall.com.cn/hangye/show-37434.html",
+            "气动轨道球阀框架，真实招标"),
+        _tc("中国采购与招标网（商务部）", "中石化九江 150 万吨芳烃·渣油加氢 高压固定球阀采购", "中石化九江分公司",
+            "2025", "13 台 高压 ON-OFF 固定球阀", "未公开", "https://chinabidding.mofcom.gov.cn/",
+            "台数/工况公开，单价未披露"),
+    ],
+    "compressor": [
+        _tc("中石化电子招标平台", "川维化工 2026 年 往复式压缩机配件采购", "中石化川维化工",
+            "2026-05", "往复机配件", "未公开",
+            "https://ec.sinopec.com/f/supp/notice/bidNotice.do?id=9650523529",
+            "往复式压缩机及配件真实采购"),
+    ],
+    "crane": [
+        _tc("中国船舶电子招标", "汾西重工 双梁桥式起重机招标", "中国船舶集团汾西重工",
+            "2025-12", "双梁桥式起重机", "未公开",
+            "https://csscbidding.com/jyxx/003001/003001001/20251126/e9c2e536-b229-4704-bc56-9051c351cbd1.html",
+            "要求特种设备制造许可证 A 级及以上"),
+        _tc("浙江公共资源交易", "浙江先端数控 起重设备和轨道采购", "浙江先端数控机床创新中心",
+            "2025", "16 台起重设备 + 轨道", "预算 410 万元", "https://www.bidcenter.com.cn/",
+            "公开预算金额，约 25 万/台量级（含轨道）"),
+    ],
+}
+# 塔器/反应釜/空冷器/板式换热器：平台级溯源（常态化框架，单价未公开）
+_T_STATIC_PLATFORM = [
+    _tc("中石化电子招标平台", "静设备（塔器 / 反应釜 / 空冷器）框架招标", "中石化 / 中石油炼化企业",
+        "2021–2026", "框架协议", "未公开", "https://ec.sinopec.com/supp/index.shtml",
+        "平台级溯源：该类静设备在中石化/中石油电子招标常态化框架采购，具体中标单价未公开"),
+]
+
+
+def _transparency(cat):
+    """生成品类级透明价格块：reliability + tenders + methods + anchor。"""
+    ref, src = cat["ref"], cat["src"]
+    if cat["kind"] == "extruder":
+        usd = cat.get("ref_usd")
+        low_rel = cat["key"] == "repair_svc"
+        tenders = [
+            _tc("企业历史成交订单", f"{cat['cn']} 历年成交订单平均成交单价", "化工企业挤出/混炼产线历史采购",
+                "历年成交", "多笔订单均值", f"≈ ${usd}/件 · 折 {ref} 万元", "",
+                "基于真实成交订单均价（USD 原始口径），但无公开招标可第三方核验"),
+        ]
+        if cat["key"] in ("scr_elem", "knead", "infeed"):
+            tenders.append(_tc("阿里巴巴 1688", "双螺杆挤出机 螺纹元件 / 螺杆块 公开市场报价", "公开 B2B 市场",
+                               "2026", "市场零售挂牌", "区间宽·按规格", "https://www.1688.com/market/-CBABC2DDB8CBBCB7B3F6BBFA.html",
+                               "公开市场仅零售挂牌、无招标中标，仅作量级交叉验证"))
+        methods = [
+            {"name": "企业历史成交均价", "value": f"{ref} 万元", "note": f"≈ ${usd}/件，原始成交订单口径"},
+            {"name": "原厂↔替代区间", "value": "科倍隆原厂溢价", "note": "C.A.Picard/戴勒/国产高端约低 15–30%"},
+            {"name": "公开招标", "value": "无", "note": "进口 OEM 备件无公开中标，不可第三方核验"},
+        ]
+        return {
+            "reliability": {"level": "low" if low_rel else "medium",
+                            "note": ("维修服务离散度大、无公开中标 → 仅量级参考，以现场测绘报价为准"
+                                     if low_rel else
+                                     "价格源自企业真实历史成交订单均价，但无公开招标可第三方核验 → 中等可靠")},
+            "tenders": tenders, "methods": methods,
+            "anchor": f"{ref} 万元 · 历史成交均价（{'低' if low_rel else '中'}可靠）",
+        }
+    # —— 石化设备 ——
+    tenders = _T_PETRO.get(cat["key"]) or _T_STATIC_PLATFORM
+    methods = [
+        {"name": "行业均价基准", "value": f"{ref} 万元", "note": src},
+        {"name": "平台框架协议价", "value": "随规格/批量浮动", "note": "中石化/中石油/中化电子招标，中标单价多未公开"},
+        {"name": "四厂建模锚定", "value": "见各厂价格分析", "note": "按属地物流系数情景测算"},
+    ]
+    if cat["key"] == "crane":
+        methods.insert(1, {"name": "公开预算佐证", "value": "410 万 / 16 台",
+                           "note": "浙江先端起重设备采购，含轨道，约 25 万/台量级"})
+    specific = cat["key"] in _T_PETRO
+    return {
+        "reliability": {"level": "medium",
+                        "note": ("真实公开招标可查（中标单价未公开，按行业均价+建模测算）→ 中等可靠"
+                                 if specific else
+                                 "平台级溯源（该类静设备框架招标常态化，未逐条核验具体中标单价）→ 中等可靠")},
+        "tenders": tenders, "methods": methods,
+        "anchor": f"{ref} 万元 · 行业均价基准",
+    }
+
+
+# ════════════════════════════════════════════════════════════════════
 # 主流程
 # ════════════════════════════════════════════════════════════════════
 def build():
@@ -376,6 +586,7 @@ def build():
             "key": cat["key"], "cn": cat["cn"], "en": cat["en"], "icon": cat["icon"],
             "accent": cat["accent"], "ref_price_wan": cat["ref"], "kind": cat["kind"],
             "spec": cat["spec"], "edge": cat["edge"], "source": cat["src"],
+            "transparency": _transparency(cat),
             "plants": {},
         }
         for plant in PLANTS:

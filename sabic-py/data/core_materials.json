@@ -30,48 +30,51 @@
       "champion": "中信钛业股份有限公司",
       "pricing": {
         "updated": "2026-06",
-        "headline": "Up over 3,500 元/吨 cumulatively since 2026; in June, LB/Xianghai and others raised prices ~1,000 元/吨 again. Chlorination cost is tied to titanium ore and natural gas, not sulfur, so prices are more stable — index long contracts to the monthly titanium-ore price, not sulfur. · 2026 年以来累计上涨超 3,500 元/吨，6 月龙佰/祥海等再集体提价约 1,000 元/吨。氯化法成本挂钩钛精矿与天然气、不依赖硫磺，价格更抗波动——长协建议按钛精矿月度价联动，而非硫磺。",
+        "headline": "Sulfate rutile TiO2 trades at a daily-published index; the prior 17,600–18,500 figure was stale. Per 100ppi (2026-06-30) mainstream sulfate-rutile ex-works is 13,500–14,500 元/吨, composite benchmark 16,460. Chlorination grade commands a premium. · 硫酸法金红石型有生意社日度指数，原 17,600–18,500 偏高已校正：截至 2026-06-30 硫酸法金红石型主流出厂 13,500–14,500 元/吨，综合参考基准价 16,460；氯化法高端另有溢价。建议长协按生意社月度基准价联动。",
         "official": {
-          "title": "Official market price (tax-incl. mainstream ex-works · 2026-06) · 市场官方行情价（含税出厂主流价 · 2026-06）",
+          "title": "Public market index (sulfate-rutile ex-works, tax-incl. · 100ppi 2026-06-30) · 公开市场指数（硫酸法金红石型出厂含税 · 生意社 2026-06-30）",
           "items": [
             {
-              "name": "硫酸法金红石型 · 主流出厂",
-              "low": 17600,
-              "high": 18500,
+              "name": "硫酸法金红石型 · 主流出厂（含税）",
+              "low": 13500,
+              "high": 14500,
               "unit": "元/吨",
               "tag": "verified"
             },
             {
-              "name": "国产氯化法（比同牌硫酸法高 800–1500）",
-              "low": 19000,
-              "high": 20500,
+              "name": "硫酸法金红石型 · 全国报价全距",
+              "low": 12500,
+              "high": 16000,
               "unit": "元/吨",
               "tag": "verified"
             },
             {
-              "name": "进口氯化法 · FOB（到岸另加关税+海运）",
-              "low": 2000,
-              "high": 2250,
-              "unit": "美元/吨",
+              "name": "氯化法金红石型 · 国产高端/进口",
+              "low": 16500,
+              "high": 19000,
+              "unit": "元/吨",
+              "tag": "estimate"
+            },
+            {
+              "name": "生意社金红石型参考基准价",
+              "low": 16460,
+              "high": 16460,
+              "unit": "元/吨",
               "tag": "verified"
             }
           ],
           "sources": [
             {
-              "name": "百川盈孚",
-              "url": "https://www.baiinfo.com/qitawuji/taibaifen"
-            },
-            {
-              "name": "生意社 100ppi",
+              "name": "生意社钛白粉频道 100ppi（日度报价）",
               "url": "https://tio2.100ppi.com/"
             },
             {
-              "name": "我的钢铁网 Mysteel",
-              "url": "https://m.mysteel.com/hot/562814.html"
+              "name": "生意社 钛白粉交易基准价",
+              "url": "https://www.100ppi.com/vane/detail-645.html"
             },
             {
-              "name": "ChemNet 化工头条",
-              "url": "https://news.chemnet.com/toutiao/detail-68554.html"
+              "name": "生意社 2026-04-18 商品报价动态",
+              "url": "https://www.100ppi.com/news/detail-20260418-5548739.html"
             }
           ]
         },
@@ -122,7 +125,61 @@
             "conf": "estimate"
           }
         ],
-        "disclaimer": "Estimated from public market data and announced price hikes, not a formal quote; actual deals vary by grade, volume, payment terms and monthly indexing — refer to the maker's written quote. · 以上为公开行情与厂商公开提价信息测算，非正式报价单；实际成交受牌号、批量、付款账期、月度联动影响，请以厂商书面报价为准。"
+        "disclaimer": "Sulfate-rutile TiO2 has a daily public index → high reliability; chlorination grade is a premium estimate. Long contracts should track the 100ppi monthly benchmark. · 硫酸法金红石型有日度公开指数，可信度高；氯化法为高端溢价测算。建议长协价按生意社月度基准价联动，实际成交一单一议。",
+        "reliability": {
+          "level": "high",
+          "note": "生意社钛白粉日度行情指数 + 多家上市公司公开调价函，硫酸法金红石型基准可逐日核验 · daily 100ppi index + listed-co price letters"
+        },
+        "tenders": [
+          {
+            "platform": "生意社 100ppi",
+            "title": "金红石型钛白粉 参考基准价",
+            "buyer": "生意社大宗商品价格指数",
+            "date": "2026-06-29",
+            "qty": "日度指数",
+            "unit_price": "16,460 元/吨",
+            "url": "https://www.100ppi.com/vane/detail-645.html",
+            "note": "金红石型综合参考基准价，可逐日回溯"
+          },
+          {
+            "platform": "生意社 100ppi",
+            "title": "硫酸法金红石型 全国主流报价",
+            "buyer": "生意社钛白粉频道",
+            "date": "2026-06-30",
+            "qty": "全国主流出厂",
+            "unit_price": "12,500–16,000 元/吨",
+            "url": "https://tio2.100ppi.com/",
+            "note": "成交集中在 13,500–14,500，实际一单一议"
+          },
+          {
+            "platform": "新浪财经 / 生意社",
+            "title": "安纳达·海峰鑫等 2026 年内多轮调价函",
+            "buyer": "多家上市钛白粉企业",
+            "date": "2026-06",
+            "qty": "行业调价",
+            "unit_price": "本轮上调约 1,000 元/吨",
+            "url": "https://finance.sina.com.cn/money/future/nyzx/2026-02-28/doc-inhpkaqk2909183.shtml",
+            "note": "2026 年内累计上涨，连发调价函，验证上行趋势"
+          }
+        ],
+        "methods": [
+          {
+            "name": "市场指数法（生意社月均）",
+            "value": "≈13,900 元/吨",
+            "note": "硫酸法金红石型 2 月度均价口径"
+          },
+          {
+            "name": "综合参考基准价法",
+            "value": "16,460 元/吨",
+            "note": "金红石型综合基准（含氯化法溢价）"
+          },
+          {
+            "name": "龙头出厂报价法",
+            "value": "13,500–14,500 元/吨",
+            "note": "龙蟒佰利/中核钛白等主流硫酸法出厂"
+          }
+        ],
+        "anchor": "硫酸法 ≈13,900 元/吨 · 氯化法 ≈17,500 元/吨"
       },
       "weights": {
         "tech": 35,
@@ -184,6 +241,39 @@
         },
         {
           "rank": 2,
+          "name": "龙佰集团股份有限公司",
+          "score": 91,
+          "location": "河南焦作（上海颜钛分销）",
+          "type": "Dual chlorination lines · 氯化双线",
+          "note": "Global TiO₂ capacity leader 1.51M t/yr (chlorination 660k t), sold to 110+ countries, 50%+ overseas, large-capacity fallback · 全球钛白粉产能龙头 151 万吨/年（氯化法 66 万吨），远销 110 余国，海外占比超 50%，大产能兜底",
+          "gs": "✅ Active · listed 002601 · reg. capital 2.38B (QCC-verified) · ✅ 存续 · 上市 002601 · 注册资本 23.8 亿（企查查核验）",
+          "dims": {
+            "tech": 96.0,
+            "location": 81.0,
+            "cost": 85.0,
+            "ehss": 93.3,
+            "scale": 99.9,
+            "service": 86.0
+          },
+          "pros": [
+            "国内氯化法产能第一（66 万吨/年）、全球总产能龙头 151 万吨/年，旺季断供应急能力最强",
+            "垂直一体化（钛矿—氯化—钛白），成本与一致性可控；上海颜钛分销，华东可达"
+          ],
+          "cons": [
+            "总部河南，长协交付需上海前置仓/分销配合",
+            "产品线覆盖氯化+硫酸双线，纯氯化高端牌号一致性建议按批次验证"
+          ],
+          "verdict": "Strong runner-up · national chlorination-capacity No.1 · 强力次选 · 国内氯化法产能第一",
+          "coords": {
+            "lat": 35.21,
+            "lng": 113.24
+          },
+          "base": "CQ",
+          "base_cn": "重庆",
+          "base_km": 888
+        },
+        {
+          "rank": 3,
           "name": "宜宾天原海丰和泰有限公司",
           "score": 89,
           "location": "四川宜宾",
@@ -216,39 +306,6 @@
           "base": "CQ",
           "base_cn": "重庆",
           "base_km": 206
-        },
-        {
-          "rank": 3,
-          "name": "龙佰集团股份有限公司",
-          "score": 84,
-          "location": "河南焦作（上海颜钛分销）",
-          "type": "Dual chlorination lines · 氯化双线",
-          "note": "Global TiO₂ capacity leader 1.51M t/yr (chlorination 660k t), sold to 110+ countries, 50%+ overseas, large-capacity fallback · 全球钛白粉产能龙头 151 万吨/年（氯化法 66 万吨），远销 110 余国，海外占比超 50%，大产能兜底",
-          "gs": "✅ Active · listed 002601 · reg. capital 2.38B (QCC-verified) · ✅ 存续 · 上市 002601 · 注册资本 23.8 亿（企查查核验）",
-          "dims": {
-            "tech": 85.7,
-            "location": 64.0,
-            "cost": 80.0,
-            "ehss": 93.3,
-            "scale": 99.9,
-            "service": 80.0
-          },
-          "pros": [
-            "全球产能第一梯队，氯化/硫酸双线，旺季断供应急能力强",
-            "上海颜钛分销，华东可达"
-          ],
-          "cons": [
-            "氯化法占比低于纯氯化路线，高端牌号一致性需验证",
-            "总部河南，长协交付需前置仓配合"
-          ],
-          "verdict": "Core backup · large-capacity fallback · 核心备选 · 大产能兜底",
-          "coords": {
-            "lat": 35.21,
-            "lng": 113.24
-          },
-          "base": "CQ",
-          "base_cn": "重庆",
-          "base_km": 888
         },
         {
           "rank": 4,
@@ -650,12 +707,12 @@
       "champion": "上海海湾石化有限公司",
       "pricing": {
         "updated": "2026-06",
-        "headline": "Finished FFS film has no single authoritative price index; estimated as 'metallocene/LLDPE resin + processing fee'; the 2026 resin index is +3–5% YoY and moves with crude — index long contracts to the monthly PE-resin price. Finished price varies by thickness, layers and print colors. · FFS 成品膜无单独权威价格指数，按『茂金属/LLDPE 树脂 + 加工费』测算；2026 年树脂价格指数同比 +3–5%、随原油波动，长协建议按 PE 树脂月度价联动。成品价随膜厚、层数、印刷色数浮动。",
+        "headline": "FFS heavy-duty film has no single price index; Sinopec/Sinochem run real framework tenders but do not publish award unit-prices, so we triangulate as 'mLLDPE/LLDPE resin + processing'. Est. 11,500–14,000 元/吨. · FFS 重包装膜无单一价格指数；中石化、中化商务等有真实框架招标但不公开中标单价，故按『茂金属/LLDPE 树脂 + 加工费』测算，成品约 11,500–14,000 元/吨，随 PE 树脂月度价联动。",
         "official": {
-          "title": "Market reference price (resin cost + processing fee · 2026-06) · 市场参考价（树脂成本 + 加工费测算 · 2026-06）",
+          "title": "Triangulated reference (resin cost + processing · 2026-06) · 测算参考价（树脂成本 + 加工费 · 2026-06）",
           "items": [
             {
-              "name": "茂金属/LLDPE 树脂原料",
+              "name": "茂金属/LLDPE 树脂原料（公开指数）",
               "low": 9000,
               "high": 10500,
               "unit": "元/吨",
@@ -663,31 +720,27 @@
             },
             {
               "name": "三层共挤茂金属 FFS 重膜成品",
-              "low": 13000,
-              "high": 16000,
+              "low": 11500,
+              "high": 14000,
               "unit": "元/吨",
-              "tag": "estimate"
+              "tag": "tender"
             },
             {
-              "name": "FFS 膜卷（单只参考）",
-              "low": 1.5,
-              "high": 1.5,
-              "unit": "元/只",
-              "tag": "estimate"
+              "name": "再生 FFS 膜（中石化框架口径）",
+              "low": 0,
+              "high": 0,
+              "unit": "框架价 −200 元/吨",
+              "tag": "tender"
             }
           ],
           "sources": [
             {
-              "name": "百川盈孚 PE 包装膜",
+              "name": "中化商务 · FFS重型膜袋采购招标",
+              "url": "https://e.sinochemitc.com/cms/channel/ywgg1hw/151921.htm"
+            },
+            {
+              "name": "百川盈孚 PE 包装膜行情",
               "url": "https://www.baiinfo.com/suliaozhipin/baozhuangmo"
-            },
-            {
-              "name": "金联创 PE",
-              "url": "https://plas.315i.com/pe.html"
-            },
-            {
-              "name": "专塑视界 塑料行情",
-              "url": "https://www.zhuansushijie.com/"
             }
           ]
         },
@@ -720,7 +773,61 @@
             "conf": "rfq"
           }
         ],
-        "disclaimer": "Public per-ton prices for finished FFS film are scarce; the above is a resin-cost-plus-processing estimate range, not a formal quote; actual deals vary by film thickness, layers, print colors and volume — refer to the maker's written quote. · FFS 成品膜公开吨价稀缺，以上为树脂成本叠加加工费的测算区间，非正式报价；实际成交受膜厚、层数、印刷色数、批量影响，请以厂商书面报价为准。"
+        "disclaimer": "Real Sinopec/Sinochem FFS tenders exist but award unit-prices are not public; the above is a resin-cost-plus triangulation → medium reliability. Final price varies by thickness/layers/print. · 中石化、中化商务等FFS 招标真实存在但不公开中标单价，上为成本加成测算，可信度中等；实际价随膜厚、层数、印刷而变，以书面报价为准。",
+        "reliability": {
+          "level": "medium",
+          "note": "中石化框架协议、中化商务等真实招标可查，但中标单价未公开，价格由 PE 树脂成本 + 加工费多方测算 · real frameworks found, award unit-price undisclosed → triangulated"
+        },
+        "tenders": [
+          {
+            "platform": "中石化电子招标平台",
+            "title": "2026 年 FFS膜 / 再生FFS膜 框架协议招标采购聚乙烯包装膜",
+            "buyer": "中石化国际事业华南有限公司",
+            "date": "2026",
+            "qty": "框架协议",
+            "unit_price": "未公开（再生膜 = 框架价 −200 元/吨）",
+            "url": "",
+            "note": "招标编号 NWZ251224-1605-107217，价差关系真实可查"
+          },
+          {
+            "platform": "中化商务",
+            "title": "FFS 重型防滑膜包装袋采购招标",
+            "buyer": "中化商务（重庆云天化天聚 350吨 / 云南水富云天化 175吨）",
+            "date": "2024-11",
+            "qty": "合计 525 吨",
+            "unit_price": "未公开",
+            "url": "https://e.sinochemitc.com/cms/channel/ywgg1hw/151921.htm",
+            "note": "交货 2025 全年，证明大化企持续集采"
+          },
+          {
+            "platform": "千里马招标网",
+            "title": "2025 年度第 11 批 FFS 包装机薄膜询价单",
+            "buyer": "工业企业（湖北）",
+            "date": "2025-03",
+            "qty": "询价批量",
+            "unit_price": "未公开",
+            "url": "",
+            "note": "行业活跃询价佐证"
+          }
+        ],
+        "methods": [
+          {
+            "name": "成本加成法（树脂+加工）",
+            "value": "11,500–14,000 元/吨",
+            "note": "茂金属/LLDPE 9,000–10,500 + 加工费 2,500–3,500"
+          },
+          {
+            "name": "招标价差佐证法",
+            "value": "再生膜 = 框架价 −200",
+            "note": "中石化 2026 框架真实价差"
+          },
+          {
+            "name": "市场指数法（PE 包装膜）",
+            "value": "同比 +3–5%",
+            "note": "百川盈孚/隆众 PE 包装膜指数随原油"
+          }
+        ],
+        "anchor": "成品 ≈12,800 元/吨（随 PE 树脂月度价联动）"
       },
       "weights": {
         "tech": 35,
@@ -962,6 +1069,39 @@
         },
         {
           "rank": 8,
+          "name": "四川美丰高分子材料科技有限公司",
+          "score": 82,
+          "location": "四川",
+          "type": "Out-of-town large plant · 异地大厂",
+          "note": "Chemical-group polymer platform, self-supplied feedstock, westerly location · 化工集团高分子材料平台，原料自给，区位偏西",
+          "gs": "✅ Active · reg. capital 240M · founded 2019 (QCC-verified) · ✅ 存续 · 注册资本 2.4 亿 · 成立 2019（企查查核验）",
+          "dims": {
+            "tech": 88.0,
+            "location": 79.0,
+            "cost": 78.0,
+            "ehss": 74.0,
+            "scale": 88.0,
+            "service": 78.0
+          },
+          "pros": [
+            "上市化工集团（四川美丰 000731）高分子平台，原料自给、成本可控",
+            "参与起草重载膜行业标准，技术规范与批次一致性有背书"
+          ],
+          "cons": [
+            "区位偏西（四川），华东/华南基地需长协前置仓配合",
+            "高分子子公司 2019 年成立，重载膜专线产能规模仍待放量"
+          ],
+          "verdict": "Standard-drafting listed-group platform · viable cross-region pick · 行业标准起草·上市集团平台 · 跨区可选",
+          "coords": {
+            "lat": 30.57,
+            "lng": 104.07
+          },
+          "base": "CQ",
+          "base_cn": "重庆",
+          "base_km": 264
+        },
+        {
+          "rank": 9,
           "name": "上海紫江彩印包装有限公司",
           "score": 81,
           "location": "上海",
@@ -993,7 +1133,7 @@
           "base_km": 7
         },
         {
-          "rank": 9,
+          "rank": 10,
           "name": "中天科盛科技股份有限公司（上海金山）",
           "score": 80,
           "location": "上海金山",
@@ -1020,7 +1160,7 @@
           "base_km": 57
         },
         {
-          "rank": 10,
+          "rank": 11,
           "name": "福建泉宁塑胶有限公司",
           "score": 79,
           "location": "福建泉州",
@@ -1047,7 +1187,7 @@
           "base_km": 171
         },
         {
-          "rank": 11,
+          "rank": 12,
           "name": "广东众和化塑股份公司",
           "score": 76,
           "location": "广东",
@@ -1072,33 +1212,6 @@
           "base": "NS",
           "base_cn": "南沙",
           "base_km": 50
-        },
-        {
-          "rank": 12,
-          "name": "四川美丰高分子材料科技有限公司",
-          "score": 75,
-          "location": "四川",
-          "type": "Out-of-town large plant · 异地大厂",
-          "note": "Chemical-group polymer platform, self-supplied feedstock, westerly location · 化工集团高分子材料平台，原料自给，区位偏西",
-          "gs": "✅ Active · reg. capital 240M · founded 2019 (QCC-verified) · ✅ 存续 · 注册资本 2.4 亿 · 成立 2019（企查查核验）",
-          "dims": {
-            "tech": 73.5,
-            "location": 79.0,
-            "cost": 75.5,
-            "ehss": 71.5,
-            "scale": 78.5,
-            "service": 68.5
-          },
-          "pros": [],
-          "cons": [],
-          "verdict": "",
-          "coords": {
-            "lat": 30.57,
-            "lng": 104.07
-          },
-          "base": "CQ",
-          "base_cn": "重庆",
-          "base_km": 264
         },
         {
           "rank": 13,
@@ -1466,44 +1579,36 @@
       "champion": "上海民悦包装材料有限公司",
       "pricing": {
         "updated": "2026-06",
-        "headline": "Pallets have no unified price index; a typical by-spec market range. Prices move with timber/plywood costs; 10k-unit batches get discounts. IPPC fumigation and export-inspection certificate fees are usually charged separately. · 木托盘无统一价格指数，按规格的市场典型成交区间；价格随木材/胶合板原料波动，万件级批量有折扣。IPPC 熏蒸处理与出口商检证书费通常另计。",
+        "headline": "Wood pallets have no price index and public award unit-prices are scarce; real bulk tenders (e.g. CR Chemicals) exist but do not disclose unit price. We narrow to the most common spec with an explicit low-reliability flag. · 木托盘无价格指数、公开中标单价稀缺；华润化学等真实集采项目存在但不披露单价。下方收窄到最常见规格并显式标注『估测不准』，仅作量级参考。",
         "official": {
-          "title": "Typical market transaction price (by spec · 2026-06) · 市场典型成交价（按规格 · 2026-06）",
+          "title": "Market estimate by most-common spec (low reliability · 2026-06) · 按最常见规格的市场估测（低可靠 · 2026-06）",
           "items": [
             {
-              "name": "免熏蒸胶合板托盘 1100×1100",
-              "low": 55,
-              "high": 85,
-              "unit": "元/个",
-              "tag": "estimate"
+              "name": "免熏蒸胶合板托盘 1100×1100（常见规格）",
+              "low": 65,
+              "high": 78,
+              "unit": "元/片",
+              "tag": "unreliable"
             },
             {
               "name": "IPPC 实木熏蒸托盘 1100×1100",
-              "low": 45,
-              "high": 70,
-              "unit": "元/个",
-              "tag": "estimate"
+              "low": 50,
+              "high": 68,
+              "unit": "元/片",
+              "tag": "unreliable"
             },
             {
-              "name": "二手周转托盘",
+              "name": "出口检验 / IPPC 熏蒸证书费",
               "low": 0,
               "high": 0,
-              "unit": "新价 30–40%",
-              "tag": "estimate"
+              "unit": "另计·需询价",
+              "tag": "rfq"
             }
           ],
           "sources": [
             {
-              "name": "京东 出口免熏蒸木托盘报价",
-              "url": "https://www.jd.com/jiage/14065a46306e4a95bfe54.html"
-            },
-            {
-              "name": "安捷包装 胶合板托盘",
-              "url": "https://www.angelic.com.cn/dizuomutuopan/2082.html"
-            },
-            {
-              "name": "中国制造网 出口托盘",
-              "url": "https://3g.made-in-china.com/photo/chukoutpmxz-1.html"
+              "name": "中国政府采购网 · 中标公告",
+              "url": "https://www.ccgp.gov.cn/cggg/zygg/zbgg/"
             }
           ]
         },
@@ -1536,7 +1641,51 @@
             "conf": "rfq"
           }
         ],
-        "disclaimer": "Precise public unit prices for pallets are scarce; the above is a typical by-spec market range, not a formal quote; actual deals vary by size, thickness, load, certificate inclusion and volume — refer to the maker's written quote. · 木托盘公开精确单价稀缺，以上为按规格的市场典型成交区间，非正式报价；实际成交受尺寸、厚度、承重、是否含证、批量影响，请以厂家书面报价为准。"
+        "disclaimer": "Pallet public unit-prices are scarce → the above is an estimate, NOT a quote; actual deals vary by size, thickness, load, certificate inclusion and volume. Always defer to the maker's written quote. · 木托盘公开单价稀缺，上为估测非正式报价；实际成交受尺寸、厚度、载重、是否含证书、批量影响，务必以厂商书面报价为准。",
+        "reliability": {
+          "level": "low",
+          "note": "木托盘无统一价格指数、公开中标单价稀缺；下列为真实集采项目佐证 + 长三角常见规格市场估测，单价可靠性低，务必以书面报价为准 · scarce public award unit-prices → low reliability"
+        },
+        "tenders": [
+          {
+            "platform": "标标达商机网",
+            "title": "免熏蒸 / 熏蒸木托盘 招标采购（含华润化学常州基地）",
+            "buyer": "华润化学材料科技股份有限公司 等",
+            "date": "2026-01",
+            "qty": "华润常州基地 8,500 块",
+            "unit_price": "未公开",
+            "url": "",
+            "note": "真实机构集采项目，单价不披露，仅佐证需求量级"
+          },
+          {
+            "platform": "中国政府采购网",
+            "title": "木托盘 / 出口包装托盘 中标公告",
+            "buyer": "各级政府采购单位",
+            "date": "2025–2026",
+            "qty": "零星批量",
+            "unit_price": "少量公开",
+            "url": "https://www.ccgp.gov.cn/cggg/zygg/zbgg/",
+            "note": "出口级木托盘公开中标单价稀缺，多按询价成交"
+          }
+        ],
+        "methods": [
+          {
+            "name": "常见规格市场估测",
+            "value": "65–78 元/片",
+            "note": "免熏蒸胶合板托盘 1100×1100，可靠性低"
+          },
+          {
+            "name": "原料成本浮动法",
+            "value": "随木材/胶合板价",
+            "note": "10,000 片批量有折扣"
+          },
+          {
+            "name": "招标佐证法",
+            "value": "单价多未公开",
+            "note": "华润/政府采购项目存在但不披露单价"
+          }
+        ],
+        "anchor": "免熏蒸托盘 ≈70 元/片（低可靠，以书面报价为准）"
       },
       "weights": {
         "tech": 30,

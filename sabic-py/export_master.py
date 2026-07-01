@@ -2,11 +2,12 @@
 """
 SABIC 供应商总表导出器 —— 一次导出全站所有品类的供应商，多 Sheet 工作簿。
 
-覆盖网页上的四类来源：
+覆盖网页上的五类来源（与首页四大类入口一一对应）：
   ①  专家评审 · 核心物料   (core_materials.json，6 维专家评分，含国产+进口)
   ②  核心采购品类 P1        (local_cache/*.json，企查查 3 维工商评分)
   ③  补充扩展品类 P2        (local_cache/*.json，企查查 3 维工商评分)
   ④  综合服务 · 15 品类     (services.json，5 维加权专家评分，4 基地 ×5 家)
+  ⑤  化工设备 · 寻源        (equipment.json，5 维加权专家评分，各品类 ×4 基地)
 
 用法：  python export_master.py
 输出：  ../SABIC_供应商总表_全品类_<时间戳>.xlsx
@@ -24,6 +25,8 @@ from utils.local_search import list_cache_categories, search_local
 from utils.sabic_search import get_category_priority
 from utils.services_scorer import rank_suppliers, DIM_KEYS as SV_DIMS, DIM_CN as SV_DIM_CN, \
     DEFAULT_WEIGHTS as SV_DEFAULT_W, verdict_for
+from utils.equipment_scorer import rank_suppliers as eq_rank, DIM_KEYS as EQ_DIMS, \
+    DIM_CN as EQ_DIM_CN, DEFAULT_WEIGHTS as EQ_DEFAULT_W, verdict_for as eq_verdict
 
 APP_DIR = Path(__file__).resolve().parent
 DATA = APP_DIR / "data"
@@ -98,6 +101,8 @@ BASE_CN = {"SH": "上海浦东", "NS": "广州南沙", "GL": "福建古雷", "CQ
 NATURE_ZH = {"foreign": "外资", "soe": "国企", "joint": "合资", "private": "民营"}
 TIERN_ZH = {"national_top": "全国龙头", "regional": "区域龙头", "local": "属地本地"}
 SECTOR_ZH = {"petrochem": "石化炼化", "chemical": "化工", "industrial": "工业通用", "general": "通用"}
+EQ_TIER_ZH = {"oem_intl": "原厂/国际一线", "premium_alt": "德资高端替代",
+              "national_top": "国产高端龙头", "regional": "国产通用", "local": "属地应急"}
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -210,6 +215,43 @@ def sheet_services(wb, stats):
 
 
 # ════════════════════════════════════════════════════════════════════
+# Sheet ⑤ 化工设备 · 寻源（5 维加权专家评分 · 各品类 ×4 基地）
+# ════════════════════════════════════════════════════════════════════
+def sheet_equipment(wb, stats):
+    eq = json.loads((DATA / "equipment.json").read_text(encoding="utf-8"))
+    ws = wb.create_sheet("⑤ 化工设备·寻源")
+    ws.sheet_properties.tabColor = "EA580C"
+    heads = [("设备品类", 18), ("基地", 10), ("排名", 6), ("供应商全称", 30),
+             ("综合评分", 9)] + [(EQ_DIM_CN[k], 11) for k in EQ_DIMS] + \
+            [("估算到厂价(万)", 13), ("交期(天)", 9), ("距离(km)", 9), ("属地", 7),
+             ("资质", 11), ("规模圈层", 12), ("专家评语", 20)]
+    _title(ws, len(heads), "供应商总表 · ⑤ 化工设备寻源（5 维加权专家评分 · 各设备品类 × 四大基地）")
+    _headers(ws, heads, color="FFEA580C")
+    rows = []
+    ncat = 0
+    for c in eq.get("categories", []):
+        cat_cn = c.get("cn", c.get("key", ""))
+        has_row = False
+        for bk, bcn in BASE_CN.items():
+            sl = c.get("plants", {}).get(bk, {}).get("suppliers", [])
+            for s in eq_rank(sl, EQ_DEFAULT_W):
+                d = s["dims"]
+                rows.append([cat_cn, bcn, s["rank"], s.get("name", ""), s["score"]] +
+                            [round(d[k], 1) for k in EQ_DIMS] +
+                            [s.get("est_price_wan", ""), s.get("lead_time_days", ""),
+                             s.get("distance_km", ""), "✓" if s.get("is_local") else "—",
+                             s.get("qualification", ""),
+                             EQ_TIER_ZH.get(s.get("tier", ""), s.get("tier", "")),
+                             eq_verdict(s)])
+                has_row = True
+        if has_row:
+            ncat += 1
+    score_cols = tuple([5] + list(range(6, 6 + len(EQ_DIMS))))
+    _write_rows(ws, rows, score_cols=score_cols, name_cols=(4, len(heads)))
+    stats.append(("⑤ 化工设备 · 寻源", f"{ncat} 设备品类 × 4 基地", len(rows)))
+
+
+# ════════════════════════════════════════════════════════════════════
 # Sheet 0 汇总封面
 # ════════════════════════════════════════════════════════════════════
 def sheet_cover(wb, stats):
@@ -218,7 +260,7 @@ def sheet_cover(wb, stats):
     _title(ws, 4, "供应商总表 · 全品类汇总")
     sub = ws.cell(row=2, column=1,
                   value=f"导出时间：{datetime.now():%Y-%m-%d %H:%M}　|　"
-                        f"覆盖：专家评审核心物料 + 核心采购品类 + 补充扩展品类 + 综合服务 15 品类")
+                        f"覆盖：专家评审核心物料 + 核心采购品类 + 补充扩展品类 + 综合服务 15 品类 + 化工设备寻源")
     ws.merge_cells("A2:D2")
     sub.font = Font(name="微软雅黑", size=10, color="FF334155")
     sub.alignment = Alignment(horizontal="left", vertical="center")
@@ -230,6 +272,7 @@ def sheet_cover(wb, stats):
         "② 核心采购品类 P1": "企查查 3 维工商评分",
         "③ 补充扩展品类 P2": "企查查 3 维工商评分",
         "④ 综合服务 · 15 品类": "5 维加权专家评分",
+        "⑤ 化工设备 · 寻源": "5 维加权专家评分",
     }
     total = 0
     for i, (name, scope, n) in enumerate(stats):
@@ -265,6 +308,7 @@ def build_master() -> bytes:
     _gongshang_sheet(wb, "② 核心采购品类", 1, "0A1628", stats, "② 核心采购品类 P1")
     _gongshang_sheet(wb, "③ 补充扩展品类", 2, "2563EB", stats, "③ 补充扩展品类 P2")
     sheet_services(wb, stats)
+    sheet_equipment(wb, stats)
     sheet_cover(wb, stats)
     buf = io.BytesIO()
     wb.save(buf)

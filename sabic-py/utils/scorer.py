@@ -5,11 +5,15 @@ SABIC 供应商全量化评分算法  v3.0
   recheck_relevance 保证；移除专利加分——企查查专利接口无数据，全为0无意义）
 
 维度（默认权重）：
-  ① 地理位置      geography   35%  — 省份圈层 + km 距离（纯数字）
-  ② 企业规模      scale       35%  — 注册资本 + 成立年限（纯数字）
-  ③ 合规与资质    compliance  30%  — 经营状态/角色/许可/园区/行业/进出口（全部可量化）
+  ① 地理位置      geography   25%  — 省份圈层 + km 距离（纯数字）
+  ② 企业规模      scale       40%  — 注册资本 + 成立年限（纯数字）
+  ③ 合规与资质    compliance  35%  — 经营状态/角色/许可/园区/行业/进出口（全部可量化）
 
 字段来源：全部来自企查查工商信息（status/scope/industry/address/RegistCapi/StartDate）
+
+v3.1 权重调整：地理权重 35%→25%，让『行业地位』（规模/合规）主导排序，避免万华、
+  吉林石化、龙佰等异地龙头仅因离厂区远而被压到与其行业地位不符的低位。地理仍保留
+  25% 并按所选厂区独立计算，就近交付优势依旧体现；侧栏『就近优先』预设仍可临时拉高。
 """
 from __future__ import annotations
 import re
@@ -27,9 +31,9 @@ TIERS          = REGIONS["tiers"]
 PROVINCE_COORDS = REGIONS.get("provinceCoords", {})  # {省名: {lng,lat,distance_km}}
 
 DEFAULT_WEIGHTS = {
-    "geography":  0.35,
-    "scale":      0.35,
-    "compliance": 0.30,
+    "geography":  0.25,
+    "scale":      0.40,
+    "compliance": 0.35,
 }
 
 # 同义词表：从 data/synonyms.json 动态加载（open_search.py 用于 API 搜索词扩展）
