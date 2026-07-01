@@ -497,37 +497,6 @@ def open_search(
     scored.sort(key=lambda x: (-x["score"],
                                _role_rank.get(x.get("_role","unknown"), 4)))
 
-    # ── 阶段六：用 255 资质证书核验 Top 候选（验证真工厂+质量）──────────
-    # 仅对排序后前 N 家调用（控制成本），用资质数据回填并微调分数
-    from utils.qcc_client import get_qualifications, is_qual_enabled
-    qual_checked = 0
-    if is_qual_enabled():
-        VERIFY_TOP_N = 12   # 只核验前12家，每家0.3元
-        for s in scored[:VERIFY_TOP_N]:
-            quals = get_qualifications(s.get("name", ""))
-            if quals and quals.get("items"):
-                items = quals["items"]
-                names = " ".join(i.get("name","") for i in items)
-                lic = s.setdefault("licenses", {})
-                lic["iso_certs"] = [i.get("name","") for i in items
-                                    if "ISO" in i.get("name","") or "体系认证" in i.get("name","")]
-                lic["production_license"] = ("生产许可" in names)
-                lic["safety_production"]  = ("安全生产许可" in names)
-                if "危险化学品" in names:
-                    lic["hazardous_chemicals"] = True
-                s["_qualifications"] = items
-                s["_qual_verified"] = True
-                # 资质齐全的真工厂：重新评分（资质分会提升 compliance）
-                rescored = score_supplier(s, virtual_chem, w, query=query, site_key=site_key)
-                s["score"] = rescored["score"]
-                s["dimensions"] = rescored["dimensions"]
-                qual_checked += 1
-            else:
-                s["_qual_verified"] = False
-        # 资质回填后重排（综合评分降序，同分工厂优先）
-        scored.sort(key=lambda x: (-x["score"],
-                                   _role_rank.get(x.get("_role","unknown"), 4)))
-
     return {
         "total":        total,
         "displayed":    len(scored),
@@ -535,5 +504,4 @@ def open_search(
         "source":       "qichacha",
         "detail_ok":    detail_ok,
         "detail_fail":  detail_fail,
-        "qual_checked": qual_checked,
     }

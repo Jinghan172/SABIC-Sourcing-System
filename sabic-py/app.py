@@ -861,11 +861,8 @@ with st.sidebar:
     st.caption("Cache hits skip the API; uncached categories need the APIs below for live search.  \n"
                "本地缓存命中时不调 API；未缓存品类需开通以下接口实时搜索。")
 
-    from utils.qcc_client import (is_configured as qcc_ok,
-                                  is_qual_enabled, is_risk_enabled)
-    _qcc  = qcc_ok()
-    _qual = is_qual_enabled()
-    _risk = is_risk_enabled()
+    from utils.qcc_client import is_configured as qcc_ok
+    _qcc = qcc_ok()
 
     def _iface_row(order, name, code, on, mandatory, powers, cfg_hint):
         """渲染一个接口管理行"""
@@ -901,12 +898,6 @@ with st.sidebar:
     _iface_row(2, "Company business info · 企业工商信息", "410", _qcc, True,
                "Live supplier details + 3-dimension scoring · 实时搜索的供应商详情 + 三维评分",
                "Same as above (same key) · 同上（同一组 Key）")
-    _iface_row(3, "Qualification certs (255) · 资质证书", "0.3元", _qual, False,
-               "Detail card 「📜 Cert verification · 资质证书核验」· auto-loads on opening details · 打开详情自动加载",
-               "Fill QCC_QUAL_ENDPOINT · 填 QCC_QUAL_ENDPOINT")
-    _iface_row(4, "Risk scan (736) · 风险扫描", "6元", _risk, False,
-               "Detail card 「⚠️ Deep risk check · 深度风险核查」· only on manual button · 手动按钮才调用",
-               "Fill QCC_RISK_ENDPOINT · 填 QCC_RISK_ENDPOINT")
 
 
 if st.session_state.get("core_material"):
@@ -1669,110 +1660,17 @@ with right_col:
                 st.caption("No business-scope data for this company (sole proprietors may lack this field in QCC)  \n该企业暂无经营范围数据（个体工商户在企查查工商接口可能无登记字段）")
             st.caption("Capacity / MOQ / quotes require an RFQ to the company — QCC business data does not include these  \n产能/起订量/报价需向企业询价，企查查工商数据不含这些")
 
-        # ── 行 2：企查查扩展接口（开通后自动显示真实数据）──────────────
+        # ── 行 2：官方核验链接 ─────────────────────────────────────────
         st.markdown("---")
-        st.caption("The info below is queried on demand — one API call per company view, to control cost  \n以下信息按需查询，仅在查看本企业时调用一次接口，控制成本")
-        from utils.qcc_client import (get_qualifications, get_risk_info,
-                                       is_qual_enabled, is_risk_enabled)
-        ea1, ea2, ea3, ea4 = st.columns(4)
-
-        with ea1:
-            st.markdown("**📜 Certificate Verification · 资质证书核验**")
-            if is_qual_enabled():
-                _quals = get_qualifications(active.get("name", ""))
-                if _quals and _quals.get("items"):
-                    for q in _quals["items"][:4]:
-                        _ok = q.get("status","") in ("有效","正常","")
-                        st.markdown(
-                            f'<div style="font-size:12px;padding:2px 0">'
-                            f'<span style="color:{"#059669" if _ok else "#dc2626"}">'
-                            f'{"✓" if _ok else "✗"}</span> {q.get("name","")}'
-                            f'<span style="color:#9ba8bb"> {q.get("expire","")}</span></div>',
-                            unsafe_allow_html=True)
-                else:
-                    st.caption("No certificate records found · 未查到资质证书记录")
-            else:
-                st.markdown(
-                    '<div style="background:#f9fafb;border:1px dashed #d1d5db;'
-                    'border-radius:6px;padding:8px;font-size:11px;color:#9ca3af;text-align:center">'
-                    'Enable the "Certificates" API to<br>verify hazmat/safety-production licenses<br>'
-                    '开通「资质证书」接口后<br>核验危化品/安全生产许可证</div>',
-                    unsafe_allow_html=True)
-
-        with ea2:
-            st.markdown("**⚠️ Deep Risk Check · 深度风险核查**")
-            if is_risk_enabled():
-                _sid = active.get("id", "")
-                _risk_cache_key = f"risk_{_sid}"
-                _cached_risk = st.session_state.get(_risk_cache_key)
-
-                if _cached_risk is None:
-                    st.caption("QCC risk scan · 企查查风险扫描 · ¥6/scan · 6元/次")
-                    if st.button("🔍 Check now · 立即核查", key=f"risk_btn_{_sid}",
-                                 width='stretch',
-                                 help="Calls QCC API 736: dishonesty / litigation / abnormal operation / shareholders, ¥6 each  \n调用企查查736接口，含失信/诉讼/经营异常/股东，每次6元"):
-                        with st.spinner("Checking… · 正在核查..."):
-                            _r = get_risk_info(active.get("name", ""))
-                            st.session_state[_risk_cache_key] = _r or {"_empty": True}
-                        st.rerun()
-                else:
-                    _risk = _cached_risk if not _cached_risk.get("_empty") else None
-                    if _risk:
-                        _flags = []
-                        if _risk.get("dishonest"): _flags.append(("Dishonest debtor · 失信被执行人","#dc2626"))
-                        if _risk.get("executed"):  _flags.append(("Person subject to enforcement · 被执行人","#dc2626"))
-                        if _risk.get("abnormal"):  _flags.append(("Abnormal operation · 经营异常","#d97706"))
-                        if _risk.get("penalty_count",0)>0:
-                            _flags.append((f"Admin. penalties · 行政处罚 {_risk['penalty_count']}","#d97706"))
-                        if _risk.get("lawsuit_count",0)>0:
-                            _flags.append((f"Lawsuits · 涉诉 {_risk['lawsuit_count']}","#d97706"))
-                        if _flags:
-                            for txt, col in _flags:
-                                st.markdown(f'<div style="font-size:12px;color:{col};padding:2px 0">⚠ {txt}</div>',
-                                            unsafe_allow_html=True)
-                        else:
-                            st.markdown('<div style="font-size:12px;color:#059669;padding:2px 0">✓ No major risks found · 未发现重大风险</div>',
-                                        unsafe_allow_html=True)
-                        st.caption("✓ Checked (no re-charge this session) · 已核查（本次会话不再重复扣费）")
-                    else:
-                        st.caption("No risk records found · 未查到风险记录")
-            else:
-                st.markdown(
-                    '<div style="background:#f9fafb;border:1px dashed #d1d5db;'
-                    'border-radius:6px;padding:8px;font-size:11px;color:#9ca3af;text-align:center">'
-                    'Enable "Risk scan 736" for<br>manual checks (¥6/scan)<br>'
-                    '开通「企业风险扫描736」<br>后可手动核查（6元/次）</div>',
-                    unsafe_allow_html=True)
-
-        with ea3:
-            st.markdown("**👥 Shareholders · 股东信息**")
-            _sid3 = active.get("id", "")
-            _risk_data = st.session_state.get(f"risk_{_sid3}")
-            _partners = (_risk_data or {}).get("partners", []) if _risk_data else []
-            if _partners:
-                for p in _partners[:5]:
-                    st.markdown(
-                        f'<div style="font-size:12px;padding:2px 0">'
-                        f'{p.get("name","")} '
-                        f'<span style="color:#9ba8bb">{p.get("ratio","")}</span></div>',
-                        unsafe_allow_html=True)
-            else:
-                st.markdown(
-                    '<div style="background:#f9fafb;border:1px dashed #d1d5db;'
-                    'border-radius:6px;padding:8px;font-size:11px;color:#9ca3af;text-align:center">'
-                    'Click "Deep risk check" on the left<br>to also show shareholders<br>'
-                    '点击左侧「深度风险核查」<br>后一并显示股东</div>', unsafe_allow_html=True)
-
-        with ea4:
-            st.markdown("**🔗 Verification Links · 核验链接**")
-            st.markdown(
-                f'<a href="https://www.gsxt.gov.cn/corp-query-homepage.html" '
-                f'target="_blank" style="font-size:12px;color:#3b82f6">🏛 National Enterprise Credit · 国家企业信用信息公示</a><br>'
-                f'<a href="https://www.mem.gov.cn/fw/cxfw/" '
-                f'target="_blank" style="font-size:12px;color:#3b82f6">🔒 MEM qualification check · 应急管理部资质核验</a><br>'
-                f'<a href="https://credit.customs.gov.cn/" '
-                f'target="_blank" style="font-size:12px;color:#3b82f6">🛃 Customs credit query · 海关信用企业查询</a>',
-                unsafe_allow_html=True
-            )
-            if active.get("_fetched_at"):
-                st.caption(f"Data fetched · 数据拉取时间：{active.get('_fetched_at', '')[:10]}")
+        st.markdown("**🔗 Verification Links · 核验链接**")
+        st.markdown(
+            f'<a href="https://www.gsxt.gov.cn/corp-query-homepage.html" '
+            f'target="_blank" style="font-size:12px;color:#3b82f6">🏛 National Enterprise Credit · 国家企业信用信息公示</a>&nbsp;&nbsp;'
+            f'<a href="https://www.mem.gov.cn/fw/cxfw/" '
+            f'target="_blank" style="font-size:12px;color:#3b82f6">🔒 MEM qualification check · 应急管理部资质核验</a>&nbsp;&nbsp;'
+            f'<a href="https://credit.customs.gov.cn/" '
+            f'target="_blank" style="font-size:12px;color:#3b82f6">🛃 Customs credit query · 海关信用企业查询</a>',
+            unsafe_allow_html=True
+        )
+        if active.get("_fetched_at"):
+            st.caption(f"Data fetched · 数据拉取时间：{active.get('_fetched_at', '')[:10]}")
